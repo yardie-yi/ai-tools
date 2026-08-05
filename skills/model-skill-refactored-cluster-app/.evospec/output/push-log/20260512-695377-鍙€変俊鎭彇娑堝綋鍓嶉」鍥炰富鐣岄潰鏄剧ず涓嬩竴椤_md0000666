@@ -1,0 +1,21 @@
+# 提交记录
+
+- 日期：2026-05-12
+- ONES ID：#695377
+- 分支：dev/adcj_20251201
+- Commit：a26f66df
+- Change-Id：I11353ccc4a4e200f9026393ab70520ac97c1b705
+
+## Commit Message
+
+ones id : #695377 修复可选信息取消当前显示项后回主界面应显示下一项而非默认第一项
+
+## 提交文件列表
+
+| 文件 | 改动说明 |
+|------|----------|
+| `awtk/awtkhmi/src/Presentation/src/page/pagePresentation.cpp` | syncOptionViewVisibility() 中查找替代项的循环起点从 i=0 改为 i=1（mOptionInfoIndex+1 取模循环） |
+
+## 板端验证结论
+
+推板验证通过：取消当前显示项（胎压）后返回主界面，正确显示下一个已勾选项，不再跳回总里程。

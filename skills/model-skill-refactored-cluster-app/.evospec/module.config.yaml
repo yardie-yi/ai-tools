@@ -1,0 +1,196 @@
+schema_version: 2
+
+module:
+  id: cluster-app
+  name: cluster-app 仪表盘 HMI 应用模块
+  description: 车载仪表盘 HMI 应用
+  root: .
+  platform: ac8215e
+  framework: AWTK
+  runtime_processes: [awtkhmi, appmgr]
+
+paths:
+  architecture_sources: [CLAUDE.md]
+  requirement_input: .evospec/input/prd
+  design_output: .evospec/output/design
+  bug_log_output: .evospec/output/bug-log
+  push_log_output: .evospec/output/push-log
+  code_analysis_output: .evospec/output/code-analysis
+
+work_item:
+  system: ONES
+  id_label: ONES ID
+  id_pattern: "^[0-9]+$"
+  filename_template: "{date}-{task.id}-{summary}.md"
+
+architecture:
+  style: layered-mvc
+  flow: [Data, Controller, Presentation]
+  layers:
+    - name: Data
+      responsibility: 订阅并转换车辆或系统信号
+    - name: Controller
+      responsibility: 执行业务逻辑和状态处理
+    - name: Presentation
+      responsibility: 更新界面表现
+  related_modules:
+    - name: 消息总线（VehicleInterfaceBase）
+      path: ../vehicle-service
+    - name: 应用管理（appmgr）
+      path: ../appmgr
+    - name: 编译脚本
+      path: ../build-script
+
+build:
+  enabled: true
+  default_strategy: remote
+  strategies:
+    remote:
+      enabled: true
+      host_shell: powershell
+      description: SSH 远程交叉编译正式板端产物
+      command: >-
+        ssh yiwanming@172.19.160.73 "bash -c 'cd ~/adcj/platform/autoai-services/build-script && source env_setup.sh ac8215e && make cluster-app 2>&1'"
+      manual_steps:
+        - ssh yiwanming@172.19.160.73
+        - cd ~/adcj/platform/autoai-services/build-script
+        - source env_setup.sh ac8215e
+        - make cluster-app
+      auth_note: 密码由本地凭据或人工输入提供，不在配置中保存明文
+    local:
+      enabled: true
+      host_shell: bash
+      description: 仅用于本机代码逻辑验证，不生成板端可部署产物
+      commands:
+        - cd .
+        - cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+        - cmake --build build -j4
+  clean_command: make clean && make cluster-app
+  common_errors:
+    - pattern: "Bad permissions|Load key: bad permissions|exit 255"
+      action: 检查 SSH 连通性、VPN 和私钥权限
+    - pattern: "autoaiLog.h: No such file|make: command not found"
+      action: 重新初始化工具链后构建
+    - pattern: "undefined reference to dlopen"
+      action: 检查目标是否链接 dl 库
+
+artifacts:
+  - id: main_bin
+    description: 仅代码改动时部署的主二进制
+    kind: file
+    local_path: ../build/autoai-services/bin/awtkhmi/bin/awtkhmi
+    target_path: /mnt/autoai_platform/bin/awtkhmi/bin/awtkhmi
+  - id: awtkhmi_dir
+    description: 包含资源文件的完整运行目录
+    kind: directory
+    local_path: ../build/autoai-services/bin/awtkhmi
+    target_path: /mnt/autoai_platform/bin
+
+deploy:
+  enabled: true
+  transport: adb
+  host_shell: powershell
+  preflight_commands:
+    - adb devices
+  prepare_commands:
+    - adb shell "echo clear_all_wp > /proc/nand_wp"
+    - adb shell sync
+    - adb shell "mount -o remount,rw /dev/root /"
+  stop_process_command_template: "adb shell 'killall {process}; true'"
+  processes: [appmgr, awtkhmi]
+  scenarios:
+    code_only:
+      description: 仅修改代码，部署主二进制
+      artifact_id: main_bin
+      remove_commands:
+        - adb shell rm -f "{artifact.target_path}"
+        - adb shell sync
+      transfer_command: adb push "{artifact.local_path}" "{artifact.target_path}"
+    with_resources:
+      description: 修改资源文件，部署完整目录
+      artifact_id: awtkhmi_dir
+      remove_commands:
+        - adb shell rm -rf /mnt/autoai_platform/bin/awtkhmi
+        - adb shell sync
+      transfer_command: adb push "{artifact.local_path}" "{artifact.target_path}"
+  post_commands:
+    - adb shell chmod -R 777 /mnt/autoai_platform/bin
+    - adb shell sync
+  verification:
+    commands:
+      - adb shell pidof awtkhmi
+      - adb logcat -d | findstr /R "AWTKHMI ClusterHMI"
+    success_criteria:
+      - 目标进程存在
+      - 启动日志无 FATAL 或持续崩溃
+
+debug:
+  log_command: adb logcat
+  clear_log_command: adb logcat -c
+  save_log_command_windows: adb logcat > C:\logs\debug.log
+  filter_commands:
+    windows: 'adb logcat | findstr /R "{tags}"'
+    posix: "adb logcat | grep -E '{tags}'"
+  log_tags: [AWTKHMI, ClusterHMI, VehicleInterface]
+  process_query_command_template: adb shell pidof {process}
+  config_files: []
+
+git:
+  enabled: true
+  commit:
+    template: "ones id : #{task.id} {task.summary}"
+    summary_language: zh-CN
+    max_summary_length: 50
+  push:
+    provider: gerrit
+    remote: origin
+    target_branch: dev/adcj_20251201
+    command_template: "git push {remote} HEAD:refs/for/{target_branch}"
+  branch_patterns: ["dev/adcj_YYYYMMDD", localbranch]
+  forbidden_paths: [build/, "*.so", package/update.iso, package/update.bin, package/update/]
+
+development:
+  languages: [C, C++]
+  build_file_patterns: [CMakeLists.txt, "*.cmake"]
+  logging:
+    enabled: true
+    include: common/src/commonProj.h
+    namespace: ClusterhmiCommon
+    macros:
+      debug: SLOG_DEBUG
+      info: SLOG_INFO
+      warn: SLOG_WARN
+      error: SLOG_ERROR
+    fixed_tag: ClusterHMI
+    required_points: [关键函数入口, 错误返回, 关键状态变化, 初始化或注册, 重试超时或降级]
+    high_frequency_policy: change_or_rate_limited
+  comments:
+    enabled: true
+    language: zh-CN
+    mode: every_nontrivial_line
+  high_frequency_calls:
+    enabled: true
+    function_hints: [onUpdate, poll, refresh, tick, loop, RET_REPEAT]
+    call_patterns: [widget_move, widget_resize, widget_set_value, widget_set_text_utf8, widget_set_visible, widget_set_opacity, image_set_image]
+    cache_prefix: last_
+  extension_contract:
+    enabled: false
+    base_type: ""
+    factory_functions: []
+    registration_file: ""
+    registration_key: ""
+
+code_analysis:
+  index_mode: discover
+  preferred_documents:
+    - name: core-modules.md
+      keywords: [模块, 类, 职责, 架构]
+    - name: message-flow.md
+      keywords: [消息, 信号, 总线, 回调]
+    - name: awtkhmi_init_flow.md
+      keywords: [初始化, 启动, 顺序]
+    - name: 架构设计.md
+      keywords: [全局, 架构, 分层]
+
+templating:
+  unresolved_markers: [REQUIRED, PLACEHOLDER, TODO_CONFIG]

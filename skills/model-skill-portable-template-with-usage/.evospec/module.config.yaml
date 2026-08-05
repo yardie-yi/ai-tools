@@ -1,0 +1,115 @@
+schema_version: 2
+
+module:
+  id: REQUIRED
+  name: REQUIRED
+  description: ""
+  root: .
+  platform: REQUIRED
+  framework: ""
+  runtime_processes: []
+
+paths:
+  architecture_sources: []
+  requirement_input: .evospec/input/prd
+  design_output: .evospec/output/design
+  bug_log_output: .evospec/output/bug-log
+  push_log_output: .evospec/output/push-log
+  code_analysis_output: .evospec/output/code-analysis
+
+work_item:
+  system: REQUIRED
+  id_label: Task ID
+  id_pattern: "^.+$"
+  filename_template: "{date}-{task.id}-{summary}.md"
+
+architecture:
+  style: REQUIRED
+  flow: []
+  layers: []
+  related_modules: []
+
+build:
+  enabled: true
+  default_strategy: local
+  strategies:
+    local:
+      enabled: true
+      host_shell: REQUIRED
+      description: REQUIRED
+      commands: [REQUIRED]
+  clean_command: ""
+  common_errors: []
+
+artifacts: []
+
+deploy:
+  enabled: false
+  transport: REQUIRED
+  host_shell: REQUIRED
+  preflight_commands: []
+  prepare_commands: []
+  stop_process_command_template: ""
+  processes: []
+  scenarios: {}
+  post_commands: []
+  verification:
+    commands: []
+    success_criteria: []
+
+debug:
+  log_command: REQUIRED
+  clear_log_command: ""
+  save_log_command_windows: ""
+  filter_commands: {}
+  log_tags: []
+  process_query_command_template: ""
+  config_files: []
+
+git:
+  enabled: true
+  commit:
+    template: "{task.id}: {task.summary}"
+    summary_language: zh-CN
+    max_summary_length: 72
+  push:
+    provider: REQUIRED
+    remote: origin
+    target_branch: REQUIRED
+    command_template: "git push {remote} HEAD:{target_branch}"
+  branch_patterns: []
+  forbidden_paths: [build/, dist/, out/, "*.o", "*.so", "*.bin"]
+
+development:
+  languages: []
+  build_file_patterns: []
+  logging:
+    enabled: false
+    include: ""
+    namespace: ""
+    macros: {}
+    fixed_tag: ""
+    required_points: []
+    high_frequency_policy: change_or_rate_limited
+  comments:
+    enabled: true
+    language: zh-CN
+    mode: meaningful_blocks
+  high_frequency_calls:
+    enabled: false
+    function_hints: [poll, refresh, tick, loop]
+    call_patterns: []
+    cache_prefix: last_
+  extension_contract:
+    enabled: false
+    base_type: ""
+    factory_functions: []
+    registration_file: ""
+    registration_key: ""
+
+code_analysis:
+  index_mode: discover
+  preferred_documents: []
+
+templating:
+  unresolved_markers: [REQUIRED, PLACEHOLDER, TODO_CONFIG]
