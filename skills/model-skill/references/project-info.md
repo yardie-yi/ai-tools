@@ -1,42 +1,37 @@
 # 项目资源索引
 
-> **配置来源**：项目路径、板端路径、关联模块均来自 `.evospec/module.config.yaml`，使用前先读取该文件。
+> 本页是配置导航，不保存项目路径常量。先读取 `.evospec/module.config.yaml`。
 
-## 需求文档
+## 模块信息
 
-| 类型 | 路径 |
-|------|------|
-| PRD / 需求文档 | `.evospec/input/prd/`（手动放入） |
-| 详细设计文档 | `<config.module.id>-detail-design.md` |
-| 下载子进程架构 | `download_package/ARCHITECTURE.md` |
-| 插件开发指南 | `plugins/plugin_template/PLUGIN_BASE_GUIDE.md` |
+- 标识：`<config: module.id>`
+- 名称：`<config: module.name>`
+- 描述：`<config: module.description>`
+- 根目录：`<config: module.root>`
+- 平台/框架：`<config: module.platform>` / `<config: module.framework>`
 
-> 分析需求时优先读 `.evospec/input/prd/` 下的最新 PRD 文件。
+## 文档与产物目录
 
-## 输出产物目录（.evospec/output）
+| 用途 | 配置路径 |
+|---|---|
+| 架构来源 | `paths.architecture_sources` |
+| 需求输入 | `paths.requirement_input` |
+| 设计输出 | `paths.design_output` |
+| Bug 记录 | `paths.bug_log_output` |
+| 提交记录 | `paths.push_log_output` |
+| 代码分析 | `paths.code_analysis_output` |
 
-| 目录 | 内容 | 生成时机 |
-|------|------|----------|
-| `.evospec/output/design/` | 需求设计方案文档 | 需求分析完成后 |
-| `.evospec/output/bug-log/` | Bug 修复记录 | 推板验证通过后 |
-| `.evospec/output/push-log/` | Git 提交记录 | git push 后 |
+## 架构与关联模块
 
-## 编译环境
+读取 `architecture.style`、`architecture.flow`、`architecture.layers` 和 `architecture.related_modules`。配置只用于导航，最终以当前源码和项目架构文档为准。
 
-- **方式**：SSH 连接远程编译服务器
-- **详细步骤**：见 `@references/env-setup.md`
+## 构建、部署与调试
 
-## 板端调试
+- 构建：`@references/us-build.md`
+- 环境：`@references/env-setup.md`
+- 部署：`@references/us-board-deploy.md`
+- 调试：`@references/debug-commands.md`
 
-- **详细命令**：见 `@references/debug-commands.md`
+## 配置完整性
 
-## 相关模块位置
-
-关联模块路径见 `.evospec/module.config.yaml` → `related_modules` 列表。
-
-| 配置项 | 引用 |
-|------|------|
-| 配置文件（板端） | `<config: board.config_file>` |
-| 插件部署路径（板端） | `<config: board.plugin_deploy_path>` |
-
-# cluster-app 不涉及 OTA 升级包，此项不适用
+发现空值或 unresolved marker 时，明确指出完整配置路径；不得沿用其他项目的旧值。

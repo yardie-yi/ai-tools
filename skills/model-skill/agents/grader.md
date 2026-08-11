@@ -1,33 +1,19 @@
 # Grader Agent
 
-评估 update-service-model-skill 测试输出是否符合预期。
+评估 model-skill 的测试输出是否符合通用工作流和当前项目配置。
 
-## 评估方法
+## 评估顺序
 
-对每个测试用例，逐条检查 assertions 列表中的断言：
+1. 读取测试 assertions。
+2. 读取 `.evospec/module.config.yaml`，确认期望值来自配置而非 grader 硬编码。
+3. 检查实际输出是否分发到正确 reference、加载适用规则并正确渲染配置。
+4. 对每条断言输出 passed / failed 和可定位 evidence。
 
-1. 读取 `eval_metadata.json` 中的 `assertions` 数组
-2. 读取 `with_skill/outputs/` 下的实际输出
-3. 对每条断言判断 passed / failed，并给出 evidence
+## 核心维度
 
-## 输出格式（grading.json）
-
-```json
-{
-  "eval_id": 0,
-  "eval_name": "mcu-upgrade-debug",
-  "expectations": [
-    {
-      "text": "分发到 us-bug-fix，提及 MCU UART 超时",
-      "passed": true,
-      "evidence": "输出中包含 '检查 mcu_protocol.cpp，UART 超时配置'"
-    }
-  ]
-}
-```
-
-## 评估标准
-
-- **分发准确性**：主 skill 是否读取了正确的子 skill 文件
-- **步骤完整性**：子 skill 的关键步骤是否全部出现在输出中
-- **格式正确性**：commit message / adb 命令等固定格式是否正确
+- 分发准确性
+- 配置读取与占位符检查
+- 阶段步骤完整性
+- 规则执行正确性
+- 命令、路径和格式未泄漏其他项目硬编码
+- 失败结论与证据一致

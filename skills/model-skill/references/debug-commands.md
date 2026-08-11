@@ -1,56 +1,26 @@
-# 板端调试命令
+# 调试命令
 
-> **配置来源**：进程名、配置文件路径、日志 TAG 列表均来自 `.evospec/module.config.yaml`，使用前先读取该文件。
+> 调试工具、日志标签、进程和配置文件均来自 `.evospec/module.config.yaml` → `debug`、`deploy`、`module`。
 
-## adb 日志抓取
+## 日志
 
-### 按模块过滤（推荐）
+- 实时日志：`<config: debug.log_command>`
+- 清空日志：`<config: debug.clear_log_command>`
+- 保存日志：`<config: debug.save_log_command_windows>`（按当前宿主系统选择）
+- 过滤日志：从 `<config: debug.filter_commands>` 选择当前宿主系统模板，将 `{tags}` 替换为 `<config: debug.log_tags>` 拼接结果。
 
-> 日志 TAG 列表见 `.evospec/module.config.yaml` → `debug.log_tags`
+## 进程与服务
 
-```bat
-REM 按 config.debug.log_tags 逐一过滤，例如：
-adb logcat | findstr "<config: debug.log_tags[0]>"
-adb logcat | findstr "<config: debug.log_tags[1]>"
-```
+对 `<config: module.runtime_processes>` 或 `<config: deploy.processes>` 使用 `<config: debug.process_query_command_template>`；停止进程使用部署配置中的命令模板，不自行假设 `killall`、`pkill` 或 systemd 可用。
 
-### 多模块同时过滤
+## 配置文件
 
-```bat
-REM 将 config.debug.log_tags 拼接为空格分隔的关键字
-adb logcat | findstr /R "<config: debug.log_tags 空格拼接>"
-```
+若 `<config: debug.config_files>` 非空，先确认读取权限，再使用项目配置的传输/终端工具查看；为空时不构造路径。
 
-### 保存日志到文件
+## 常见定位顺序
 
-```bat
-adb logcat > C:\logs\debug_%date:~0,10%.log
-```
-
-### 清空日志缓冲
-
-```bat
-adb logcat -c
-```
-
-## 进程管理
-
-```bat
-REM 查看进程是否运行（进程名见 config.board.processes_to_kill）
-adb shell pidof <config: board.processes_to_kill[i]>
-
-REM 强制停止进程
-adb shell "pidof <config: board.processes_to_kill[i]> && kill -9 $(pidof <config: board.processes_to_kill[i]>)"
-
-REM 查看板端配置文件
-adb shell cat <config: board.config_file>
-```
-
-## 常见异常快速定位
-
-| 现象 | 命令 | 关注点 |
-|------|------|--------|
-| 服务未启动 | `adb shell pidof <config: board.processes_to_kill[0]>` | 返回空则未运行 |
-| 启动失败 | `adb logcat \| findstr "<config: debug.log_tags[0]>"` | `Failed to initialize` |
-| 动态库加载失败 | `adb logcat \| findstr "<config: debug.log_tags[0]>"` | `dlopen failed` |
-| 查看完整日志 | `adb logcat > C:\logs\debug.log` | 搜索 ERROR / FATAL |
+1. 确认进程/服务是否存在。
+2. 抓取未过滤的短窗口完整日志。
+3. 用配置 TAG 缩小范围，并定位首个 ERROR/FATAL 或状态偏移。
+4. 对照设计、代码分析和当前源码确认调用链。
+5. 保存原始日志和复现时间，避免只保留筛选结果。

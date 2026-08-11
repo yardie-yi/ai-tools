@@ -1,17 +1,20 @@
 ---
 name: model-skill
-description: cluster-app 仪表盘HMI应用模块的开发维护总入口skill。手动触发。根据当前开发阶段自动分发到对应子skill，实现开发流程标准化。
+description: 通用项目开发维护工作流入口。根据用户意图分发到需求、开发、修复、构建、部署、Git、调试、代码分析或规则管理流程；所有项目差异均从 .evospec/module.config.yaml 读取。
 ---
 
-# cluster-app 模块开发维护工作流
+# 通用项目开发维护工作流
 
-## 模块简介
+## 核心原则
 
-cluster-app 是车载仪表盘 HMI 应用，基于 AWTK 框架，主进程为 awtkhmi，运行于 ac8215e 平台。
+1. **流程通用、参数配置化**：服务器、工具链、架构、日志、部署、Git、文档路径等项目差异，只允许出现在 `.evospec/module.config.yaml` 或 `.evospec/rules/` 中。
+2. **配置优先**：执行任何阶段前先读取配置，不凭经验补全项目命令，不把配置值回写到 `references/*.md`。
+3. **证据优先**：涉及代码、构建、部署和提交时，以仓库现状、命令输出和配置为准。
+4. **渐进读取**：只读取当前阶段需要的配置节、规则和 reference，避免一次加载全部内容。
 
 ## 开发阶段地图
 
-```
+```text
 需求分析 → 功能开发/Bug修复 → 编译构建 → 推板验证 → Git提交
 ```
 
@@ -21,7 +24,6 @@ cluster-app 是车载仪表盘 HMI 应用，基于 AWTK 框架，主进程为 aw
 | 新增功能、添加插件、实现接口 | 功能开发 | @references/us-feature-dev.md |
 | bug、报错、异常、定位问题、修复 | Bug修复 | @references/us-bug-fix.md |
 | 编译、构建、make、cmake、ssh | 编译构建 | @references/us-build.md |
-|                                        |          |                                 |
 | 推板、adb、部署、验证 | 推板验证 | @references/us-board-deploy.md |
 | 提交、commit、push、git | Git管理 | @references/us-git-submit.md |
 | 调试、日志、串口、logcat | 调试命令 | @references/debug-commands.md |
@@ -30,44 +32,32 @@ cluster-app 是车载仪表盘 HMI 应用，基于 AWTK 框架，主进程为 aw
 | 分析代码、架构分析、流程分析、代码功能 | 代码分析 | @references/us-code-analysis.md |
 | 查看规则、添加规则、禁用规则、规则管理 | 规则管理 | @references/us-rules.md |
 
-## 使用方式
+## 执行协议
 
-收到用户请求后：
+收到用户请求后按顺序执行：
 
-0. **首先读取 `.evospec/module.config.yaml`，将配置值加载到上下文**，后续所有操作以此配置为准，不使用任何硬编码值
-1. 判断用户当前处于哪个开发阶段（可能跨多个阶段）
-2. **读取 `.evospec/rules/INDEX.md`，加载当前阶段适用的 enabled 规则**
-3. 读取对应子skill文件，按其指引执行；在规则检查点验证规则
-4. 如果阶段不明确，直接问用户："你当前在哪个阶段？（需求分析 / 功能开发 / Bug修复 / 编译 / 推板验证 / Git提交）"
+1. 读取 `.evospec/module.config.yaml` 的 `schema_version`、`module`、`paths` 和当前阶段对应配置节。
+2. 检查当前阶段所需字段：值为空、为 `REQUIRED` 或配置节 `enabled: false` 时，不构造虚假命令；说明缺失字段并继续完成不依赖该字段的部分。
+3. 读取 `.evospec/rules/INDEX.md`，筛选当前阶段 `enabled` 的规则，再读取对应规则文件。
+4. 读取上表对应的 `references/*.md`，按其中流程执行。
+5. 跨阶段任务按实际顺序串联；每个阶段结束时明确输入、输出和下一阶段前置条件。
 
-## 各阶段适用规则速查
+## 配置引用约定
 
-| 阶段 | 适用规则 |
-|------|----------|
-| 功能开发 | R003 plugin-base · R007 chinese-comments · R008 no-redundant-ui-call · R009 presentation-access-via-controller |
-| Bug修复 | R002 log-required · R007 chinese-comments · R008 no-redundant-ui-call · R009 presentation-access-via-controller |
-| 推板验证 | R004 build-before-deploy |
-| Git提交 | R001 commit-format · R002 log-required · R005 no-build-artifacts |
+reference 中使用 `<config: a.b.c>` 表示配置路径；数组使用 `<config: a.b[i]>`。执行时替换为真实值，不把占位符原样作为命令运行。
 
-## 关键路径速查
+配置中的命令可使用以下模板变量：
 
-> 产物路径从 `.evospec/module.config.yaml` 的 `artifacts` 节读取，以配置文件为准。
+- `{module.root}`、`{module.id}`、`{module.name}`
+- `{artifact.id}`、`{artifact.local_path}`、`{artifact.target_path}`
+- `{task.id}`、`{task.summary}`
+- 其他变量以配置文件 `templating.variables` 为准
 
-## 跨模块 skill 同步规则
+## 跨项目移植规则
 
-将本模块 skill 同步到其他模块（如 update-service）时，**禁止直接覆盖**以下文件：
+移植到新项目时：
 
-| 文件 | 原因 |
-|------|------|
-| `references/us-build.md` | 各模块编译命令、服务器路径、工具链不同 |
-| `references/us-board-deploy.md` | 各模块推板路径、进程名、写保护方式不同 |
-
-**可以同步**的文件（流程通用）：
-
-| 文件 | 说明 |
-|------|------|
-| `references/us-git-submit.md` | git 提交/push 格式对所有模块一致 |
-| `change_log.md` | 记录历史，各模块共用 |
-| `SKILL.md` 中的通用规则 | 如本节跨模块规则 |
-
-同步前必须先 diff 对比，确认只修改通用部分，不覆盖模块特有配置。
+1. 复制 `.codex/skills/model-skill/`、`.evospec/rules/` 和 `.evospec/scripts/`。
+2. 以通用模板创建 `.evospec/module.config.yaml`，只修改配置，不修改路由表和 reference 文件集合。
+3. 保持 `references/` 中现有 Markdown 文件的文件名和职责稳定；项目独有步骤通过配置命令、规则开关或项目文档表达。
+4. 迁移后运行配置检查：路径存在性、构建命令 dry-run、部署场景列表、Git push ref、输出目录可写性。

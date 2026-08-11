@@ -1,95 +1,51 @@
 # Git 提交管理
 
+> Commit、push、分支和禁止提交项来自 `.evospec/module.config.yaml` → `git`、`work_item`、`paths`。
+
 ## 提交前检查
 
-1. 板端验证已通过
-2. 只提交与本次改动相关的文件（不提交 `build/`、`package/update.iso`、`package/update.bin` 等产物）
-3. 确认 `git diff` 中没有调试用的临时代码
+1. 查看 `git status`、`git diff` 和必要的测试/验证结果。
+2. 只暂存本次任务相关文件，优先 `git add <具体路径>`。
+3. 对照 `<config: git.forbidden_paths>` 和 R005 检查暂存区。
+4. Bug 修复场景确认 `<config: paths.bug_log_output>` 已生成记录（R002）。
+5. 不修改或覆盖用户无关改动。
 
-## Commit Message 格式
+## Commit Message
 
+使用 `<config: git.commit.template>`，将 `{task.id}` 与 `{task.summary}` 替换为真实值，并遵守语言与长度配置。任务编号缺失时不得编造。
+
+示例仅展示模板变量，不代表固定项目格式：
+
+```text
+<rendered git.commit.template>
 ```
-ones id : #<任务ID> <简短描述改动内容>
-```
 
-**示例：**
-```
-ones id : #695377 新增BT插件DFU超时重试逻辑
-ones id : #686625 修复MCU升级进度回调未触发问题
-ones id : #701234 升级流程增加SOC分区校验步骤
-```
-
-**规则：**
-- `ones id :` 固定前缀（注意冒号后有空格）
-- `#` 后接 ONES 任务 ID（纯数字）
-- 描述用中文，说明**改了什么**，不超过 50 字
-
-## 提交步骤
+## 提交与推送
 
 ```bash
-# 1. 查看改动
 git status
-git diff
-
-# 2. 暂存目标文件（避免用 git add . 误提交产物）
-git add <具体文件路径>
-
-# 3. 提交（ones_id 从 module.config.yaml 的 git.ones_id 读取，当前值：695377）
-git commit -m "ones id : #695377 描述改动内容"
-
-# 4. 推送到 Gerrit（必须用 refs/for 格式，普通 git push 会被仓库拒绝）
-git push origin HEAD:refs/for/dev/adcj_20251201
+git diff --cached
+git commit -m "<rendered commit message>"
 ```
 
-> 若网络不通（Gerrit 服务器内网访问），将上述命令提供给用户，说明需在内网或 VPN 环境下手动执行，**不要停在网络检查步骤**。
+推送命令由 `<config: git.push.command_template>` 渲染，变量来自同一配置节。执行前确认当前分支、remote 和目标分支；网络或权限失败时保留 commit，并给出相同的已渲染命令供用户在正确环境执行。
 
-## 分支规范
+## 生成提交记录
 
-- 当前开发分支格式参考历史：`dev/adcj_YYYYMMDD`
-- 本地测试分支：`localbranch`（不推送）
-
-## 常见 .gitignore 产物（不应提交）
-
-```
-build/
-package/update.iso
-package/update.bin
-package/update/
-*.so
-```
-
-如发现这些文件被 `git add` 暂存，用 `git reset HEAD <文件>` 撤销。
-
-## 生成提交记录（必须）
-
-git push 成功后，在 `.evospec/output/push-log/` 下生成记录文件。
-
-**文件命名**：`YYYYMMDD-<ones-id>-<简短描述>.md`
-例：`20260509-701234-SOC分区校验.md`
-
-**记录模板**：
+push 成功后，在 `<config: paths.push_log_output>` 生成文件，命名遵循 `<config: work_item.filename_template>`。
 
 ```markdown
 # 提交记录
 
 - 日期：YYYY-MM-DD
-- ONES ID：#XXXXXX
-- 分支：dev/adcj_YYYYMMDD
-- Commit：（粘贴 git log 最新一条的 hash 前8位）
+- <任务编号标签>：#XXXXXX
+- 分支：
+- Commit：
 
 ## Commit Message
-
-ones id : #XXXXXX 描述改动内容
-
 ## 提交文件列表
-
-（粘贴 git diff --name-only HEAD~1 的输出）
-
 | 文件 | 改动说明 |
-|------|----------|
-| `xxx/xxx.cpp` | 简述本文件改了什么 |
-
-## 板端验证结论
-
-（简述推板验证的结果，如：MCU/BT/SOC升级均正常，日志无异常）
+|---|---|
+## 构建与验证结论
+## 推送目标
 ```
