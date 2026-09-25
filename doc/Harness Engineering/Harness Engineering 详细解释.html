@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Harness Engineering｜让 AI 工作可控、可验证、可接续</title>
+<style>
+:root{--ink:#152d3d;--ink2:#25485a;--paper:#f7f5ee;--white:#fffefa;--teal:#087e83;--mint:#beeadf;--gold:#eab66b;--red:#b64949;--muted:#5d7179;--line:#dbe3de;--shadow:0 12px 34px #142c3b0a;--mono:Consolas,"Cascadia Code",monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}button,input,select{font:inherit}button,a,input,select{outline-offset:5px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--teal)}a{color:inherit}button{cursor:pointer}::selection{background:var(--mint)}.shell{max-width:1480px;margin:auto;display:grid;grid-template-columns:245px minmax(0,1fr)}.sidebar{height:100vh;position:sticky;top:0;padding:32px 22px 24px;border-right:1px solid var(--line);overflow:auto}.brand{font-size:13px;letter-spacing:.12em;font-weight:800}.brand strong{display:block;font-size:20px;letter-spacing:0;line-height:1.35;margin-top:10px}.brand span{font-size:12px;color:var(--muted);font-weight:400;letter-spacing:0}.progress{height:3px;background:var(--line);border-radius:3px;margin:22px 0}.progress div{height:100%;background:var(--teal);width:0;transition:width .15s}.toc{display:grid;gap:3px}.toc a{font-size:12.5px;display:flex;gap:10px;align-items:baseline;text-decoration:none;padding:7px 10px;border-radius:6px;line-height:1.6;color:var(--muted)}.toc a b{font:11px var(--mono);opacity:.7}.toc a:hover{background:#e8eeE7}.toc a.active{background:var(--ink);color:white}.side-note{font-size:11px;line-height:1.75;color:var(--muted);margin-top:24px}.mobile-top{display:none}main{padding:0 54px 55px;min-width:0}.hero{padding:58px 0 44px;position:relative}.eyebrow{font:700 11px/1.5 var(--mono);letter-spacing:.12em;color:var(--teal);text-transform:uppercase;display:flex;align-items:center;gap:10px}.eyebrow:before{content:"";height:7px;width:7px;background:var(--teal);border-radius:50%}h1{font-size:clamp(32px,4.1vw,58px);line-height:1.12;letter-spacing:-.045em;margin:22px 0 14px;font-weight:850}h1 span{display:block;font-size:clamp(20px,2.3vw,31px);letter-spacing:-.02em;font-weight:600;margin-top:14px;line-height:1.5}.lead{max-width:730px;color:var(--muted);font-size:17px;line-height:1.95;margin:18px 0 24px}.hero-pills{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid var(--line);border-radius:30px;padding:4px 12px;font-size:11px;color:var(--muted)}.hero-visual{margin-top:34px;background:var(--ink);border-radius:16px;overflow:hidden;color:var(--white);padding:28px 28px 24px;position:relative}.formula{display:flex;gap:18px;align-items:center;justify-content:center;font-family:var(--mono);font-size:24px;line-height:1.35}.formula strong{font-weight:700;color:var(--mint)}.formula .plus{font-size:24px;color:#779ca6}.formula small{display:block;font:11px/1.6 "Microsoft YaHei",sans-serif;color:#b5cbd1;margin-top:7px}.formula .formula-box{border:1px solid #557683;border-radius:10px;padding:17px 22px}.hero-visual>p{font-size:11px;color:#c1d2d6;margin:19px 0 0;text-align:center}.quick-read{border-left:3px solid var(--teal);padding:0 0 0 19px;margin:28px 0 0;font-size:14px}.quick-read strong{color:var(--teal)}section{padding:42px 0 12px;border-top:1px solid var(--line);margin-top:22px;scroll-margin-top:30px}.section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}.section-no{font:13px var(--mono);color:var(--teal);font-weight:700}h2{font-size:28px;line-height:1.45;margin:0;letter-spacing:-.02em}h3{font-size:18px;line-height:1.6;margin:26px 0 10px}h4{font-size:14px;margin:0 0 8px}p{margin:12px 0}.section-intro{color:var(--muted);font-size:15px;margin:9px 0 23px}.card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:21px 22px;box-shadow:var(--shadow)}.card p{font-size:13px;line-height:1.9;margin:8px 0;color:var(--muted)}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.mini-label{font:700 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}.callout{padding:17px 21px;border-radius:8px;background:#e5f2ed;font-size:13px;margin:20px 0;line-height:1.9}.callout strong{color:#086e70}.callout.warn{background:#fbefdd;border-left:3px solid var(--gold)}.callout.error{background:#faeaea;border-left:3px solid var(--red)}.small{font-size:12px;color:var(--muted)}.note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.8}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--white);margin:15px 0}table{border-collapse:collapse;width:100%;font-size:12.5px;line-height:1.8}th{text-align:left;padding:13px 16px;background:#eaf0eb;color:var(--ink);font-weight:700;white-space:nowrap}td{padding:13px 16px;border-top:1px solid var(--line);vertical-align:top}td:first-child{font-weight:600;color:var(--ink)}td:not(:first-child){color:var(--muted)}code{font-family:var(--mono);font-size:.91em;background:#e9eee8;padding:2px 5px;border-radius:3px;overflow-wrap:anywhere}.table-wrap code{white-space:nowrap}.stack-diagram{background:var(--ink);border-radius:12px;padding:22px;color:#e8f4f1}.stack-top{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center;margin-bottom:12px}.stack-box{padding:14px;border:1px solid #527382;border-radius:8px;font-size:13px}.stack-box small{display:block;color:#b4cbd0;font-size:11px;margin-top:3px}.stack-harness{border:1px solid var(--mint);border-radius:9px;padding:17px 17px 12px}.stack-harness>strong{font-size:13px;color:var(--mint)}.component-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.component-btn{color:#dcece8;background:#254858;border:1px solid #507380;border-radius:7px;padding:13px 8px;line-height:1.5;text-align:center;font-size:12px}.component-btn:hover,.component-btn[aria-pressed=true]{background:var(--mint);color:var(--ink);border-color:var(--mint)}.detail-panel{margin-top:15px;background:#e7f2ed;padding:19px 21px;border-radius:10px;min-height:124px;font-size:13px;line-height:1.9}.detail-panel h4{font-size:15px}.detail-panel p{margin:5px 0;color:#43626b}.detail-panel .boundary{font-size:12px;border-top:1px solid #c8ddd5;padding-top:9px;margin-top:10px;color:var(--teal)}.artifact{display:grid;grid-template-columns:48px 1fr;gap:16px;padding:19px 0;border-bottom:1px solid var(--line)}.artifact:last-child{border-bottom:0}.artifact-num{background:var(--ink);color:var(--mint);font:18px var(--mono);height:42px;width:42px;display:grid;place-items:center;border-radius:9px}.artifact h4{font-size:15px;margin:0 0 6px}.artifact p{font-size:13px;color:var(--muted);margin:4px 0}.flow-strip{display:flex;gap:6px;align-items:stretch;margin:17px 0}.flow-item{flex:1;min-width:0;background:var(--white);border:1px solid var(--line);padding:15px 11px;border-radius:8px;text-align:center;font-size:12px;line-height:1.65}.flow-item b{display:block;color:var(--teal);font:12px var(--mono);margin-bottom:8px}.flow-arrow{align-self:center;font-size:16px;color:#89a29f}.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}.code-shell{background:#152d3d;border-radius:11px;overflow:hidden;color:#d7e9e4;min-width:0}.code-head{display:flex;justify-content:space-between;align-items:center;padding:11px 17px;background:#214252;gap:10px;font:11px var(--mono);color:#c4d9d8}.code-head button{background:#345c69;color:#e8f4ef;border:1px solid #587a85;border-radius:4px;font-size:10px;padding:3px 8px;white-space:nowrap}pre{margin:0;padding:19px 21px;overflow:auto;tab-size:4;line-height:1.8;font:12px/1.85 var(--mono);color:#e1eee9}pre code{background:transparent;padding:0;white-space:pre;overflow-wrap:normal;font-size:inherit}.comment{color:#9fc6b9}.tree code{line-height:2.1}.control-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0}.control-row label{font-size:12px;color:var(--muted)}select{padding:8px 35px 8px 12px;border:1px solid #becfc9;background:var(--white);border-radius:6px;max-width:100%;font-size:12px;color:var(--ink)}.btn{border:1px solid var(--ink);background:var(--ink);color:var(--white);border-radius:6px;padding:8px 15px;font-size:12px;font-weight:600}.btn.secondary{background:transparent;color:var(--ink);border-color:#b9cbc4}.btn:disabled{opacity:.4;cursor:not-allowed}.loop-track{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.loop-node{background:var(--white);border:1px solid var(--line);border-top:3px solid var(--line);border-radius:8px;padding:14px 8px;min-height:84px;text-align:center;font-size:12px;transition:all .2s}.loop-node small{display:block;font:10px var(--mono);color:var(--muted);margin-bottom:7px}.loop-node.active{background:#def2e9;border-color:var(--teal);box-shadow:0 4px 0 #087e8310}.loop-node.done{border-top-color:var(--teal)}.loop-output{background:var(--ink);border-radius:10px;margin-top:15px;padding:21px 23px;color:#d9ede6;min-height:183px}.output-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.status{font:700 10px var(--mono);border:1px solid #718e95;border-radius:4px;padding:3px 7px;letter-spacing:.05em}.status.completed{background:#beeadd;color:#124238;border-color:#beeadd}.status.blocked{background:#efcd94;color:#583815;border-color:#efcd94}.status.failed{background:#e9b5b1;color:#592823;border-color:#e9b5b1}.loop-output h4{font-size:16px;margin:0}.loop-output p{font-size:13px;color:#c0d5d6;margin:12px 0}.loop-metrics{font:11px var(--mono);color:#99c4b9;padding-top:11px;border-top:1px solid #3a5663;display:flex;gap:20px;flex-wrap:wrap}.legend{font-size:11px;color:var(--muted);margin-top:12px}.matrix-shell{display:grid;grid-template-columns:30px 1fr;gap:10px}.matrix-y{writing-mode:vertical-rl;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.08em;padding-top:25px}.matrix-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}.matrix-title{font-size:12px;text-align:center;padding:0 0 9px;color:var(--muted)}.matrix{display:grid;grid-template-columns:1fr 1fr;gap:12px}.matrix-cell{border:1px solid var(--line);background:var(--white);border-radius:10px;padding:19px 20px;color:var(--ink);text-align:left;transition:all .15s;min-height:146px}.matrix-cell:hover,.matrix-cell[aria-pressed=true]{border-color:var(--teal);background:#e2f0e9}.matrix-cell .mini-label{display:block}.matrix-cell strong{display:block;font-size:15px}.matrix-cell span:last-child{font-size:12px;line-height:1.8;color:var(--muted);display:block;margin-top:8px}.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:17px 0 12px}.tab{padding:8px 13px;border:1px solid var(--line);background:var(--white);border-radius:6px;font-size:12px;color:var(--muted)}.tab[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:var(--white)}[hidden]{display:none!important}.evidence-chain{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.evidence-block{background:var(--white);border:1px solid var(--line);border-radius:8px;padding:15px 13px;font-size:12px}.evidence-block .mini-label{margin-bottom:6px}.evidence-block strong{font-size:13px}.evidence-block p{font-size:11px;line-height:1.8;color:var(--muted);margin-bottom:0}.case-header{background:var(--ink);border-radius:12px;padding:26px;color:var(--white);margin-bottom:18px}.case-header .mini-label{color:var(--mint)}.case-header h3{margin:0 0 11px;font-size:22px;line-height:1.5}.case-header p{color:#b7d0d3;font-size:13px;margin:0}.case-badge{display:inline-block;background:#395767;border-radius:4px;font-size:10px;padding:3px 8px;margin-bottom:14px;color:#e4c48f}.hypothesis{counter-reset:h}.hypothesis li{list-style:none;position:relative;padding:11px 0 11px 39px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}.hypothesis{padding:0;margin:8px 0}.hypothesis li:before{counter-increment:h;content:"H"counter(h);position:absolute;left:0;top:13px;font:11px var(--mono);color:var(--teal)}.hypothesis strong{color:var(--ink)}.verify-list{display:grid;gap:10px}.verify-level{display:grid;grid-template-columns:48px 150px 1fr;gap:15px;align-items:center;padding:17px;background:var(--white);border:1px solid var(--line);border-radius:9px;font-size:12px}.verify-level .level{font:21px var(--mono);color:var(--teal)}.verify-level h4{margin:0;font-size:13px}.verify-level p{margin:0;color:var(--muted)}.verify-level.hardware{border-color:#cfa768;background:#fcf3e4}.budget{padding:23px;background:var(--white);border:1px solid var(--line);border-radius:10px;margin-top:16px}.budget-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.budget-fields label{font-size:11px;display:block;color:var(--muted)}.budget-fields input{width:100%;border:1px solid #cbd8d0;border-radius:5px;padding:8px 10px;color:var(--ink);background:#f9faf5;margin-top:6px;font:15px var(--mono)}.budget-result{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}.budget-result strong{font:28px var(--mono);color:var(--teal)}.budget-result span{font-size:12px;color:var(--muted)}.check-progress{display:flex;align-items:center;gap:20px;padding:20px 23px;background:var(--ink);border-radius:10px;color:var(--white);margin-bottom:14px}.check-progress strong{font:25px var(--mono);color:var(--mint);white-space:nowrap}.check-progress p{font-size:12px;color:#b7d0d2;margin:0}.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.check-item{display:flex;gap:12px;align-items:flex-start;padding:15px 17px;border:1px solid var(--line);border-radius:8px;background:var(--white);cursor:pointer;font-size:12px;line-height:1.8}.check-item input{accent-color:var(--teal);margin:6px 0 0;width:16px;height:16px;flex:none}.check-item:has(input:checked){background:#e2f0e9;border-color:#b1d5c7}.check-item strong{display:block;font-size:12px}.check-item span{color:var(--muted)}details{background:var(--white);border:1px solid var(--line);border-radius:8px;margin:10px 0;padding:0 18px}summary{cursor:pointer;font-size:13px;font-weight:700;padding:15px 0}details p{font-size:13px;color:var(--muted);padding:0 0 13px;margin:0}.footer{font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--line);margin-top:42px;padding-top:22px}.footer a{text-decoration:none;color:var(--teal)}.print-btn{border:none;background:none;text-decoration:underline;color:var(--muted);padding:0;font-size:11px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media(min-width:1450px){main{padding-left:65px;padding-right:65px}}@media(max-width:1150px){.shell{grid-template-columns:215px minmax(0,1fr)}main{padding-left:32px;padding-right:32px}.sidebar{padding-left:15px;padding-right:15px}.grid3{gap:10px}.card{padding:17px}.formula{font-size:21px;gap:12px}.formula .formula-box{padding:16px}.verify-level{grid-template-columns:35px 120px 1fr;gap:12px}.loop-node{font-size:11px}.grid4{grid-template-columns:1fr 1fr}}
+@media(max-width:880px){html{scroll-padding-top:76px}.shell{display:block}.mobile-top{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:var(--ink);color:var(--white);font-size:12px;box-shadow:0 2px 12px #142c3b1a}.mobile-top button{font-size:12px;border:1px solid #5b7983;border-radius:4px;background:transparent;color:white;padding:3px 11px}.sidebar{display:none;position:fixed;z-index:29;top:51px;left:0;bottom:0;height:auto;width:280px;background:var(--paper);box-shadow:10px 0 25px #142c3b20;padding:20px}.sidebar.open{display:block}.sidebar .brand{display:none}.sidebar .progress{margin-top:0}.sidebar .side-note{display:none}main{padding:0 28px 40px}.hero{padding-top:37px}section{scroll-margin-top:76px}.hero-visual{padding:24px}.lead{max-width:none}.grid3{grid-template-columns:1fr 1fr}.grid3>.card:last-child{grid-column:1/-1}.evidence-chain{grid-template-columns:1fr 1fr}.flow-item{padding:12px 7px;font-size:11px}}
+@media(max-width:600px){body{font-size:15px}main{padding-left:19px;padding-right:19px}.hero{padding:30px 0 26px}h1{font-size:36px;letter-spacing:-.045em}h1 span{font-size:21px;line-height:1.55;margin-top:15px}.lead{font-size:14px}.hero-pills{gap:6px}.pill{font-size:10px;padding:3px 9px}.hero-visual{padding:22px 15px}.formula{font-size:17px;gap:8px;flex-wrap:wrap}.formula .formula-box{padding:14px 12px}.formula>.formula-agent{width:100%;text-align:center;margin-bottom:3px}.formula>.formula-equal{display:none}.formula small{font-size:10px}.hero-visual>p{font-size:10px;text-align:left}.quick-read{font-size:12px;margin-top:23px}.section-head{gap:10px}h2{font-size:24px}.section-no{font-size:11px}.section-intro{font-size:13px}section{padding-top:30px;margin-top:20px}.grid2,.grid3,.grid4,.split,.check-grid{grid-template-columns:1fr}.grid3>.card:last-child{grid-column:auto}.card{padding:19px}.card p{font-size:12px}.stack-diagram{padding:15px}.stack-top{gap:8px}.stack-box{padding:12px 8px}.stack-harness{padding:13px 11px}.component-grid{gap:7px}.component-btn{padding:12px 4px;font-size:11px}.detail-panel{padding:17px;min-height:0}.flow-strip{flex-wrap:wrap;gap:7px}.flow-item{flex:1 1 26%;font-size:11px}.flow-arrow{display:none}.artifact{grid-template-columns:36px 1fr;gap:12px}.artifact-num{width:34px;height:34px;font-size:14px}.artifact h4{font-size:14px}.artifact p{font-size:12px}th,td{padding:11px 12px}table{min-width:610px;font-size:12px}pre{font-size:10.5px;padding:16px;line-height:1.85}.loop-track{grid-template-columns:repeat(3,1fr)}.loop-node{padding:12px 6px;min-height:71px;font-size:11px}.loop-output{padding:19px;min-height:213px}.output-top h4{font-size:14px}.loop-output p{font-size:12px}.loop-metrics{gap:10px;font-size:10px}.control-row{gap:8px}.control-row label{flex-basis:100%}select{flex:1;font-size:11px;padding-right:18px}.btn{font-size:11px;padding:8px 12px}.matrix-shell{grid-template-columns:18px 1fr;gap:7px}.matrix{gap:8px}.matrix-cell{padding:14px 12px;min-height:155px}.matrix-cell strong{font-size:13px}.matrix-cell span:last-child{font-size:11px}.matrix-cell .mini-label{font-size:9px}.matrix-title{font-size:10px}.matrix-y{font-size:10px}.evidence-chain{gap:8px}.evidence-block{padding:13px 12px}.evidence-block strong{font-size:12px}.case-header{padding:22px}.case-header h3{font-size:20px}.case-header p{font-size:12px}.verify-level{grid-template-columns:30px 1fr;gap:7px 12px;padding:16px}.verify-level .level{font-size:19px;grid-row:1/3}.verify-level p{grid-column:2;font-size:11px}.budget{padding:19px}.budget-fields{grid-template-columns:1fr 1fr}.budget-result{align-items:flex-start;flex-direction:column;gap:6px}.check-progress{padding:18px;gap:14px}.check-progress strong{font-size:22px}.check-progress p{font-size:11px}.footer{flex-direction:column;gap:5px}.tabs{gap:5px}.tab{font-size:11px;padding:8px 10px}.callout{font-size:12px;padding:16px}.note{font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{body{background:white;font-size:11px}.sidebar,.mobile-top,.control-row,.tabs,.code-head button,.print-btn,#reset-checks{display:none!important}.shell{display:block;max-width:none}main{padding:0}.hero{padding-top:10px}h1{font-size:35px}h1 span{font-size:22px}.hero-visual,.stack-diagram,.loop-output,.code-shell,.case-header,.check-progress{print-color-adjust:exact;-webkit-print-color-adjust:exact}.hero-visual{margin-top:20px}.card,.artifact,.verify-level,details,.check-item{break-inside:avoid}section{padding-top:20px;margin-top:20px}.section-intro{margin-bottom:15px}h2{font-size:22px}h3{font-size:16px}pre{white-space:pre-wrap;font-size:9px}.code-shell pre code{white-space:pre-wrap}.table-wrap{overflow:visible}table{font-size:10px;min-width:0}th,td{padding:8px}.code-tab[hidden]{display:block!important;margin-top:15px}.detail-panel{min-height:0}.footer{margin-top:20px}.hero-pills{display:none}a{text-decoration:none}.budget-fields input{border:none}details p{display:block!important}details{padding-bottom:10px}summary{list-style:none}}
+</style>
+</head>
+<body id="top">
+<div class="mobile-top"><strong>HARNESS / ENGINEERING</strong><button id="menu-toggle" aria-expanded="false" aria-controls="sidebar">目录</button></div>
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+  <div class="brand">ENGINEERING FIELD GUIDE<strong>Harness<br>Engineering</strong><span>从一次生成，到可验收的工程闭环</span></div>
+  <div class="progress" aria-hidden="true"><div id="reading-progress"></div></div>
+  <nav class="toc" aria-label="文档目录">
+    <a href="#definition" class="active"><b>01</b>定义与边界</a><a href="#architecture"><b>02</b>六个系统职责</a><a href="#comparison"><b>03</b>四种 Engineering</a><a href="#artifacts"><b>04</b>五项落地工件</a><a href="#contract"><b>05</b>任务契约与影响图</a><a href="#loop"><b>06</b>运行循环 · 交互演示</a><a href="#matrix"><b>07</b>控制矩阵 · 交互探索</a><a href="#pseudocode"><b>08</b>带注释的伪代码</a><a href="#continuity"><b>09</b>跨会话恢复与证据</a><a href="#embedded"><b>10</b>嵌入式案例推演</a><a href="#validation"><b>11</b>分层验证与失败分类</a><a href="#budget"><b>12</b>预算、退出与成本</a><a href="#decay"><b>13</b>衰减、消融与精简</a><a href="#rollout"><b>14</b>落地自检与常见误解</a>
+  </nav>
+  <div class="side-note">中文技术手册 · 单文件离线可用<br>包含交互模型与注释伪代码<br>面向嵌入式开发与工程团队</div>
+</aside>
+<main>
+<header class="hero">
+  <div class="eyebrow">A practical guide for engineers</div>
+  <h1>Harness Engineering<span>让 AI 工作可控、可验证、可接续</span></h1>
+  <p class="lead">模型负责提出下一步；工程系统负责约束它能做什么、检查做得怎样、保存可靠证据，并决定何时继续或停止。可靠交付来自这套完整的工作环境。</p>
+  <div class="hero-pills"><span class="pill">14 个主题</span><span class="pill">6 类职责</span><span class="pill">4 种运行情景</span><span class="pill">FreeRTOS 教学案例</span><span class="pill">离线交互</span></div>
+  <div class="hero-visual" role="img" aria-label="概念式：Agent 系统近似由模型和 Harness 共同构成">
+    <div class="formula"><div class="formula-agent">Agent<small>可执行任务的系统</small></div><span class="plus formula-equal">≈</span><div class="formula-box">Model<small>理解、推理、生成</small></div><span class="plus">+</span><div class="formula-box"><strong>Harness</strong><small>上下文、工具、控制与证据</small></div></div>
+    <p>这是便于讨论的近似模型；真实系统还涉及运行平台、外部服务、人员与组织流程。</p>
+  </div>
+  <p class="quick-read"><strong>先记住一条：</strong>把“请你认真完成”改造成“有边界的动作 + 可检查的结果 + 明确的退出条件”。输出一份补丁只是中间产物，通过约定验收才算完成。</p>
+</header>
+
+<section id="definition">
+  <div class="section-head"><span class="section-no">01</span><h2>定义与边界</h2></div>
+  <p class="section-intro">Harness Engineering 是围绕模型设计运行环境、执行约束、反馈和状态管理的工程实践。它改善的是整个系统的工作方式。</p>
+  <div class="grid3">
+    <div class="card"><div class="mini-label">CONTEXT</div><h4>让模型看见正确的现场</h4><p>工作目录、代码版本、模块契约、可用工具、尚未完成的任务和最新验证结果。上下文要按需加载，并保留来源位置与时效。</p></div>
+    <div class="card"><div class="mini-label">CONTROL</div><h4>把动作放进明确边界</h4><p>允许访问的路径、命令、网络、设备与时间预算由程序约束。模型可以提议动作，执行权限由宿主环境决定。</p></div>
+    <div class="card"><div class="mini-label">EVIDENCE</div><h4>用可复核证据决定进度</h4><p>保存命令、退出码、测试结果、环境与代码版本。结果不满足契约时，修正、升级处理或停止；不能仅凭模型自述标记完成。</p></div>
+  </div>
+  <h3>用操作系统类比理解职责</h3>
+  <div class="table-wrap"><table><thead><tr><th>类比对象</th><th>帮助理解的职责</th><th>类比到这里就该停下</th></tr></thead><tbody>
+    <tr><td>模型 ≈ CPU</td><td>承担理解、规划和生成的核心计算。</td><td>模型是概率性推理系统；并不具备 CPU 指令级确定性，也不是执行命令的主体。</td></tr>
+    <tr><td>上下文窗口 ≈ RAM</td><td>提供当前工作集，容量有限，需要取舍和更新。</td><td>上下文不是可随机寻址的可靠存储；“在窗口里”不等于“被正确使用”。</td></tr>
+    <tr><td>Harness ≈ OS</td><td>管理工具、调度、状态、资源预算与边界。</td><td>提示词无法提供内核级隔离；实际安全边界来自沙箱、操作系统权限及服务端鉴权。</td></tr>
+  </tbody></table></div>
+  <div class="callout"><strong>成功条件：</strong>面对相同任务，整个系统能更稳定地产生满足验收的变更，并能解释每次失败、续接工作和控制成本。它不能保证模型永不出错。</div>
+</section>
+
+<section id="architecture">
+  <div class="section-head"><span class="section-no">02</span><h2>六个系统职责</h2></div>
+  <p class="section-intro">从职责出发搭系统，比先挑一堆框架更容易发现缺口。点选下面的组件，查看它真正应该负责什么。</p>
+  <div class="stack-diagram">
+    <div class="stack-top"><div class="stack-box"><strong>任务目标与验收契约</strong><small>需求、边界、风险、完成标准</small></div><div class="stack-box"><strong>模型推理与提议</strong><small>计划、补丁、工具调用建议</small></div></div>
+    <div class="stack-harness"><strong>HARNESS · 执行和控制层</strong><div class="component-grid" role="group" aria-label="六类 Harness 职责">
+      <button class="component-btn" data-component="context" aria-pressed="true">01 上下文管理</button><button class="component-btn" data-component="tools" aria-pressed="false">02 工具与权限</button><button class="component-btn" data-component="loop" aria-pressed="false">03 执行循环</button><button class="component-btn" data-component="state" aria-pressed="false">04 状态与恢复</button><button class="component-btn" data-component="verify" aria-pressed="false">05 验证与观测</button><button class="component-btn" data-component="budget" aria-pressed="false">06 预算与退出</button>
+    </div></div>
+  </div>
+  <div class="detail-panel" id="component-detail" aria-live="polite"><h4>01 · 上下文管理：建立当前事实，而不是灌满窗口</h4><p>先定位任务相关文件和符号，再加载模块约束、调用关系与最新证据。长日志保留摘要和原始文件路径；摘要不能取代原始结果。</p><div class="boundary">输入：任务、仓库与状态　→　输出：可追溯、可更新的工作集。</div></div>
+  <div class="callout warn"><strong>工程底线：</strong>AGENTS.md 可以声明“只修改驱动目录”，但真正的越界阻止需要路径白名单、工具包装或隔离环境。约定与强制约束承担不同职责。</div>
+</section>
+
+<section id="comparison">
+  <div class="section-head"><span class="section-no">03</span><h2>Prompt、Context、Loop 与 Harness</h2></div>
+  <p class="section-intro">四个视角可以重叠；它们描述的是不同层次的问题，术语边界也并非统一标准。</p>
+  <div class="table-wrap"><table><thead><tr><th>视角</th><th>核心问题</th><th>典型设计</th><th>只做这一层的缺口</th></tr></thead><tbody>
+    <tr><td>Prompt Engineering</td><td>这一轮如何表达任务？</td><td>目标、约束、输出格式、必要示例。</td><td>无法单独解决状态、权限和真实验证。</td></tr>
+    <tr><td>Context Engineering</td><td>这一刻应该提供哪些信息？</td><td>检索代码、裁剪日志、模块索引、记忆恢复。</td><td>信息正确，也仍可能执行错误或跳过验收。</td></tr>
+    <tr><td>Loop Engineering</td><td>怎样持续推进、纠错和停止？</td><td>观察 → 规划 → 行动 → 评价 → 选择下一步。</td><td>循环本身不会自动提供可信工具与执行边界。</td></tr>
+    <tr><td>Harness Engineering</td><td>怎样让完整系统稳定交付？</td><td>统筹上下文、工具、循环、恢复、证据和预算。</td><td>仍需要清晰需求、可靠环境和工程判断。</td></tr>
+  </tbody></table></div>
+  <div class="flow-strip" aria-label="从任务描述到验收交付的层次关系"><div class="flow-item"><b>PROMPT</b>说清这次要什么</div><div class="flow-arrow">→</div><div class="flow-item"><b>CONTEXT</b>提供当前事实</div><div class="flow-arrow">→</div><div class="flow-item"><b>LOOP</b>安排行动与纠错</div><div class="flow-arrow">→</div><div class="flow-item"><b>HARNESS</b>管理完整工作系统</div></div>
+  <p class="note">上图用于解释关注层次，不是严格的单向调用顺序。上下文会在循环中不断更新，验证和权限检查会贯穿全程。</p>
+</section>
+
+<section id="artifacts">
+  <div class="section-head"><span class="section-no">04</span><h2>五项落地工件</h2></div>
+  <p class="section-intro">先把工程事实写成可维护的工件，再让运行循环消费它们。文件名是示例，结构与责任才是重点。</p>
+  <div class="card">
+    <div class="artifact"><div class="artifact-num">01</div><div><h4>AGENTS.md：项目入口与约束索引</h4><p>说明目录职责、构建入口、验证方法、架构边界和禁改范围；链接仓库内部的设计文档。保持短而可导航，具体规则可下沉至模块。</p><p><strong>维护要求：</strong>模块迁移、构建方式或架构约束改变时同步更新；路径和命令应能核验。</p></div></div>
+    <div class="artifact"><div class="artifact-num">02</div><div><h4>feature_list.json：任务状态与验收记录</h4><p>每项包含稳定 ID、优先级、验收条目、状态和证据引用。它是进度账本；真正的测试脚本、环境和报告需要独立存在。</p><p><strong>维护要求：</strong>完成标记必须由验收证据支撑；不能为了通过而删改验收条目。JSON 不支持注释，解释请放旁注或改用明确标注的 JSONC。</p></div></div>
+    <div class="artifact"><div class="artifact-num">03</div><div><h4>初始化例程：每个会话的已知起点</h4><p>确认工作目录、分支和未提交变更；读取任务状态与近期提交；检查工具链和设备；运行适当的基线验证，再开始一个有边界的任务。</p><p><strong>维护要求：</strong>可重复执行；不能清理掉别人的未提交修改。缺失依赖应显式报告。</p></div></div>
+    <div class="artifact"><div class="artifact-num">04</div><div><h4>任务契约：实施前固定验收口径</h4><p>把目标、范围、非目标、风险、允许动作、验收方法及退出条件写清楚。规划、执行、评价可以分阶段完成，也可以由不同角色承担。</p><p><strong>维护要求：</strong>只有在需求变化被确认后才更新验收；计划和评价的逻辑分离不意味着必须运行三个模型。</p></div></div>
+    <div class="artifact"><div class="artifact-num">05</div><div><h4>真实影响图：把任务绑定到仓库现场</h4><p>列出已确认存在的文件、符号、调用链、既有模式及对应验证；同时标记尚待验证的推断。让后续补丁沿真实代码结构展开。</p><p><strong>维护要求：</strong>每项包含定位依据；仓库重构后重新计算。示意路径不能直接当作当前项目事实。</p></div></div>
+  </div>
+  <h3>一个可复制的目录形状</h3>
+  <div class="code-shell tree"><div class="code-head"><span>示例目录 · 非当前工程扫描结果</span></div><pre><code>project/
+├── AGENTS.md                 # 项目地图、构建入口、全局约束
+├── docs/
+│   ├── architecture.md       # 模块边界、依赖方向、关键决策
+│   └── validation.md         # 主机与硬件验证方法、设备要求
+├── harness/
+│   ├── feature_list.json     # 任务状态、验收条目、证据索引
+│   ├── contracts/            # 单项任务的范围与完成标准
+│   ├── init.ps1              # Windows 会话初始化与基线检查
+│   └── progress.md           # 当前结论、阻塞原因、下一步
+├── tests/                    # 真正执行验证的测试代码
+└── artifacts/                # 按版本保存的日志、报告与清单</code></pre></div>
+  <p class="note">Linux 项目可以使用对应初始化脚本。大体积日志、设备输出及敏感信息按项目策略保存在受控存储中，仓库保留索引与校验信息。</p>
+</section>
+
+<section id="contract">
+  <div class="section-head"><span class="section-no">05</span><h2>任务契约与真实影响图</h2></div>
+  <p class="section-intro">把“修一下串口丢包”转成可执行任务：先定义什么叫修好，再决定改动哪段代码。</p>
+  <div class="grid2">
+    <div class="card"><div class="mini-label">TASK CONTRACT</div><h4>实施前必须清楚的内容</h4><p><strong>目标：</strong>在约定输入速率、调度负载和接收容量下，满足数据完整性要求。</p><p><strong>范围：</strong>接收数据路径、必要的统计和测试；接口兼容要求明确。</p><p><strong>非目标：</strong>不顺带重构协议栈，不改变发送路径。</p><p><strong>验收：</strong>边界条件测试、目标构建、硬件测试条件和报告字段预先定义。</p><p><strong>退出：</strong>缺少板卡为 blocked；预算或重试耗尽为 failed；全部要求通过才为 completed。</p></div>
+    <div class="card"><div class="mini-label">GROUNDED IMPACT MAP</div><h4>用代码检索验证每个候选点</h4><p><strong>入口：</strong>确认真实中断、DMA 回调及注册位置。</p><p><strong>数据流：</strong>追踪“DMA 写入 → 生产者索引 → 任务消费 → 协议处理”。</p><p><strong>同步：</strong>检查索引的读写上下文、可见性和互斥约定。</p><p><strong>既有模式：</strong>查找相邻驱动如何处理通知、缓冲区与溢出。</p><p><strong>变更边界：</strong>逐项标出文件、符号、影响的调用方及验证入口。</p></div>
+  </div>
+  <div class="callout"><strong>把未知保留为未知：</strong>“怀疑环回边界重复消费”属于待验证假设；“某符号负责消费索引推进”只有在实际代码定位后才能写成事实。</div>
+  <h3>任务账本示例</h3>
+  <div class="code-shell"><div class="code-head"><span>feature_list.json · 合法 JSON，无内联注释</span></div><pre><code>{
+  "id": "UART-RX-001",
+  "title": "验证并修复约定负载下的接收完整性问题",
+  "status": "pending",
+  "priority": 1,
+  "acceptance": [
+    { "id": "AC-01", "check": "主机边界测试通过", "required": true },
+    { "id": "AC-02", "check": "目标配置构建通过", "required": true },
+    { "id": "AC-03", "check": "约定负载的 HIL 验收通过", "required": true }
+  ],
+  "evidence": [],
+  "blocked_reason": null
+}</code></pre></div>
+  <p class="note">字段说明：<code>acceptance</code> 记录验收要求；<code>evidence</code> 索引实际报告；<code>status</code> 表示工作状态。此处未给出板卡、速率和时长，正式执行前必须在任务契约中补齐，不能把这份示例当成已具备执行条件的测试规范。</p>
+</section>
+
+<section id="loop">
+  <div class="section-head"><span class="section-no">06</span><h2>运行循环：每一步都能解释</h2></div>
+  <p class="section-intro">选择情景，逐步观察 Harness 如何利用证据改变下一步。所有轮次、行为与结果均为交互教学示例。</p>
+  <div class="control-row"><label for="scenario">演示情景</label><select id="scenario"><option value="normal">正常：验收全部通过</option><option value="testfail">测试失败：有限重试后通过</option><option value="hardware">缺少硬件：停在 blocked</option><option value="stalled">没有进展：达到上限后 failed</option></select><button class="btn" id="step-loop">下一步</button><button class="btn secondary" id="reset-loop">重置</button></div>
+  <div class="loop-track" aria-label="执行循环步骤"><div class="loop-node active" data-stage="0"><small>01 / OBSERVE</small>读取现场</div><div class="loop-node" data-stage="1"><small>02 / PLAN</small>确定一步</div><div class="loop-node" data-stage="2"><small>03 / GUARD</small>权限门禁</div><div class="loop-node" data-stage="3"><small>04 / ACT</small>执行动作</div><div class="loop-node" data-stage="4"><small>05 / VERIFY</small>验证与评价</div><div class="loop-node" data-stage="5"><small>06 / DECIDE</small>保存并决策</div></div>
+  <div class="loop-output" aria-live="polite" aria-atomic="true"><div class="output-top"><h4 id="loop-title">读取现场与当前验收契约</h4><span class="status" id="loop-status">running</span></div><p id="loop-description">检查代码版本、未提交变更、任务状态与验证基线。准备处理一个有边界的任务。</p><div class="loop-metrics"><span id="loop-step">步骤 1 / 6</span><span id="loop-attempt">修正重试 0 / 2</span><span id="loop-progress">证据：已读取基线</span></div></div>
+  <p class="legend">completed：约定验收全部满足　｜　blocked：存在外部前提缺口　｜　failed：当前尝试在规则或预算内无法完成。</p>
+  <h3>规划、执行和评价如何分开</h3>
+  <div class="grid3"><div class="card"><div class="mini-label">PLAN</div><h4>产物是任务契约</h4><p>定义最小变更、约束、验收与影响范围。它必须足够明确，执行者才能知道哪一步算越界。</p></div><div class="card"><div class="mini-label">EXECUTE</div><h4>产物是受控变更</h4><p>读取真实文件后实施小步改动。把执行结果、错误与环境状态原样交还控制层。</p></div><div class="card"><div class="mini-label">EVALUATE</div><h4>产物是验收判断</h4><p>运行独立的测试和门禁，必要时补充语义审查。评价者的语言判断不能覆盖失败的硬性验收。</p></div></div>
+  <p class="note">可以在单一进程中分阶段，也可以按风险引入人工或不同代理。独立模型仍可能存在相关性错误，验收应尽量落在可执行的检查和真实环境上。</p>
+</section>
+
+<section id="matrix">
+  <div class="section-head"><span class="section-no">07</span><h2>前馈 / 反馈 × 确定性 / 推理</h2></div>
+  <p class="section-intro">从“何时使用”和“如何判断”两个维度分配控制。点击象限，查看嵌入式工作流中的使用方式与局限。</p>
+  <div class="matrix-shell"><div class="matrix-y">上：确定性检查　／　下：推理判断</div><div><div class="matrix-cols"><div class="matrix-title">前馈 · 约束下一次动作</div><div class="matrix-title">反馈 · 评价已经产生的结果</div></div><div class="matrix" role="group" aria-label="控制方式矩阵">
+    <button class="matrix-cell" data-matrix="df" aria-pressed="true"><span class="mini-label">DETERMINISTIC / BEFORE</span><strong>先把违规动作挡住</strong><span>工具参数校验、路径白名单、动作前置条件。</span></button>
+    <button class="matrix-cell" data-matrix="db" aria-pressed="false"><span class="mini-label">DETERMINISTIC / AFTER</span><strong>用程序检查实际结果</strong><span>编译、单元测试、静态检查、结果断言。</span></button>
+    <button class="matrix-cell" data-matrix="if" aria-pressed="false"><span class="mini-label">INFERENTIAL / BEFORE</span><strong>实施前澄清语义与风险</strong><span>需求审阅、影响分析、测试计划评估。</span></button>
+    <button class="matrix-cell" data-matrix="ib" aria-pressed="false"><span class="mini-label">INFERENTIAL / AFTER</span><strong>结果产生后寻找遗漏</strong><span>代码评审、日志解释、验收覆盖检查。</span></button>
+  </div></div></div>
+  <div class="detail-panel" id="matrix-detail" aria-live="polite"><h4>确定性前馈 · 工具门禁</h4><p>例：执行前解析补丁涉及的真实路径，拒绝越过允许模块的写入；烧录前校验目标设备身份与授权。</p><div class="boundary">适合强制执行明确规则。规则过宽会漏掉风险，规则过窄会阻碍正常工作。</div></div>
+  <div class="callout"><strong>同一工具可以落在不同位置：</strong>把 linter 规则提供给实现阶段，是对下一步的前馈；对已生成的补丁运行 linter，是反馈。测试失败日志既是本轮结果的反馈，也成为下一轮修正的前馈。分类取决于它相对哪次动作发挥作用。</div>
+  <p class="note">“确定性”描述按固定规则检查，不保证运行一定快速或可复现；硬件测试可能有时序噪声，LLM 推理也可能仅用于提出建议。两类控制需要组合使用。</p>
+</section>
+
+<section id="pseudocode">
+  <div class="section-head"><span class="section-no">08</span><h2>把控制写进代码</h2></div>
+  <p class="section-intro">下面是带中文注释的 Python 风格伪代码，用来解释控制顺序；函数与数据结构均为示意，不能直接运行。</p>
+  <div class="tabs" role="tablist" aria-label="伪代码示例"><button class="tab" role="tab" id="tab-main" aria-controls="code-main" aria-selected="true" data-code="main">主循环</button><button class="tab" role="tab" id="tab-gate" aria-controls="code-gate" aria-selected="false" data-code="gate">动作门禁</button><button class="tab" role="tab" id="tab-restore" aria-controls="code-restore" aria-selected="false" data-code="restore">恢复与验收</button></div>
+  <div class="code-shell code-tab" id="code-main" role="tabpanel" aria-labelledby="tab-main"><div class="code-head"><span>run_task.pseudo · 主循环</span><button class="copy-code" data-copy="main">复制</button></div><pre><code id="pseudo-main"><span class="comment"># 初始化、模型、执行和验证共享总预算；数值仅为演示。</span>
+budget = create_budget(task.resource_limits, max_retries=2, max_stagnation=2)
+resources = create_resource_scope()
+state = initial_state(task)
+
+try:
+    <span class="comment"># 恢复时重新核对基线；包装器实际执行超时与资源限制。</span>
+    state = run_bounded(restore_and_validate, task, repository,
+                        budget=budget, resources=resources)
+
+    while True:
+        <span class="comment"># 先检查运行边界和外部前提，准备本轮下一状态。</span>
+        <span class="comment"># 恢复阶段已经识别的冲突或阻塞，直接保存并退出。</span>
+        if state.is_terminal:
+            next_state = state
+        elif budget.exhausted() or state.stagnation_limit_reached():
+            next_state = state.stop("failed", "达到运行边界")
+        elif state.required_external_dependency_missing():
+            next_state = state.stop("blocked", state.missing_dependency)
+        else:
+            <span class="comment"># 每轮都计数；模型规划也占用总时间与费用预算。</span>
+            budget.consume_iteration()
+            context = build_context(task.contract, state, repository)
+            proposal = run_bounded(model.propose_one_step, context,
+                                   budget=budget, resources=resources)
+            decision = guard(proposal, task.permissions, budget)
+
+            <span class="comment"># 拒绝也写入状态；重复越界会触发次数或停滞上限。</span>
+            if not decision.allowed:
+                next_state = state.with_rejection(decision.reason)
+            else:
+                <span class="comment"># 只执行获准动作，保留真实退出码与产物。</span>
+                result = run_bounded(execute, proposal, decision,
+                                     budget=budget, resources=resources)
+
+                <span class="comment"># 固定受测代码和工具链；设备配置受控并持有租约。</span>
+                with frozen_validation_scope(repository, resources) as env:
+                    evidence = run_bounded(verify_required_checks,
+                        task.contract, env, budget=budget, resources=resources)
+                    evidence.invalidate_if_environment_changed(env)
+
+                <span class="comment"># 先合并证据、分类失败，再推导下一状态与重试学习。</span>
+                next_state = derive_next_state(state, result, evidence,
+                    contract=task.contract, budget=budget)
+                <span class="comment"># 该函数只按全任务必需验收判 completed，不按当前小步。</span>
+                <span class="comment"># 缺外部条件为 blocked；不可重试或预算耗尽为 failed。</span>
+
+        <span class="comment"># 下一状态含证据、预算、失败学习和终止原因，原子保存。</span>
+        checkpoint_atomically(next_state, budget)
+        state = next_state
+
+        <span class="comment"># 保存成功后才对外返回；运行中状态继续下一轮。</span>
+        if state.is_terminal:
+            return state.summary()
+
+except RuntimeBudgetExceeded as error:
+    <span class="comment"># 包装器中断超时或超额操作，保留失败现场后结束。</span>
+    state = state.stop("failed", error.reason)
+    checkpoint_atomically(state, budget)
+    return state.summary()
+finally:
+    <span class="comment"># 无论成功、失败或异常，都清理进程、快照和设备租约。</span>
+    resources.cleanup()</code></pre></div>
+  <div class="code-shell code-tab" id="code-gate" role="tabpanel" aria-labelledby="tab-gate" hidden><div class="code-head"><span>guard.pseudo · 动作门禁</span><button class="copy-code" data-copy="gate">复制</button></div><pre><code id="pseudo-gate"><span class="comment"># 所有工具调用通过统一入口，禁止绕过宿主权限策略。</span>
+def guard(action, permissions, budget):
+    <span class="comment"># 校验工具名、结构化参数和调用资源预算。</span>
+    if not schema_valid(action) or not budget.can_start(action):
+        return deny("参数无效或预算不足")
+    if action.tool not in permissions.allowed_tools:
+        return deny("工具不在允许集合中")
+
+    <span class="comment"># 解析真实路径并处理链接；不能仅做字符串前缀匹配。</span>
+    for path in resolve_real_targets(action):
+        if not permitted_path(path, action.operation, permissions):
+            return deny("目标路径超出任务授权范围")
+
+    <span class="comment"># 网络、密钥和外部写入分别校验，防止工具扩大权限。</span>
+    if not external_access_allowed(action, permissions):
+        return deny("外部访问未获任务授权")
+
+    <span class="comment"># 烧录、擦除等动作绑定具体设备，按既定授权流程执行。</span>
+    if action.affects_hardware:
+        if not match_device_identity(action, permissions.device):
+            return deny("设备身份不匹配")
+        if not hardware_operation_authorized(action, permissions):
+            return deny("该设备操作不在授权范围")
+
+    <span class="comment"># 返回允许只意味着可执行；执行后仍要验证结果。</span>
+    return allow(timeout=permissions.tool_timeout,
+                 sandbox=permissions.execution_sandbox)</code></pre></div>
+  <div class="code-shell code-tab" id="code-restore" role="tabpanel" aria-labelledby="tab-restore" hidden><div class="code-head"><span>restore.pseudo · 恢复与验收</span><button class="copy-code" data-copy="restore">复制</button></div><pre><code id="pseudo-restore"><span class="comment"># 检查点提供线索，真实仓库、产物和环境提供当前事实。</span>
+def restore_and_validate(task, repository):
+    saved = load_checkpoint(task.id)
+    current = inspect_workspace_without_discarding_changes(repository)
+
+    <span class="comment"># 保留他人的未提交修改；有冲突时显式标记并停止相关动作。</span>
+    if conflicting_changes(saved, current):
+        return blocked_state("工作区存在需要协调的变更")
+
+    <span class="comment"># 提交、补丁、工具链、配置或输入变化时，失效相关证据。</span>
+    state = reconcile(saved, current)
+    state.invalidate_mismatched_evidence()
+
+    <span class="comment"># 对受影响范围重跑必要基线；不要默认沿用旧的通过状态。</span>
+    state.attach(run_required_baseline(task, current))
+    return state
+
+<span class="comment"># 验收是逐项、逐版本的判断；没有报告的检查属于未验证。</span>
+def acceptance_passes(contract, evidence):
+    <span class="comment"># 空验收清单是无效契约，不能因为循环为空而通过。</span>
+    if not contract.required_criteria:
+        return False
+    for criterion in contract.required_criteria:
+        report = evidence.find_current(criterion.id)
+        if report is None or report.status != "passed":
+            return False
+        if not report.matches_tested_code_and_environment():
+            return False
+
+    <span class="comment"># 硬件验收如被契约要求，主机模拟报告不能替代。</span>
+    if contract.requires_hil and not evidence.has_valid_hil_report():
+        return False
+    return True</code></pre></div>
+  <div class="callout warn"><strong>落地时还要实现：</strong>预算预留与结算、状态转移校验、不可变快照、幂等恢复、工具与存储异常处理、日志脱敏及授权记录。持久化失败时不能宣告完成；须保留错误并走恢复流程。上面的封装函数展示责任边界，不是完整运行时实现。</div>
+</section>
+
+<section id="continuity">
+  <div class="section-head"><span class="section-no">09</span><h2>跨会话：保存证据链，而非只存聊天</h2></div>
+  <p class="section-intro">会话结束后，下一次运行应能回答：当前代码是什么、什么已经验证、哪些结论已经过期、下一步从哪里开始。</p>
+  <div class="evidence-chain"><div class="evidence-block"><div class="mini-label">01 / TASK</div><strong>任务与验收版本</strong><p>任务 ID、契约版本、必需检查项与当前阻塞。</p></div><div class="evidence-block"><div class="mini-label">02 / CODE</div><strong>受测代码指纹</strong><p>提交 SHA；有未提交修改时补充补丁或工作树指纹。</p></div><div class="evidence-block"><div class="mini-label">03 / ENV</div><strong>环境与输入</strong><p>工具链、构建选项、测试数据、设备和固件身份。</p></div><div class="evidence-block"><div class="mini-label">04 / RESULT</div><strong>可复核验证产物</strong><p>命令、退出码、时间、完整报告、原始日志及哈希。</p></div></div>
+  <div class="table-wrap"><table><thead><tr><th>持久化内容</th><th>下一会话如何使用</th><th>需要防止的错误</th></tr></thead><tbody>
+    <tr><td>进度摘要</td><td>快速恢复目标、当前假设与下一步。</td><td>摘要写“测试通过”，但找不到对应报告。</td></tr>
+    <tr><td>提交与补丁</td><td>确认变更边界和受测版本，识别并行修改。</td><td>测试后又修改了代码，却沿用旧通过结论。</td></tr>
+    <tr><td>证据清单</td><td>按验收条目查找最新有效报告。</td><td>把其他板卡、配置或固件的测试结果混用。</td></tr>
+    <tr><td>检查点</td><td>从确定的阶段续接，避免重复高代价动作。</td><td>崩溃后重复烧录、上传或其他非幂等动作。</td></tr>
+  </tbody></table></div>
+  <div class="callout"><strong>“提交了”与“验证了”是两个状态。</strong>代码提交后若没有改动，之前对相同内容的证据可以在核对后关联到该提交；若内容、配置或环境发生变化，需要按影响范围重新验证。是否提交仍遵循项目工作流。</div>
+  <h3>恢复流程</h3>
+  <div class="flow-strip"><div class="flow-item"><b>1</b>读取任务与检查点</div><div class="flow-arrow">→</div><div class="flow-item"><b>2</b>核对工作树与环境</div><div class="flow-arrow">→</div><div class="flow-item"><b>3</b>失效过期证据</div><div class="flow-arrow">→</div><div class="flow-item"><b>4</b>运行必要基线</div><div class="flow-arrow">→</div><div class="flow-item"><b>5</b>继续一个任务</div></div>
+</section>
+
+<section id="embedded">
+  <div class="section-head"><span class="section-no">10</span><h2>嵌入式案例：UART DMA 接收丢包</h2></div>
+  <p class="section-intro">把 Harness 的每项职责映射到熟悉的工程工作。以下是虚构教学场景，没有关联真实板卡、日志或测试结果。</p>
+  <div class="case-header"><span class="case-badge">假设场景 · 用于方法推演 · 未经实测</span><div class="mini-label">FREERTOS × UART DMA × RING BUFFER</div><h3>高负载时，接收数据偶发不完整</h3><p>假设项目使用 DMA 接收，ISR 发布可用数据，FreeRTOS 任务从环形缓冲区消费。先补齐复现输入、运行负载、缓冲区容量与丢包判据，再做定位。</p></div>
+  <div class="grid2"><div class="card"><h4>第一步：形成可复现的边界</h4><p>明确 MCU 与缓存能力、DMA 工作模式、中断优先级、任务优先级、吞吐与突发长度、协议帧结构、预期容量和可接受溢出行为。</p><p>采集发送序号、接收序号、错误计数和缓冲区水位。区分线路错误、驱动丢失、队列溢出与上层处理积压。</p></div><div class="card"><h4>第二步：明确完成需要哪些证据</h4><p>算法边界测试验证索引计算；目标构建检查平台适配；硬件测试检验真实 DMA、ISR、调度和持续接收行为。</p><p>测试时长、输入负载、目标设备、观察指标和通过阈值由任务契约确定。本手册不提供虚构实测参数。</p></div></div>
+  <h3>第三步：把怀疑点变成可证伪的假设</h3>
+  <ul class="hypothesis"><li><strong>环回边界处理：</strong>构造 DMA 写入位置跨尾部、空缓冲、满缓冲及重复事件，检查字节是否遗漏或重复消费。</li><li><strong>生产者 / 消费者并发：</strong>核对 ISR 和任务对索引的写入所有权及同步方式，用可控调度和真实压力运行验证。</li><li><strong>消费者处理不足：</strong>观测缓冲区水位、积压时长和溢出计数，区分吞吐不足与算法错误；不能仅凭“增大缓冲区后改善”就认定根因。</li><li><strong>条件相关的平台问题：</strong>只有目标架构和配置确实涉及缓存一致性、特定 DMA 约束时才展开检查，不假定所有 MCU 都有相同问题。</li></ul>
+  <h3>数据流形状与观察点</h3>
+  <div class="flow-strip"><div class="flow-item"><b>INPUT</b>带序号的发送数据<br><span class="small">确定输入事实</span></div><div class="flow-arrow">→</div><div class="flow-item"><b>DMA / ISR</b>写入与事件发布<br><span class="small">事件、错误、位置</span></div><div class="flow-arrow">→</div><div class="flow-item"><b>RING</b>索引与可用字节<br><span class="small">水位、溢出、回绕</span></div><div class="flow-arrow">→</div><div class="flow-item"><b>TASK</b>读取与协议处理<br><span class="small">序号、重复、缺口</span></div></div>
+  <h3>Harness 如何组织这次任务</h3>
+  <div class="table-wrap"><table><thead><tr><th>系统职责</th><th>具体安排</th><th>产出</th></tr></thead><tbody>
+    <tr><td>上下文</td><td>检索实际驱动、ISR、消费任务和同步原语；读板级设计约束。</td><td>经过代码定位的影响图；未验证假设单独标记。</td></tr>
+    <tr><td>工具与权限</td><td>限定修改目录；编译器和主机测试可运行；设备操作绑定实际授权。</td><td>可执行动作集合与设备身份检查。</td></tr>
+    <tr><td>执行循环</td><td>选择一个假设 → 构造最小验证 → 检查证据 → 再决定是否修改。</td><td>小步补丁、假设排除记录及关联测试。</td></tr>
+    <tr><td>状态与证据</td><td>保存受测代码、工具链、固件指纹与原始输出。</td><td>能被下一会话复核的验证清单。</td></tr>
+    <tr><td>完成门禁</td><td>逐项检查必需验收；没有板卡时停止硬件验收。</td><td>主机通过但硬件未验证 → blocked，而非 completed。</td></tr>
+  </tbody></table></div>
+  <div class="callout warn"><strong>本案例的正确结论是方法，不是根因：</strong>尚未获得真实代码与测量数据，不能宣称丢包由某寄存器、缓存或环回算法造成，也不能宣称某补丁已经修复。</div>
+</section>
+
+<section id="validation">
+  <div class="section-head"><span class="section-no">11</span><h2>验证分层，失败分类</h2></div>
+  <p class="section-intro">验证层次回答“能证明什么”；失败分类回答“下一步应该由谁解决”。两者共同决定是否继续运行。</p>
+  <div class="verify-list">
+    <div class="verify-level"><span class="level">L0</span><h4>静态约束与改动检查</h4><p>确认范围、接口、依赖、格式和显性缺陷。无法证明运行行为正确。</p></div>
+    <div class="verify-level"><span class="level">L1</span><h4>主机单元与属性测试</h4><p>覆盖算法、边界、数据不变量和错误路径。调度、硬件事件与内存模型可能被简化。</p></div>
+    <div class="verify-level"><span class="level">L2</span><h4>目标构建与集成检查</h4><p>检查目标工具链、配置、链接和模块集成。编译通过不代表运行时正确。</p></div>
+    <div class="verify-level hardware"><span class="level">L3</span><h4>HIL / 板级验证</h4><p>检查真实 DMA、ISR、调度、外设与时序行为。必须记录设备、固件、输入和运行条件。</p></div>
+    <div class="verify-level"><span class="level">L4</span><h4>系统回归与持续观测</h4><p>检查持续负载、相邻功能、资源占用及运行稳定性。验收范围由项目风险决定。</p></div>
+  </div>
+  <div class="callout warn"><strong>主机测试不能替代 HIL。</strong>当硬件验收属于必需条目时，缺设备或访问权限就应保留已完成证据并标为 blocked。只完成算法级验证，必须把结论限制在算法层。</div>
+  <h3>失败分类与处理策略</h3>
+  <div class="table-wrap"><table><thead><tr><th>类别</th><th>识别线索</th><th>下一步</th></tr></thead><tbody>
+    <tr><td>需求或验收歧义</td><td>目标互相冲突，缺少通过标准。</td><td>提炼最小待确认问题；依赖该信息的工作标 blocked。</td></tr>
+    <tr><td>实现缺陷</td><td>可复现失败与补丁、输入存在对应关系。</td><td>围绕一个假设做有限修正，用同一验收重新验证。</td></tr>
+    <tr><td>环境或依赖缺失</td><td>工具链、服务、设备或权限不可用。</td><td>在授权范围内修复环境；需要外部条件时 blocked。</td></tr>
+    <tr><td>证据失效</td><td>代码、配置、输入或设备已变更。</td><td>失效相关通过状态，重新运行受影响的检查。</td></tr>
+    <tr><td>偶发 / 不稳定测试</td><td>同条件结果波动，缺少稳定复现。</td><td>记录波动并调查；一次重跑通过不能抹去未解释的失败。</td></tr>
+    <tr><td>执行资源耗尽</td><td>重试、费用、时间或停滞达到上限。</td><td>保存现场并以 failed 结束当前尝试，给出后续建议。</td></tr>
+  </tbody></table></div>
+</section>
+
+<section id="budget">
+  <div class="section-head"><span class="section-no">12</span><h2>预算、退出与真实成本</h2></div>
+  <p class="section-intro">“自动运行”需要明确边界。持续调用模型不等于持续取得进展；便宜的一次调用也不等于便宜的一次交付。</p>
+  <div class="grid4"><div class="card"><div class="mini-label">RETRY</div><h4>重试上限</h4><p>针对同一失败限制修正次数；每次必须带着新假设或证据。</p></div><div class="card"><div class="mini-label">TIME</div><h4>执行超时</h4><p>工具超时和任务总超时分开控制，清理残留进程并保存现场。</p></div><div class="card"><div class="mini-label">COST</div><h4>费用预算</h4><p>统计模型调用、工具与执行资源，启动高代价动作前检查余量。</p></div><div class="card"><div class="mini-label">PROGRESS</div><h4>停滞判断</h4><p>同一错误、重复动作、无新证据持续出现时，结束无效循环。</p></div></div>
+  <h3>用“每个验收通过的变更”计算成本</h3>
+  <p class="small">统计窗口内的总成本应包含失败尝试。分母采用通过约定验收的变更数，并同时观察耗时、成功率与回归情况。</p>
+  <div class="budget"><div class="mini-label">INTERACTIVE CALCULATOR · 全部输入为教学示例，单位：元</div><div class="budget-fields"><label>模型费用<input id="cost-model" type="number" value="120" min="0" step="10"></label><label>工具 / 执行资源<input id="cost-tools" type="number" value="40" min="0" step="10"></label><label>人工验收与返工<input id="cost-human" type="number" value="240" min="0" step="10"></label><label>验收通过变更数<input id="cost-accepted" type="number" value="4" min="0" step="1"></label></div><div class="budget-result" aria-live="polite"><strong id="cost-result">¥100.00 / 变更</strong><span id="cost-formula">(120 + 40 + 240) ÷ 4 = 100.00</span></div></div>
+  <div class="callout"><strong>公平比较需要相同口径：</strong>固定任务集合、验收强度、运行预算和环境；区分任务类型与风险等级。不能拿“只生成演示页面”的成本与“通过功能和硬件验收”的成本直接比较。</div>
+  <p class="note">若验收通过数为 0，单位交付成本不可计算；此时报告总投入和失败原因。实际评估还应记录首次通过率、人工介入量、端到端耗时、回归逃逸和失败类别。</p>
+</section>
+
+<section id="decay">
+  <div class="section-head"><span class="section-no">13</span><h2>Harness 会衰减，组件要能被移除</h2></div>
+  <p class="section-intro">模型、代码库和工具改变后，旧的补偿步骤可能不再划算；重复提示、冗余工具和多重评价会继续消耗时间与上下文。</p>
+  <div class="grid2"><div class="card"><div class="mini-label">WHAT TO WATCH</div><h4>观察哪些组件可能已经失效</h4><p>组件增加了调用，却很少改变决策；规则与仓库实际状态不一致；多个步骤重复加载同样的信息；工具重叠导致选择成本上升。</p><p>先核对使用数据，再判断它是否值得保留。模型升级只是重新评估的触发条件，不是删除验证的充分理由。</p></div><div class="card"><div class="mini-label">ABLATION</div><h4>一次关闭一个组件做对照</h4><p>选择代表性任务，固定验收与预算；比较启用和关闭该组件的效果。按任务风险和失败类别看差异，避免只比较平均成本。</p><p>证据不足时维持现状；回归时恢复配置。每个组件应能独立开关、观测并回退。</p></div></div>
+  <div class="flow-strip"><div class="flow-item"><b>BASELINE</b>建立任务基线</div><div class="flow-arrow">→</div><div class="flow-item"><b>DISABLE ONE</b>只关闭一个组件</div><div class="flow-arrow">→</div><div class="flow-item"><b>COMPARE</b>比较质量与成本</div><div class="flow-arrow">→</div><div class="flow-item"><b>DECIDE</b>保留、精简或恢复</div></div>
+  <div class="callout warn"><strong>先区分两类约束：</strong>为补偿模型能力而增加的步骤，可以通过消融评估；权限隔离、设备授权、敏感信息保护、审计和必要验收属于工程边界，不能因模型“更聪明”就取消。调整边界需要独立的风险与授权判断。</div>
+</section>
+
+<section id="rollout">
+  <div class="section-head"><span class="section-no">14</span><h2>从一个可验收任务开始落地</h2></div>
+  <p class="section-intro">先选范围明确、可以验证的任务，跑通最小闭环，再逐步扩大自动化范围。自检状态仅保存在当前浏览器。</p>
+  <div class="check-progress" aria-live="polite"><strong id="check-count">0 / 10</strong><p id="check-message">先建立任务契约、执行边界和完成证据。勾选表示你已核对该项，不代表系统自动完成了检查。</p></div>
+  <div class="check-grid">
+    <label class="check-item"><input type="checkbox" data-check="contract"><span><strong>验收契约明确</strong>写清目标、范围、非目标和必需验收。</span></label>
+    <label class="check-item"><input type="checkbox" data-check="entry"><span><strong>项目入口可用</strong>AGENTS.md 能导航到真实构建、架构与测试入口。</span></label>
+    <label class="check-item"><input type="checkbox" data-check="impact"><span><strong>影响图经过定位</strong>候选文件、符号和调用方均已核实，推断有标记。</span></label>
+    <label class="check-item"><input type="checkbox" data-check="guard"><span><strong>执行边界可强制</strong>路径、工具、外部访问与硬件操作有宿主门禁。</span></label>
+    <label class="check-item"><input type="checkbox" data-check="baseline"><span><strong>初始化可重复</strong>能识别代码版本、环境、未提交修改与基线状态。</span></label>
+    <label class="check-item"><input type="checkbox" data-check="increment"><span><strong>每次只推进小任务</strong>步骤足够小，结果可复核，失败能定位。</span></label>
+    <label class="check-item"><input type="checkbox" data-check="evidence"><span><strong>证据绑定受测版本</strong>保存代码、配置、环境、输入、退出码和报告。</span></label>
+    <label class="check-item"><input type="checkbox" data-check="hil"><span><strong>验证层次与风险相符</strong>需要 HIL 时已经安排设备与条件，未验证项不会被放行。</span></label>
+    <label class="check-item"><input type="checkbox" data-check="exit"><span><strong>退出状态与预算清楚</strong>completed / blocked / failed 有规则，重试和停滞有上限。</span></label>
+    <label class="check-item"><input type="checkbox" data-check="review"><span><strong>效果可测且组件可调整</strong>以每个验收变更的成本和质量评估，组件可独立回退。</span></label>
+  </div>
+  <div class="control-row"><button class="btn secondary" id="reset-checks">清空自检</button><span class="small" id="storage-note">状态保存在当前浏览器；更换浏览器不会自动同步。</span></div>
+  <h3>常见误解</h3>
+  <details open><summary>AGENTS.md 写得足够详细，Agent 就可靠了吗？</summary><p>它只是信息与约定的入口。可靠性还需要真实上下文、受控工具、可执行验收、证据绑定和退出控制；长文档也会过期，并占用工作上下文。</p></details>
+  <details><summary>评价者必须是另一个模型吗？</summary><p>不必。编译器、测试程序、规则引擎、独立审查和人工评价可以按风险组合。逻辑上独立的验收标准更关键；另一个模型也无法代替真实硬件与客观测试。</p></details>
+  <details><summary>feature_list.json 标记通过，就等于测试通过吗？</summary><p>不等于。任务账本只记录状态。通过结论需要对应验收项的有效报告，并核对受测代码和环境；未运行、报告过期或硬件缺失都不能标为完成。</p></details>
+  <details><summary>多加工具、规则和重试一定更好吗？</summary><p>不一定。它们可能增加选择负担、误判和执行成本。先解决实际失效模式，再通过代表性任务评估收益；每次重试都应带来新信息。</p></details>
+  <details><summary>模型升级后，可以直接删掉验证层吗？</summary><p>不能仅据此决定。对能力补偿步骤做受控消融，同时保留与项目风险对应的验收、授权和审计边界；模型能力提升并不消除环境故障与集成风险。</p></details>
+  <details><summary>没有设备时，交付什么才算诚实且有用？</summary><p>交付已完成的代码分析、受控补丁、主机与构建验证报告、明确的硬件验收方案，并列出设备或权限缺口。若 HIL 属于必需验收，整体任务应标 blocked。</p></details>
+  <div class="callout"><strong>可执行的下一步：</strong>选一个边界明确的驱动问题，建立任务契约和证据目录；让模型提出一步、宿主检查一步、工具验证一步。先证明这个闭环能正确完成或正确停止，再扩大范围。</div>
+</section>
+<footer class="footer"><span>Harness Engineering · 中文工程实践手册 · 教学案例均已标注</span><span><button class="print-btn" onclick="window.print()">打印 / 保存 PDF</button>　<a href="#top">返回顶部 ↑</a></span></footer>
+</main></div>
+<script>
+"use strict";
+// 所有交互均在本页执行；不加载外部资源、不发送数据。
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const componentData = {
+ context:["01 · 上下文管理：建立当前事实，而不是灌满窗口","先定位任务相关文件和符号，再加载模块约束、调用关系与最新证据。长日志保留摘要和原始文件路径；摘要不能取代原始结果。","输入：任务、仓库与状态　→　输出：可追溯、可更新的工作集。"],
+ tools:["02 · 工具与权限：提议权和执行权分开","用结构化参数调用工具，校验路径、命令、网络与设备范围。读操作和写操作采用不同权限；实际限制由工具包装、沙箱与服务端策略执行。","边界：提示词不能提升权限；烧录、擦除等动作必须绑定具体设备和既定授权。"],
+ loop:["03 · 执行循环：让下一步由证据驱动","先观察、再规划最小动作，通过门禁后执行；验证结果进入状态，再决定修正、继续或结束。每轮应新增证据、排除假设或满足验收。","边界：重复同一错误与动作不算进展；循环必须有停滞和重试限制。"],
+ state:["04 · 状态与恢复：把工作保存在会话之外","持久化任务、补丁、检查点和报告索引。恢复时核对工作树、工具链与环境，失效过期证据；不能盲信上次聊天摘要。","边界：跨会话连续性依赖可复核工件，不能依赖模型记得整个历史。"],
+ verify:["05 · 验证与观测：完成结论对应真实报告","用分层检查验证结果，记录工具命令、退出码、日志、版本和环境。语义评价补充可执行测试，定位遗漏；它不能覆盖硬性验收失败。","边界：主机模拟无法证明真实 DMA、ISR 与板级时序正确；必要的 HIL 仍须执行。"],
+ budget:["06 · 预算与退出：可靠地知道何时停止","分别限制工具超时、总轮次、重试、费用与连续无进展。结束时记录 completed、blocked 或 failed，并保存可续接的现场。","边界：缺外部条件用 blocked；用尽运行预算用 failed；所有必需验收满足才用 completed。"]
+};
+function renderDetail(target, data){const el=$(target);el.replaceChildren();const h=document.createElement("h4"),p=document.createElement("p"),d=document.createElement("div");h.textContent=data[0];p.textContent=data[1];d.textContent=data[2];d.className="boundary";el.append(h,p,d);}
+$$('.component-btn').forEach(btn=>btn.addEventListener('click',()=>{$$('.component-btn').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));renderDetail('#component-detail',componentData[btn.dataset.component]);}));
+const matrixData={
+ df:["确定性前馈 · 工具门禁","例：执行前解析补丁涉及的真实路径，拒绝越过允许模块的写入；烧录前校验目标设备身份与授权。","适合强制执行明确规则。规则过宽会漏掉风险，规则过窄会阻碍正常工作。"],
+ db:["确定性反馈 · 检查实际产物","例：对刚产生的补丁运行主机边界测试和目标构建，保存退出码及报告；验收不通过就不放行。","按固定规则检查也会受测试覆盖、工具缺陷和环境波动影响；通过的含义必须限定在测试范围内。"],
+ if:["推理前馈 · 审阅任务与影响范围","例：实施前检查任务契约是否遗漏满缓冲、跨尾部与 ISR 并发条件，提出需要补充的验证。","适合发现语义缺口，但仍可能遗漏或误判。建议要转成清楚的契约与可执行检查。"],
+ ib:["推理反馈 · 解释结果与发现遗漏","例：审查补丁是否改变数据所有权，分析测试日志是否真正覆盖验收情形，并提出可验证的后续假设。","“看起来正确”不等于验收通过；解释必须关联真实代码与报告，不能编造运行现象。"]
+};
+$$('.matrix-cell').forEach(btn=>btn.addEventListener('click',()=>{$$('.matrix-cell').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));renderDetail('#matrix-detail',matrixData[btn.dataset.matrix]);}));
+// 每条轨迹都是预置的教学状态，展示控制决策而非真实执行结果。
+const frame=(stage,title,description,evidence,retry=0,status='running')=>({stage,title,description,evidence,retry,status});
+const common=[frame(0,'读取现场与当前验收契约','检查代码版本、未提交变更、任务状态与验证基线。准备处理一个有边界的任务。','已读取基线'),frame(1,'规划一个可验证的最小动作','定位相关文件与符号，选择一个假设；确认改动范围和本轮应取得的证据。','假设与验证步骤已记录'),frame(2,'先过工具与权限门禁','校验工具、路径、参数和资源预算。模型提议只有满足既定执行规则才会进入工具。','动作处于授权范围'),frame(3,'执行受限动作并保留原始输出','实施示意补丁，运行有超时的工具；保存退出码、产物和当前代码指纹。','变更与执行记录已保存')];
+const scenarios={
+ normal:[...common,frame(4,'运行约定的分层验收','在本教学情景中，主机、目标构建及契约要求的硬件验收均通过，报告绑定同一受测版本。','全部必需验收通过'),frame(5,'保存证据，并结束任务','按验收条目核对报告的完整性与时效；把完成状态和受测版本写入任务账本。','证据链完整',0,'completed')],
+ testfail:[...common,frame(4,'边界测试失败，先分类','教学测试发现跨尾部条件下的输出与期望不一致。保存失败输入和日志，当前验收未通过。','可复现的失败输入'),frame(5,'保存失败现场，允许有限修正','失败被归类为可重试的实现问题；尚有预算，记录新假设并进入一次修正。','失败类别与新假设已记录'),frame(1,'围绕失败输入收缩修改范围','只处理该边界条件，继续使用同一验收口径，不删除失败断言。','限定本次修正范围',1),frame(2,'对修正动作重新检查门禁','上一次获准并不自动授权新的动作；再次校验路径和预算。','修正动作获准',1),frame(3,'实施一次修正并更新代码指纹','保存本次补丁，旧版本的通过结果不能直接沿用。','新受测版本已记录',1),frame(4,'重新运行必需验收','本教学轨迹中，失败用例和相关回归检查通过；必需硬件验收也已通过。','全部必需验收通过',1),frame(5,'完成有证据的一次修正','保留先前失败记录和后续通过报告，说明修正路径与最终受测版本。','证据链完整',1,'completed')],
+ hardware:[...common,frame(4,'主机与构建通过，但缺少 HIL 条件','本教学情景没有可访问板卡，而任务契约要求硬件验收。主机通过不能代替这项证据。','HIL 未执行'),frame(5,'记录外部缺口，保留可续接现场','保存补丁、已通过报告、待运行的 HIL 方案以及缺失的设备条件。获得硬件后再继续。','已列出硬件验收缺口',0,'blocked')],
+ stalled:[...common,frame(4,'失败仍无法解释','本教学情景的验证结果没有支持新结论，不能声称已经定位根因。','失败现象尚未解释'),frame(5,'记录无进展，尝试一次新假设','在预算内允许有限修正，但必须记录新假设；相同输出不视为进展。','停滞计数 1 / 2'),frame(1,'提出第二个定位假设','根据已有输出调整检查点，准备一次有范围的调查。','新假设待验证',1),frame(2,'再次执行预算与权限检查','确认仍有一次有限尝试，不允许升级权限或扩大任务范围。','本轮检查获准',1),frame(3,'执行调查动作','保存真实返回结果；不把工具成功退出等同于任务取得进展。','工具执行记录已保存',1),frame(4,'仍无新增证据或有效进展','结果与前次相同，没有排除假设或满足新验收项。连续停滞达到设定上限。','停滞计数 2 / 2',1),frame(5,'停止当前尝试，报告失败边界','保留检查点和未解决问题。结束无效循环，给出需要改变输入、方法或环境的下一步。','停滞上限已达到',1,'failed')]
+};
+let loopIndex=0;
+function renderLoop(){const seq=scenarios[$('#scenario').value],f=seq[loopIndex];$$('.loop-node').forEach(n=>{n.classList.toggle('active',+n.dataset.stage===f.stage);n.classList.toggle('done',+n.dataset.stage<f.stage);});$('#loop-title').textContent=f.title;$('#loop-description').textContent=f.description;$('#loop-status').textContent=f.status;$('#loop-status').className='status '+f.status;$('#loop-step').textContent=`步骤 ${loopIndex+1} / ${seq.length}`;$('#loop-attempt').textContent=`修正重试 ${f.retry} / 2`;$('#loop-progress').textContent='证据：'+f.evidence;$('#step-loop').disabled=loopIndex===seq.length-1;$('#step-loop').textContent=loopIndex===seq.length-1?'已结束':'下一步';}
+$('#step-loop').addEventListener('click',()=>{if(loopIndex<scenarios[$('#scenario').value].length-1)loopIndex++;renderLoop();});$('#reset-loop').addEventListener('click',()=>{loopIndex=0;renderLoop();});$('#scenario').addEventListener('change',()=>{loopIndex=0;renderLoop();});
+// 伪代码标签页支持按钮与键盘左右切换；复制仅发生在用户点击后。
+function selectCode(btn){$$('.tab').forEach(b=>{const active=b===btn;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});$$('.code-tab').forEach(p=>p.hidden=p.id!=='code-'+btn.dataset.code);}
+$$('.tab').forEach((btn,i,all)=>{btn.addEventListener('click',()=>selectCode(btn));btn.addEventListener('keydown',ev=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(ev.key))return;ev.preventDefault();let next=ev.key==='Home'?0:ev.key==='End'?all.length-1:(i+(ev.key==='ArrowRight'?1:-1)+all.length)%all.length;selectCode(all[next]);all[next].focus();});});selectCode($('#tab-main'));
+$$('.copy-code').forEach(btn=>btn.addEventListener('click',async()=>{const content=$('#pseudo-'+btn.dataset.copy).textContent;try{await navigator.clipboard.writeText(content);btn.textContent='已复制';}catch(_){const area=document.createElement('textarea');area.value=content;area.style.position='fixed';area.style.left='-9999px';document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();btn.textContent=ok?'已复制':'请手动选择复制';}window.setTimeout(()=>btn.textContent='复制',1800);}));
+// 成本数字是可调整的教学输入；零交付不能显示为零成本。
+function updateCost(){const ids=['model','tools','human','accepted'];const vals=ids.map(id=>Math.max(0,Number($('#cost-'+id).value)||0));const [m,t,h,a]=vals,total=m+t+h;if(a<=0){$('#cost-result').textContent='暂无验收通过变更';$('#cost-formula').textContent=`已投入 ¥${total.toFixed(2)}；单位交付成本不可计算`;}else{$('#cost-result').textContent=`¥${(total/a).toFixed(2)} / 变更`;$('#cost-formula').textContent=`(${m} + ${t} + ${h}) ÷ ${a} = ${(total/a).toFixed(2)}`;}}
+$$('.budget-fields input').forEach(input=>input.addEventListener('input',updateCost));
+// 自检在本地保存；不支持本地存储的环境仍能完成本页交互。
+const storageKey='harness-engineering-checklist-v1';let storageAvailable=true;
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||'{}');$$('[data-check]').forEach(c=>c.checked=!!saved[c.dataset.check]);}catch(_){storageAvailable=false;$('#storage-note').textContent='当前环境不支持本地保存；自检仅保留至本页关闭。';}
+function updateChecks(save){const checks=$$('[data-check]'),count=checks.filter(c=>c.checked).length;$('#check-count').textContent=`${count} / ${checks.length}`;$('#check-message').textContent=count===checks.length?'清单已核对。下一步运行代表性任务，用真实结果检验这套闭环；勾选本身不是自动验收。':count===0?'先建立任务契约、执行边界和完成证据。勾选表示你已核对该项，不代表系统自动完成了检查。':`已核对 ${count} 项。继续补齐未勾选的责任与证据，优先检查会影响完成判断的缺口。`;if(save&&storageAvailable){try{localStorage.setItem(storageKey,JSON.stringify(Object.fromEntries(checks.map(c=>[c.dataset.check,c.checked]))));}catch(_){storageAvailable=false;$('#storage-note').textContent='本地保存不可用；本次自检状态仍可继续使用。';}}}
+$$('[data-check]').forEach(c=>c.addEventListener('change',()=>updateChecks(true)));$('#reset-checks').addEventListener('click',()=>{$$('[data-check]').forEach(c=>c.checked=false);updateChecks(true);});updateChecks(false);
+// 目录跟随阅读位置；窄屏上点击目录后自动收起。
+const navLinks=$$('.toc a');$('#menu-toggle').addEventListener('click',()=>{const open=$('#sidebar').classList.toggle('open');$('#menu-toggle').setAttribute('aria-expanded',String(open));});navLinks.forEach(a=>a.addEventListener('click',()=>{$('#sidebar').classList.remove('open');$('#menu-toggle').setAttribute('aria-expanded','false');}));
+let scrollPending=false;function syncReading(){const scrollTop=window.scrollY,max=document.documentElement.scrollHeight-window.innerHeight;$('#reading-progress').style.width=(max>0?Math.min(100,100*scrollTop/max):100)+'%';let current=0;$$('main section').forEach((s,i)=>{if(s.getBoundingClientRect().top<=160)current=i;});navLinks.forEach((a,i)=>{a.classList.toggle('active',i===current);if(i===current)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});scrollPending=false;}window.addEventListener('scroll',()=>{if(!scrollPending){scrollPending=true;requestAnimationFrame(syncReading);}},{passive:true});window.addEventListener('resize',syncReading);syncReading();
+</script>
+</body>
+</html>

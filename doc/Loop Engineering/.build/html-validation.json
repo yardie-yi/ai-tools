@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "sections": 12,
+  "phaseTabs": 5,
+  "keyboardNavigation": true,
+  "scenarios": [
+    {
+      "scenario": "success",
+      "outcome": "ACCEPTED · 宿主机范围通过\n第 3 轮模拟用例 10/10 通过，被检查代码为 src-v3；只表示约定的宿主机检查完成。",
+      "usage": "15 / 18"
+    },
+    {
+      "scenario": "stalled",
+      "outcome": "NO_PROGRESS · 无进展退出\n连续 2 轮通过用例没有增加；停止修改，保存失败用例和已尝试方法。",
+      "usage": "15 / 18"
+    },
+    {
+      "scenario": "budget",
+      "outcome": "LIMIT_REACHED · 预算不足\n剩余 2 单位，小于本次执行需要的 3 单位；调用未发起，失败与下一步已保存。",
+      "usage": "5 / 7"
+    },
+    {
+      "scenario": "device",
+      "outcome": "NEEDS_HUMAN · 设备不可用\n实板检查为 UNKNOWN。保存代码和未完成项，交给人工恢复设备后继续；整项任务未完成。",
+      "usage": "5 / 18"
+    }
+  ],
+  "costCalculator": true,
+  "checklist": true,
+  "copyStatus": "已复制",
+  "print": true,
+  "viewports": [
+    1440,
+    1024,
+    768,
+    390,
+    320
+  ],
+  "noHorizontalOverflow": true,
+  "consoleErrors": [],
+  "externalRequests": []
+}

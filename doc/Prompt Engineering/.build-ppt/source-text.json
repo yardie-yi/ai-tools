@@ -1,0 +1,26 @@
+{
+  "recordCount": 232,
+  "truncated": false,
+  "metadata": {
+    "revision": "udq6cx",
+    "target": {
+      "id": "pr/2uqffm"
+    },
+    "kind": {
+      "requested": "slide,textbox,table,notes",
+      "tokens": [
+        "slide",
+        "textbox",
+        "table",
+        "notes"
+      ]
+    },
+    "include": {
+      "tokens": []
+    },
+    "exclude": {
+      "tokens": []
+    },
+    "notices": []
+  }
+}

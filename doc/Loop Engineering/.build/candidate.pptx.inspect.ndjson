@@ -1,0 +1,211 @@
+{"kind":"deck","id":"pr/we34qs","name":"Deck"}
+{"kind":"layout","layoutId":"cd29c24d-be6a-4121-8c3f-0ca10d295198","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"3a7d5df1-9288-4c7a-ac88-3cad3389bb41","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/718g6n","slide":1,"title":"Loop","textShapes":4}
+{"kind":"textbox","id":"sh/6lsnutwj","slide":1,"name":"text-0-Loop","text":"Loop","textPreview":"Loop","textChars":4,"textLines":1,"bbox":[70,174,680,106]}
+{"kind":"textbox","id":"sh/7m1onyx4","slide":1,"name":"text-1-Engineering","text":"Engineering","textPreview":"Engineering","textChars":11,"textLines":1,"bbox":[70,283,700,100]}
+{"kind":"textbox","id":"sh/kzq5s3ed","slide":1,"name":"text-2-AI 任务的自动执行与验","text":"AI 任务的自动执行与验证","textPreview":"AI 任务的自动执行与验证","textChars":13,"textLines":1,"bbox":[74,428,650,58]}
+{"kind":"textbox","id":"sh/lkjmlofy","slide":1,"name":"text-3-闭环原理与嵌入式开发示例","text":"闭环原理与嵌入式开发示例","textPreview":"闭环原理与嵌入式开发示例","textChars":12,"textLines":1,"bbox":[75,498,640,48]}
+{"kind":"image","id":"im/wfy1grmx","slide":1,"name":"","alt":"任务循环执行与验证的示意插图","bbox":[0,0,1280,720]}
+{"kind":"notes","id":"nt/718g6n","slide":1,"text":"建议分享时长约 20–25 分钟。内容包括闭环的定义、执行步骤、验证方法、状态记录和停止条件，最后用 UART 协议解析案例说明如何应用。案例中的协议要求、模拟执行结果和成本数字均为教学假设，未对真实项目执行测试。"}
+{"kind":"slide","id":"sl/cj6ey3","slide":2,"title":"Loop Engineering：任务闭环","textShapes":5}
+{"kind":"textbox","id":"sh/2hwzadgb","slide":2,"name":"text-0-Loop Enginee","text":"Loop Engineering：任务闭环","textPreview":"Loop Engineering：任务闭环","textChars":21,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/pknil8z2","slide":2,"name":"text-1-系统根据检查结果，决定继","text":"系统根据检查结果，决定继续修改、完成任务或转交人工","textPreview":"系统根据检查结果，决定继续修改、完成任务或转交人工","textChars":25,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/ojehc3yh","slide":2,"name":"text-2-02","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/bm50nih8","slide":2,"name":"text-3-任务目标、执行步骤、检查","text":"任务目标、执行步骤、检查方法、停止条件","textPreview":"任务目标、执行步骤、检查方法、停止条件","textChars":19,"textLines":1,"bbox":[66,215,1150,78]}
+{"kind":"textbox","id":"sh/do7ipszy","slide":2,"name":"text-4-控制程序安排步骤，AI ","text":"控制程序安排步骤，AI 生成方案，检查工具返回结果。","textPreview":"控制程序安排步骤，AI 生成方案，检查工具返回结果。","textChars":26,"textLines":1,"bbox":[66,605,1140,48]}
+{"kind":"table","id":"tb/fu1w7utc","slide":2,"name":"","rows":3,"cols":3,"preview":"工作方式 | 谁决定下一步 | 如何结束","bbox":[64,328,1152,222]}
+{"kind":"notes","id":"nt/cj6ey3","slide":2,"text":"Agent 指能够调用工具执行任务的 AI 程序。人先定义目标、允许的操作范围和验收标准。控制程序安排 Agent 执行任务，再读取测试或其他检查结果，决定下一步动作。多轮执行可以在一次任务内完成，不要求定时启动。重复执行不保证结果变好，每轮需要根据具体失败原因调整做法。"}
+{"kind":"slide","id":"sl/nanv5z","slide":3,"title":"闭环的五个步骤","textShapes":3}
+{"kind":"textbox","id":"sh/4b658321","slide":3,"name":"text-0-闭环的五个步骤","text":"闭环的五个步骤","textPreview":"闭环的五个步骤","textChars":7,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/jax4zy1g","slide":3,"name":"text-1-验证未通过时，记录失败原","text":"验证未通过时，记录失败原因，下一轮针对这些原因修改","textPreview":"验证未通过时，记录失败原因，下一轮针对这些原因修改","textChars":25,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/i9on6tkv","slide":3,"name":"text-2-03","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"table","id":"tb/gf2dovex","slide":3,"name":"","rows":6,"cols":3,"preview":"步骤 | 执行内容 | 输出记录","bbox":[64,210,1152,396]}
+{"kind":"notes","id":"nt/nanv5z","slide":3,"text":"Discover 读取任务要求、当前代码和实际失败信息，核对历史记录是否仍然有效。Plan 确定本轮处理的一个具体问题，并说明修改范围和验证方法。Execute 修改代码或调用工具。Verify 按预先确定的验收标准检查修改结果。Iterate 保存检查结果，决定继续修改、结束任务或转交人工。一轮完整执行也称一次迭代。"}
+{"kind":"slide","id":"sl/xz0tbq","slide":4,"title":"验证、状态与停止条件","textShapes":12}
+{"kind":"textbox","id":"sh/fu90vqtc","slide":4,"name":"text-0-验证、状态与停止条件","text":"验证、状态与停止条件","textPreview":"验证、状态与停止条件","textChars":10,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/gvi1ovux","slide":4,"name":"text-1-每轮检查修改结果，记录执","text":"每轮检查修改结果，记录执行情况，并判断是否继续","textPreview":"每轮检查修改结果，记录执行情况，并判断是否继续","textChars":23,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/1wrix0bi","slide":4,"name":"text-2-04","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/6pgjilcv","slide":4,"name":"text-3-01","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[68,225,72,55]}
+{"kind":"textbox","id":"sh/rqp0r6tg","slide":4,"name":"text-4-Verify：验证","text":"Verify：验证","textPreview":"Verify：验证","textChars":9,"textLines":1,"bbox":[162,225,1000,44]}
+{"kind":"textbox","id":"sh/sry1kbu1","slide":4,"name":"text-5-运行测试或其他检查，判断","text":"运行测试或其他检查，判断本轮修改是否满足要求。","textPreview":"运行测试或其他检查，判断本轮修改是否满足要求。","textChars":23,"textLines":1,"bbox":[163,271,1020,48]}
+{"kind":"textbox","id":"sh/tsritgb6","slide":4,"name":"text-6-02","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[68,346,72,55]}
+{"kind":"textbox","id":"sh/qlkju5cz","slide":4,"name":"text-7-State：状态","text":"State：状态","textPreview":"State：状态","textChars":8,"textLines":1,"bbox":[162,346,1000,44]}
+{"kind":"textbox","id":"sh/bmtk3atk","slide":4,"name":"text-8-记录代码版本、失败用例、","text":"记录代码版本、失败用例、已试方法和下一轮任务。","textPreview":"记录代码版本、失败用例、已试方法和下一轮任务。","textChars":23,"textLines":1,"bbox":[163,392,1020,48]}
+{"kind":"textbox","id":"sh/bad0vu9s","slide":4,"name":"text-9-03","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[68,467,72,55]}
+{"kind":"textbox","id":"sh/a94jmps7","slide":4,"name":"text-10-Stop：停止","text":"Stop：停止","textPreview":"Stop：停止","textChars":7,"textLines":1,"bbox":[162,467,1000,44]}
+{"kind":"textbox","id":"sh/xcvix4ry","slide":4,"name":"text-11-任务完成、资源耗尽、重复","text":"任务完成、资源耗尽、重复失败或依赖缺失时停止。","textPreview":"任务完成、资源耗尽、重复失败或依赖缺失时停止。","textChars":23,"textLines":1,"bbox":[163,513,1020,48]}
+{"kind":"notes","id":"nt/xz0tbq","slide":4,"text":"Verify 用于检查代码或文件是否满足要求。State 保存下一轮需要读取的执行记录，不会改变模型参数。Stop 定义任务完成和无法继续时的处理方式。测试未执行、设备不可用或日志缺失时，检查结果应为未知。AI 自己声称完成不能代替实际检查。"}
+{"kind":"slide","id":"sl/64g6x6","slide":5,"title":"使用条件","textShapes":15}
+{"kind":"textbox","id":"sh/ps7mt4va","slide":5,"name":"text-0-使用条件","text":"使用条件","textPreview":"使用条件","textChars":4,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/25g3y9cz","slide":5,"name":"text-1-根据任务特点和现有工具，","text":"根据任务特点和现有工具，选择自动化范围","textPreview":"根据任务特点和现有工具，选择自动化范围","textChars":19,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/3qp4redk","slide":5,"name":"text-2-05","text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/cvi54ju1","slide":5,"name":"text-3-01","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[68,205,72,55]}
+{"kind":"textbox","id":"sh/dwrmxovm","slide":5,"name":"text-4-任务是否反复出现？","text":"任务是否反复出现？","textPreview":"任务是否反复出现？","textChars":9,"textLines":1,"bbox":[162,205,1000,44]}
+{"kind":"textbox","id":"sh/qt0n29cv","slide":5,"name":"text-5-比较搭建、维护流程的成本","text":"比较搭建、维护流程的成本与节省的人工时间。","textPreview":"比较搭建、维护流程的成本与节省的人工时间。","textChars":21,"textLines":1,"bbox":[163,251,1020,48]}
+{"kind":"textbox","id":"sh/bu94vedg","slide":5,"name":"text-6-02","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[68,309,72,55]}
+{"kind":"textbox","id":"sh/0zi58jux","slide":5,"name":"text-7-检查能否发现错误输出？","text":"检查能否发现错误输出？","textPreview":"检查能否发现错误输出？","textChars":11,"textLines":1,"bbox":[162,309,1000,44]}
+{"kind":"textbox","id":"sh/l0bm1obi","slide":5,"name":"text-8-构建、测试或固定规则能够","text":"构建、测试或固定规则能够报告具体失败。","textPreview":"构建、测试或固定规则能够报告具体失败。","textChars":19,"textLines":1,"bbox":[163,355,1020,48]}
+{"kind":"textbox","id":"sh/tcvihk3q","slide":5,"name":"text-9-03","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[68,413,72,55]}
+{"kind":"textbox","id":"sh/sb2h8f25","slide":5,"name":"text-10-Agent 是否具备完成","text":"Agent 是否具备完成任务的工具？","textPreview":"Agent 是否具备完成任务的工具？","textChars":18,"textLines":1,"bbox":[162,413,1000,44]}
+{"kind":"textbox","id":"sh/rat0fulk","slide":5,"name":"text-11-能够运行构建、测试，并访","text":"能够运行构建、测试，并访问任务所需接口。","textPreview":"能够运行构建、测试，并访问任务所需接口。","textChars":20,"textLines":1,"bbox":[163,459,1020,48]}
+{"kind":"textbox","id":"sh/69kz6pkf","slide":5,"name":"text-12-04","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[68,517,72,55]}
+{"kind":"textbox","id":"sh/1gvil432","slide":5,"name":"text-13-完成标准是否足够客观？","text":"完成标准是否足够客观？","textPreview":"完成标准是否足够客观？","textChars":11,"textLines":1,"bbox":[162,517,1000,44]}
+{"kind":"textbox","id":"sh/gfm1cz2h","slide":5,"name":"text-14-能够提前写明验收条件，并","text":"能够提前写明验收条件，并由他人重复检查。","textPreview":"能够提前写明验收条件，并由他人重复检查。","textChars":20,"textLines":1,"bbox":[163,563,1020,48]}
+{"kind":"notes","id":"nt/64g6x6","slide":5,"text":"任务重复频率用于估算搭建和维护流程是否值得，没有统一的每周次数要求。复杂的一次性任务也可以通过几轮修改和检查完成，但未必需要长期自动运行。检查依赖主观判断或所需工具不全时，可保留人工处理步骤。"}
+{"kind":"slide","id":"sl/09q3wt","slide":6,"title":"Prompt、Context、Harness 与 Loop","textShapes":4}
+{"kind":"textbox","id":"sh/ah4zipc7","slide":6,"name":"text-0-Prompt、Conte","text":"Prompt、Context、Harness 与 Loop","textPreview":"Prompt、Context、Harness 与 Loop","textChars":29,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/x4fyd4vy","slide":6,"name":"text-1-分别说明任务指令、输入信","text":"分别说明任务指令、输入信息、运行环境和循环控制","textPreview":"分别说明任务指令、输入信息、运行环境和循环控制","textChars":23,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/c36hkzud","slide":6,"name":"text-2-06","text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/2d4fepcb","slide":6,"name":"text-3-Graph 表示任务之间","text":"Graph 表示任务之间的依赖；Loop 根据检查结果重复执行。","textPreview":"Graph 表示任务之间的依赖；Loop 根据检查结果重复执行。","textChars":32,"textLines":1,"bbox":[66,615,1140,45]}
+{"kind":"table","id":"tb/mhofqls7","slide":6,"name":"","rows":5,"cols":3,"preview":"概念 | 主要问题 | 对应配置","bbox":[64,215,1152,350]}
+{"kind":"notes","id":"nt/09q3wt","slide":6,"text":"Prompt 是发给模型的任务指令。Context 是模型本次能读取的信息。Harness 是运行 Agent 的配套环境，包括工具、权限、工作区隔离和操作限制。Loop 根据检查结果安排重复执行。Graph 用图表示多个任务之间的先后依赖和分支，一个任务内部也可以使用循环修改和验证。"}
+{"kind":"slide","id":"sl/tnxb1z","slide":7,"title":"闭环系统的五个组成部分","textShapes":3}
+{"kind":"textbox","id":"sh/fi1k7e5c","slide":7,"name":"text-0-闭环系统的五个组成部分","text":"闭环系统的五个组成部分","textPreview":"闭环系统的五个组成部分","textChars":11,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/gjal0z6x","slide":7,"name":"text-1-分别负责启动任务、提供规","text":"分别负责启动任务、提供规则、执行操作和检查结果","textPreview":"分别负责启动任务、提供规则、执行操作和检查结果","textChars":23,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/1kj294ni","slide":7,"name":"text-2-07","text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"table","id":"tb/ja10vuts","slide":7,"name":"","rows":6,"cols":3,"preview":"组成部分 | 职责 | 在嵌入式开发中的用法","bbox":[64,206,1152,402]}
+{"kind":"notes","id":"nt/tnxb1z","slide":7,"text":"触发器确定任务何时启动，可以手动启动，也可以响应事件或按时执行。Skill 是保存为文件的可复用操作说明。独立审查者读取修改内容并检查问题，仍需用实际测试核实判断。连接器提供访问仓库和设备等环境的接口，每次操作还应符合授权范围。执行记录由状态文件统一保存。"}
+{"kind":"slide","id":"sl/gn0fp8","slide":8,"title":"验证方法及其适用范围","textShapes":4}
+{"kind":"textbox","id":"sh/rypkrqhg","slide":8,"name":"text-0-验证方法及其适用范围","text":"验证方法及其适用范围","textPreview":"验证方法及其适用范围","textChars":10,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/szylkvyl","slide":8,"name":"text-1-在修改前确定验收标准，修","text":"在修改前确定验收标准，修改后按同一标准检查","textPreview":"在修改前确定验收标准，修改后按同一标准检查","textChars":21,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/t072t0z6","slide":8,"name":"text-2-08","text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/f29kvahc","slide":8,"name":"text-3-每份报告记录代码版本、验","text":"每份报告记录代码版本、验收标准版本、测试配置和结果。","textPreview":"每份报告记录代码版本、验收标准版本、测试配置和结果。","textChars":26,"textLines":1,"bbox":[66,601,1140,45]}
+{"kind":"table","id":"tb/ve9kb6t0","slide":8,"name":"","rows":5,"cols":3,"preview":"检查方式 | 检查内容 | 结论的限制","bbox":[64,213,1152,340]}
+{"kind":"notes","id":"nt/gn0fp8","slide":8,"text":"AI 自检可以提出遗漏和潜在问题，但评分不能证明代码正确。软件验证应读取实际构建、测试和静态检查的结果。测试通过只说明已覆盖条件符合要求，不能证明所有条件都不存在缺陷。执行者不得为了让检查通过而删除失败测试或降低验收标准。每份报告需要记录代码版本、验收标准版本、配置和执行时间。"}
+{"kind":"slide","id":"sl/c6rpq4","slide":9,"title":"状态记录与任务恢复","textShapes":14}
+{"kind":"textbox","id":"sh/wvypsnah","slide":9,"name":"text-0-状态记录与任务恢复","text":"状态记录与任务恢复","textPreview":"状态记录与任务恢复","textChars":9,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/vup8zitw","slide":9,"name":"text-1-保存后续执行所需信息，避","text":"保存后续执行所需信息，避免每轮重复读取全部历史","textPreview":"保存后续执行所需信息，避免每轮重复读取全部历史","textChars":23,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/utg7qdsb","slide":9,"name":"text-2-09","text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/9s7qxsbq","slide":9,"name":"text-3-# 状态文件示例：记录当","text":"# 状态文件示例：记录当前结果和下一轮任务","textPreview":"# 状态文件示例：记录当前结果和下一轮任务","textChars":21,"textLines":1,"bbox":[70,212,1140,34]}
+{"kind":"textbox","id":"sh/8ryponu5","slide":9,"name":"text-4-task_id: uar","text":"task_id: uart_parser_fix       # 关联同一任务","textPreview":"task_id: uart_parser_fix       # 关联同一任务","textChars":39,"textLines":1,"bbox":[70,246,1140,34]}
+{"kind":"textbox","id":"sh/7q58vitk","slide":9,"name":"text-5-artifact_id:","text":"artifact_id: candidate_hash    # 本轮修改后的文件版本","textPreview":"artifact_id: candidate_hash    # 本轮修改后的文件版本","textChars":43,"textLines":1,"bbox":[70,280,1140,34]}
+{"kind":"textbox","id":"sh/mpw7mdcf","slide":9,"name":"text-6-acceptance_i","text":"acceptance_id: locked_spec     # 本次使用的验收标准版本","textPreview":"acceptance_id: locked_spec     # 本次使用的验收标准版本","textChars":44,"textLines":1,"bbox":[70,314,1140,34]}
+{"kind":"textbox","id":"sh/lonqt8bu","slide":9,"name":"text-7-attempt: 2  ","text":"attempt: 2                    # 已执行的迭代次数","textPreview":"attempt: 2                    # 已执行的迭代次数","textChars":40,"textLines":1,"bbox":[70,348,1140,34]}
+{"kind":"textbox","id":"sh/knepk3u9","slide":9,"name":"text-8-failed_check","text":"failed_checks: [fragmented]    # 当前仍然失败的检查项","textPreview":"failed_checks: [fragmented]    # 当前仍然失败的检查项","textChars":43,"textLines":1,"bbox":[70,382,1140,34]}
+{"kind":"textbox","id":"sh/mhkn65sz","slide":9,"name":"text-9-tried: [buff","text":"tried: [buffer_only]           # 已尝试的方法，避免重复","textPreview":"tried: [buffer_only]           # 已尝试的方法，避免重复","textChars":44,"textLines":1,"bbox":[70,416,1140,34]}
+{"kind":"textbox","id":"sh/n2t4fa94","slide":9,"name":"text-10-next_step: p","text":"next_step: preserve_tail       # 下一轮具体要做的修改","textPreview":"next_step: preserve_tail       # 下一轮具体要做的修改","textChars":43,"textLines":1,"bbox":[70,450,1140,34]}
+{"kind":"textbox","id":"sh/o3m58fap","slide":9,"name":"text-11-evidence_pat","text":"evidence_path: run_02/report   # 完整检查报告的保存位置","textPreview":"evidence_path: run_02/report   # 完整检查报告的保存位置","textChars":44,"textLines":1,"bbox":[70,484,1140,34]}
+{"kind":"textbox","id":"sh/94vmhkra","slide":9,"name":"text-12-status: RETR","text":"status: RETRY                 # 当前任务需要继续执行","textPreview":"status: RETRY                 # 当前任务需要继续执行","textChars":42,"textLines":1,"bbox":[70,518,1140,34]}
+{"kind":"textbox","id":"sh/edk325sn","slide":9,"name":"text-13-每轮读取相关摘要，需要定","text":"每轮读取相关摘要，需要定位问题时再读取完整日志。","textPreview":"每轮读取相关摘要，需要定位问题时再读取完整日志。","textChars":24,"textLines":1,"bbox":[68,610,1120,43]}
+{"kind":"notes","id":"nt/c6rpq4","slide":9,"text":"状态文件保存任务进度、失败原因和下一轮要做的操作。除示例字段外，可以记录已用预算、验收标准版本和环境信息。恢复任务时重新核对代码和设备状态，避免使用过期报告。保存失败时停止修改并报告错误。状态记录供后续调用读取，不会训练模型。对可能重复提交的操作，可使用唯一操作编号识别并跳过重复请求，这称为幂等处理。"}
+{"kind":"slide","id":"sl/u8buk3","slide":10,"title":"停止条件","textShapes":4}
+{"kind":"textbox","id":"sh/ojmh03yp","slide":10,"name":"text-0-停止条件","text":"停止条件","textPreview":"停止条件","textChars":4,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/3ydgryh4","slide":10,"name":"text-1-任务完成、达到资源上限或","text":"任务完成、达到资源上限或无法继续时，保存状态并停止","textPreview":"任务完成、达到资源上限或无法继续时，保存状态并停止","textChars":25,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/2x4zytgj","slide":10,"name":"text-2-10","text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/cnmh43yl","slide":10,"name":"text-3-比较每轮代码修改与测试结","text":"比较每轮代码修改与测试结果，判断是否真正解决了问题。","textPreview":"比较每轮代码修改与测试结果，判断是否真正解决了问题。","textChars":26,"textLines":1,"bbox":[66,609,1150,45]}
+{"kind":"table","id":"tb/cnmpofe9","slide":10,"name":"","rows":5,"cols":3,"preview":"状态 | 停止原因 | 保存内容","bbox":[64,217,1152,340]}
+{"kind":"notes","id":"nt/u8buk3","slide":10,"text":"SUCCESS 表示所有必需检查已执行且通过，报告对应当前代码版本。BUDGET 表示次数、总时长或费用达到上限。STALLED 表示连续多轮未解决问题，例如相同测试一直失败且没有新的可行修改方法。BLOCKED 表示缺少设备、权限或其他依赖，或无法取得完整检查结果。转交人工时列出已完成修改、剩余问题、检查报告和恢复所需条件。"}
+{"kind":"slide","id":"sl/zasdtc","slide":11,"title":"伪代码：初始化与资源检查","textShapes":16}
+{"kind":"textbox","id":"sh/3e1gvyxw","slide":11,"name":"text-0-伪代码：初始化与资源检查","text":"伪代码：初始化与资源检查","textPreview":"伪代码：初始化与资源检查","textChars":12,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/4fah43eh","slide":11,"name":"text-1-1 / 3  读取已保存","text":"1 / 3  读取已保存状态，在调用前检查剩余预算","textPreview":"1 / 3  读取已保存状态，在调用前检查剩余预算","textChars":25,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/pgjyx8f2","slide":11,"name":"text-2-11","text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/u98fytwz","slide":11,"name":"text-3-# 读取已保存状态，核对","text":"# 读取已保存状态，核对当前代码和运行环境","textPreview":"# 读取已保存状态，核对当前代码和运行环境","textChars":21,"textLines":1,"bbox":[70,207,1140,34]}
+{"kind":"textbox","id":"sh/fahgryxk","slide":11,"name":"text-4-state = load","text":"state = load_and_reconcile(task_id)","textPreview":"state = load_and_reconcile(task_id)","textChars":35,"textLines":1,"bbox":[70,241,1140,34]}
+{"kind":"textbox","id":"sh/gbqx03e5","slide":11,"name":"text-5-accept = loc","text":"accept = lock_acceptance(spec)  # 执行期间不得降低验收标准","textPreview":"accept = lock_acceptance(spec)  # 执行期间不得降低验收标准","textChars":46,"textLines":1,"bbox":[70,275,1140,34]}
+{"kind":"textbox","id":"sh/hcjytofq","slide":11,"name":"text-6-for attempt ","text":"for attempt in state.attempt + 1..limits.max_rounds:","textPreview":"for attempt in state.attempt + 1..limits.max_rounds:","textChars":52,"textLines":1,"bbox":[70,309,1140,34]}
+{"kind":"textbox","id":"sh/e5czadwj","slide":11,"name":"text-7-    if not b","text":"    if not budget.can_start():  # 剩余额度不足时，不发起调用","textPreview":"if not budget.can_start():  # 剩余额度不足时，不发起调用","textChars":47,"textLines":1,"bbox":[70,343,1140,34]}
+{"kind":"textbox","id":"sh/z6lg3ix4","slide":11,"name":"text-8-        retu","text":"        return stop_and_save(BUDGET, state)","textPreview":"return stop_and_save(BUDGET, state)","textChars":43,"textLines":1,"bbox":[70,377,1140,34]}
+{"kind":"textbox","id":"sh/vehs3y9s","slide":11,"name":"text-9-    try:","text":"    try:","textPreview":"try:","textChars":8,"textLines":1,"bbox":[70,411,1140,34]}
+{"kind":"textbox","id":"sh/ad8ruts7","slide":11,"name":"text-10-        pers","text":"        persist_attempt(state, attempt)  # 调用前将轮次写入文件","textPreview":"persist_attempt(state, attempt)  # 调用前将轮次写入文件","textChars":53,"textLines":1,"bbox":[70,445,1140,34]}
+{"kind":"textbox","id":"sh/xgza5ory","slide":11,"name":"text-11-        resu","text":"        result = controlled_cycle(state, accept, limits)","textPreview":"result = controlled_cycle(state, accept, limits)","textChars":56,"textLines":1,"bbox":[70,479,1140,34]}
+{"kind":"textbox","id":"sh/wfqtwjad","slide":11,"name":"text-12-    catch Bu","text":"    catch BudgetLimit:         # 本轮中的某次调用所需额度不足","textPreview":"catch BudgetLimit:         # 本轮中的某次调用所需额度不足","textChars":47,"textLines":1,"bbox":[70,513,1140,34]}
+{"kind":"textbox","id":"sh/ji1s7y94","slide":11,"name":"text-13-        retu","text":"        return stop_and_save(BUDGET, state)","textPreview":"return stop_and_save(BUDGET, state)","textChars":43,"textLines":1,"bbox":[70,547,1140,34]}
+{"kind":"textbox","id":"sh/ih8bytsj","slide":11,"name":"text-14-    catch er","text":"    catch error:","textPreview":"catch error:","textChars":16,"textLines":1,"bbox":[70,581,1140,34]}
+{"kind":"textbox","id":"sh/5kja98ru","slide":11,"name":"text-15-        retu","text":"        return stop_and_save(BLOCKED, state, error)","textPreview":"return stop_and_save(BLOCKED, state, error)","textChars":51,"textLines":1,"bbox":[70,615,1140,34]}
+{"kind":"notes","id":"nt/zasdtc","slide":11,"text":"这三页伪代码表达控制流程，不是可直接执行的程序。accept 保存本次使用的验收标准版本。limits 包含最大轮数、总时限和 token 或费用上限。persist_attempt 在调用前把本轮计数写入状态文件，避免进程中断后恢复时重复获得执行次数。每个工具和模型调用都要在执行前登记预留预算，并设置超时及取消机制。第三页继续说明如何处理检查结果。"}
+{"kind":"slide","id":"sl/9ce7qw","slide":12,"title":"伪代码：执行与检查","textShapes":13}
+{"kind":"textbox","id":"sh/ihc76p4f","slide":12,"name":"text-0-伪代码：执行与检查","text":"伪代码：执行与检查","textPreview":"伪代码：执行与检查","textChars":9,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/5k3q1436","slide":12,"name":"text-1-2 / 3  每次工具和","text":"2 / 3  每次工具和模型调用都检查预算，并设置超时","textPreview":"2 / 3  每次工具和模型调用都检查预算，并设置超时","textChars":27,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/4jup8zml","slide":12,"name":"text-2-12","text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/ve18vulo","slide":12,"name":"text-3-function con","text":"function controlled_cycle(state, accept, limits):","textPreview":"function controlled_cycle(state, accept, limits):","textChars":49,"textLines":1,"bbox":[70,207,1140,34]}
+{"kind":"textbox","id":"sh/uds72p4j","slide":12,"name":"text-4-    facts = ","text":"    facts = safe_call(discover, state)  # 读取实际失败信息","textPreview":"facts = safe_call(discover, state)  # 读取实际失败信息","textChars":50,"textLines":1,"bbox":[70,241,1140,34]}
+{"kind":"textbox","id":"sh/hg3qxk3u","slide":12,"name":"text-5-    plan = s","text":"    plan = safe_call(plan_next, facts)  # 确定本轮修改及验证方法","textPreview":"plan = safe_call(plan_next, facts)  # 确定本轮修改及验证方法","textChars":53,"textLines":1,"bbox":[70,275,1140,34]}
+{"kind":"textbox","id":"sh/wfap4fm9","slide":12,"name":"text-6-    work = s","text":"    work = safe_call(execute, plan)    # 在独立工作区执行修改","textPreview":"work = safe_call(execute, plan)    # 在独立工作区执行修改","textChars":51,"textLines":1,"bbox":[70,309,1140,34]}
+{"kind":"textbox","id":"sh/fa587el8","slide":12,"name":"text-7-    verdict ","text":"    verdict = safe_call(verify, work, accept)","textPreview":"verdict = safe_call(verify, work, accept)","textChars":45,"textLines":1,"bbox":[70,343,1140,34]}
+{"kind":"textbox","id":"sh/e9w7e94n","slide":12,"name":"text-8-    # 每次 saf","text":"    # 每次 safe_call 都按以下规则执行","textPreview":"# 每次 safe_call 都按以下规则执行","textChars":27,"textLines":1,"bbox":[70,377,1140,34]}
+{"kind":"textbox","id":"sh/sfe50n25","slide":12,"name":"text-9-    # 调用前保存预","text":"    # 调用前保存预留额度，设置截止时间，并传递取消信号","textPreview":"# 调用前保存预留额度，设置截止时间，并传递取消信号","textChars":30,"textLines":1,"bbox":[70,411,1140,34]}
+{"kind":"textbox","id":"sh/dgnmtsjq","slide":12,"name":"text-10-    # 调用后记录实","text":"    # 调用后记录实际消耗，超时或故障时返回异常","textPreview":"# 调用后记录实际消耗，超时或故障时返回异常","textChars":26,"textLines":1,"bbox":[70,445,1140,34]}
+{"kind":"textbox","id":"sh/qdwnydkf","slide":12,"name":"text-11-    # verify","text":"    # verify 返回通过、失败或未知，并附上检查报告","textPreview":"# verify 返回通过、失败或未知，并附上检查报告","textChars":31,"textLines":1,"bbox":[70,479,1140,34]}
+{"kind":"textbox","id":"sh/re54ri10","slide":12,"name":"text-12-    return {","text":"    return {work, verdict}            # 返回修改内容和检查结果","textPreview":"return {work, verdict}            # 返回修改内容和检查结果","textChars":51,"textLines":1,"bbox":[70,513,1140,34]}
+{"kind":"notes","id":"nt/9ce7qw","slide":12,"text":"safe_call 封装统一的调用处理：检查并预留预算、执行操作、记录实际消耗，超时后取消操作。若子进程未响应取消信号，运行环境还需要终止该进程并确认它已经停止。代码修改在独立工作区进行，保存修改前的失败信息和修改后的文件。检查工具使用预先确定的验收标准，返回通过、失败或未知，并附上检查报告。"}
+{"kind":"slide","id":"sl/npq6ib","slide":13,"title":"伪代码：保存状态与判断停止","textShapes":14}
+{"kind":"textbox","id":"sh/sbyd83ax","slide":13,"name":"text-0-伪代码：保存状态与判断停","text":"伪代码：保存状态与判断停止","textPreview":"伪代码：保存状态与判断停止","textChars":13,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/rapwzy9c","slide":13,"name":"text-1-3 / 3  保存检查结","text":"3 / 3  保存检查结果，并确定继续修改还是停止","textPreview":"3 / 3  保存检查结果，并确定继续修改还是停止","textChars":25,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/69gv6tsr","slide":13,"name":"text-2-13","text":"13","textPreview":"13","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/1gre5sre","slide":13,"name":"text-3-    state = ","text":"    state = merge(state, result, attempt)  # 记录检查结果与轮次","textPreview":"state = merge(state, result, attempt)  # 记录检查结果与轮次","textChars":54,"textLines":1,"bbox":[70,207,1140,34]}
+{"kind":"textbox","id":"sh/gfydcnat","slide":13,"name":"text-4-    atomic_s","text":"    atomic_save(state)                    # 先写临时文件，再替换","textPreview":"atomic_save(state)                    # 先写临时文件，再替换","textChars":54,"textLines":1,"bbox":[70,241,1140,34]}
+{"kind":"textbox","id":"sh/fepw3i9o","slide":13,"name":"text-5-    if accep","text":"    if accepts(result, accept):           # 所有必需检查已经通过","textPreview":"if accepts(result, accept):           # 所有必需检查已经通过","textChars":54,"textLines":1,"bbox":[70,275,1140,34]}
+{"kind":"textbox","id":"sh/edgvads3","slide":13,"name":"text-6-        retu","text":"        return stop_and_save(SUCCESS, state)","textPreview":"return stop_and_save(SUCCESS, state)","textChars":44,"textLines":1,"bbox":[70,309,1140,34]}
+{"kind":"textbox","id":"sh/p4re9srq","slide":13,"name":"text-7-    if resul","text":"    if result.verdict == UNKNOWN:         # 未执行不能算通过","textPreview":"if result.verdict == UNKNOWN:         # 未执行不能算通过","textChars":52,"textLines":1,"bbox":[70,343,1140,34]}
+{"kind":"textbox","id":"sh/o3ixgnq5","slide":13,"name":"text-8-        retu","text":"        return stop_and_save(BLOCKED, state)","textPreview":"return stop_and_save(BLOCKED, state)","textChars":44,"textLines":1,"bbox":[70,377,1140,34]}
+{"kind":"textbox","id":"sh/ytsfm5wz","slide":13,"name":"text-9-    if no_pr","text":"    if no_progress(state):                # 连续多轮未解决问题","textPreview":"if no_progress(state):                # 连续多轮未解决问题","textChars":53,"textLines":1,"bbox":[70,411,1140,34]}
+{"kind":"textbox","id":"sh/ze1gvqdk","slide":13,"name":"text-10-        retu","text":"        return stop_and_save(STALLED, state)","textPreview":"return stop_and_save(STALLED, state)","textChars":44,"textLines":1,"bbox":[70,445,1140,34]}
+{"kind":"textbox","id":"sh/kfaxove5","slide":13,"name":"text-11-    # 否则，下一轮","text":"    # 否则，下一轮根据失败原因确定修改内容","textPreview":"# 否则，下一轮根据失败原因确定修改内容","textChars":24,"textLines":1,"bbox":[70,479,1140,34]}
+{"kind":"textbox","id":"sh/lgjyx0vq","slide":13,"name":"text-12-return stop_","text":"return stop_and_save(BUDGET, state)        # 轮次耗尽也保存","textPreview":"return stop_and_save(BUDGET, state)        # 轮次耗尽也保存","textChars":52,"textLines":1,"bbox":[70,513,1140,34]}
+{"kind":"textbox","id":"sh/mhsfq5wv","slide":13,"name":"text-13-# stop_and_s","text":"# stop_and_save：保存状态，报告结果和下一步建议","textPreview":"# stop_and_save：保存状态，报告结果和下一步建议","textChars":31,"textLines":1,"bbox":[70,547,1140,34]}
+{"kind":"notes","id":"nt/npq6ib","slide":13,"text":"此处接着第 11 页成功取得 result 后的循环体执行。accepts 检查报告是否对应当前代码和验收标准，所有必需测试是否已经执行且通过。no_progress 根据相同标准下的代码差异、失败用例和已试方法判断是否连续多轮没有解决问题。atomic_save 先完整写入临时文件，再一次性替换旧状态文件，这称为原子保存。停止时保存状态并输出报告，保存失败时报告错误并停止修改。"}
+{"kind":"slide","id":"sl/wqudzh","slide":14,"title":"教学案例：UART 流式协议解析","textShapes":4}
+{"kind":"textbox","id":"sh/zulwj6pw","slide":14,"name":"text-0-教学案例：UART 流式","text":"教学案例：UART 流式协议解析","textPreview":"教学案例：UART 流式协议解析","textChars":16,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/0vuxsbqh","slide":14,"name":"text-1-目标：按既定协议正确处理","text":"目标：按既定协议正确处理分片输入和连续多帧输入","textPreview":"目标：按既定协议正确处理分片输入和连续多帧输入","textChars":23,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/1w3elg72","slide":14,"name":"text-2-14","text":"14","textPreview":"14","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/ny5wn6p8","slide":14,"name":"text-3-CRC 参数、字节序和最","text":"CRC 参数、字节序和最大载荷需在协议规格中提前确定。","textPreview":"CRC 参数、字节序和最大载荷需在协议规格中提前确定。","textChars":27,"textLines":1,"bbox":[65,613,1148,43]}
+{"kind":"table","id":"tb/vixcbq1o","slide":14,"name":"","rows":6,"cols":2,"preview":"项目 | 具体要求","bbox":[64,217,1152,365]}
+{"kind":"notes","id":"nt/wqudzh","slide":14,"text":"本案例为教学假设，未对真实代码或硬件执行测试。分片指一帧的数据分多次到达，粘包指一次接收中含有多帧数据。协议假设包含两字节同步头、长度字段、可变载荷和两字节 CRC。实际 CRC 多项式、初值、反射设置、长度含义和最大载荷应在协议规格中确定，不能由模型猜测。中断服务程序向任务传递数据的过程，以及板端吞吐率，还需要单独测试。"}
+{"kind":"slide","id":"sl/u9ymo2","slide":15,"title":"UART 示例：三轮修改过程","textShapes":4}
+{"kind":"textbox","id":"sh/1knyxgz2","slide":15,"name":"text-0-UART 示例：三轮修改","text":"UART 示例：三轮修改过程","textPreview":"UART 示例：三轮修改过程","textChars":14,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/ehwfm10b","slide":15,"name":"text-1-按失败原因逐项修改，每轮","text":"按失败原因逐项修改，每轮重新运行测试（教学假设）","textPreview":"按失败原因逐项修改，每轮重新运行测试（教学假设）","textChars":24,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/zi5gv6hw","slide":15,"name":"text-2-15","text":"15","textPreview":"15","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/dw3ytwzq","slide":15,"name":"text-3-每轮记录代码修改、测试结","text":"每轮记录代码修改、测试结果、剩余问题和下一轮任务。","textPreview":"每轮记录代码修改、测试结果、剩余问题和下一轮任务。","textChars":25,"textLines":1,"bbox":[65,602,1148,48]}
+{"kind":"table","id":"tb/p47u5grq","slide":15,"name":"","rows":4,"cols":4,"preview":"轮次 | 本轮问题 | 修改内容 | 本轮验证内容","bbox":[64,234,1152,312]}
+{"kind":"notes","id":"nt/u9ymo2","slide":15,"text":"第一轮处理未收齐的帧被丢弃的问题。第二轮在读取载荷或 CRC 前检查长度和缓冲区边界。第三轮处理错误帧后无法恢复解析的问题。每轮都重新运行分片、粘包和之前已通过的回归用例，防止新修改破坏原有功能。失败用例减少时，还要确认测试没有被删除或降低要求。"}
+{"kind":"slide","id":"sl/ecc9nd","slide":16,"title":"主机测试与板端测试","textShapes":8}
+{"kind":"textbox","id":"sh/sju50j6p","slide":16,"name":"text-0-主机测试与板端测试","text":"主机测试与板端测试","textPreview":"主机测试与板端测试","textChars":9,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/7il4rep4","slide":16,"name":"text-1-主机测试检查解析逻辑，板","text":"主机测试检查解析逻辑，板端测试检查实际设备行为","textPreview":"主机测试检查解析逻辑，板端测试检查实际设备行为","textChars":23,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/6hcny9oj","slide":16,"name":"text-2-16","text":"16","textPreview":"16","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/h8nmxo76","slide":16,"name":"text-3-主机侧检查内容","text":"主机侧检查内容","textPreview":"主机侧检查内容","textChars":7,"textLines":1,"bbox":[68,224,530,50]}
+{"kind":"textbox","id":"sh/g7e5436l","slide":16,"name":"text-4-分片、粘包与非法输入\n内","text":"分片、粘包与非法输入\n内存边界与协议回归\n构建与静态检查","textPreview":"分片、粘包与非法输入 | 内存边界与协议回归 | 构建与静态检查","textChars":28,"textLines":3,"bbox":[68,304,530,190]}
+{"kind":"textbox","id":"sh/f654vyp0","slide":16,"name":"text-5-板端检查内容","text":"板端检查内容","textPreview":"板端检查内容","textChars":6,"textLines":1,"bbox":[685,224,530,50]}
+{"kind":"textbox","id":"sh/u5cn2tov","slide":16,"name":"text-6-中断与任务之间的数据传递","text":"中断与任务之间的数据传递\nDMA / 缓冲区并发行为\n复位恢复、吞吐与时序","textPreview":"中断与任务之间的数据传递 | DMA / 缓冲区并发行为 | 复位恢复、吞吐与时序","textChars":37,"textLines":3,"bbox":[685,304,530,190]}
+{"kind":"textbox","id":"sh/xcjml472","slide":16,"name":"text-7-设备不可用时，保存软件测","text":"设备不可用时，保存软件测试报告，并列出待执行的板端检查。","textPreview":"设备不可用时，保存软件测试报告，并列出待执行的板端检查。","textChars":28,"textLines":1,"bbox":[68,598,1146,56]}
+{"kind":"notes","id":"nt/ecc9nd","slide":16,"text":"解析逻辑可以用主机侧测试检查。中断时序、DMA 缓冲区复用、任务同步和实际吞吐率，还需要在目标板运行测试。协议字节序、CRC 和内存访问边界也要在目标编译环境核对。没有板卡或测试适配器时，应记录“软件验证通过，板端待验证”。如果任务验收包含板端测试，整项任务仍未完成。"}
+{"kind":"slide","id":"sl/s4ysuy","slide":17,"title":"循环执行的成本","textShapes":5}
+{"kind":"textbox","id":"sh/p4be14jm","slide":17,"name":"text-0-循环执行的成本","text":"循环执行的成本","textPreview":"循环执行的成本","textChars":7,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/2hkvqp0b","slide":17,"name":"text-1-统计模型、工具和人工费用","text":"统计模型、工具和人工费用，再计算每项完成任务的成本","textPreview":"统计模型、工具和人工费用，再计算每项完成任务的成本","textChars":25,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/32twzu1w","slide":17,"name":"text-2-17","text":"17","textPreview":"17","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/1gbex4jq","slide":17,"name":"text-3-教学假设：5 次调用，仅","text":"教学假设：5 次调用，仅计算输入，不含缓存、输出与工具。","textPreview":"教学假设：5 次调用，仅计算输入，不含缓存、输出与工具。","textChars":28,"textLines":1,"bbox":[66,473,1146,46]}
+{"kind":"textbox","id":"sh/ed0vmp0z","slide":17,"name":"text-4-每项完成任务的成本 =（","text":"每项完成任务的成本 =（模型 + 工具 + 人工费用）÷ 完成任务数","textPreview":"每项完成任务的成本 =（模型 + 工具 + 人工费用）÷ 完成任务数","textChars":34,"textLines":1,"bbox":[66,557,1148,60]}
+{"kind":"table","id":"tb/pc3qdcjq","slide":17,"name":"","rows":3,"cols":3,"preview":"每轮输入的组织方式 | 第 1 至 5 次调用，千 token | 累计输入","bbox":[64,225,1152,226]}
+{"kind":"notes","id":"nt/s4ysuy","slide":17,"text":"token 是模型处理文本的计量单位。表中数字为教学假设，未对具体工具实测。假设调用五次，不使用缓存或压缩，只比较输入 token 数量。输出 token、工具运行和人工复核需要另外统计。实际费用取决于模型价格、缓存和调用次数。是否划算还应与任务价值和原来的人工成本比较，没有统一的验收通过率阈值。"}
+{"kind":"slide","id":"sl/altb5f","slide":18,"title":"常见问题与处理方法","textShapes":3}
+{"kind":"textbox","id":"sh/y10vqpc7","slide":18,"name":"text-0-常见问题与处理方法","text":"常见问题与处理方法","textPreview":"常见问题与处理方法","textChars":9,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/l4re1kvi","slide":18,"name":"text-1-根据具体问题，修改检查、","text":"根据具体问题，修改检查、重试或恢复方式","textPreview":"根据具体问题，修改检查、重试或恢复方式","textChars":19,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/k3idszux","slide":18,"name":"text-2-18","text":"18","textPreview":"18","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"table","id":"tb/m5wz618n","slide":18,"name":"","rows":6,"cols":3,"preview":"问题 | 具体表现 | 处理方式","bbox":[64,215,1152,390]}
+{"kind":"notes","id":"nt/altb5f","slide":18,"text":"相同失败持续出现时，需要停止重复修改，检查原因或转交人工。执行过程中修改原定验收标准，需要单独审查。恢复任务时核对报告是否对应当前文件版本。多个任务同时工作时使用独立工作区，或按顺序执行。唯一操作编号用于识别重复请求，任务锁用于防止同一任务被同时执行。具体配置应按项目要求确定。"}
+{"kind":"slide","id":"sl/duab5q","slide":19,"title":"闭环的搭建顺序","textShapes":15}
+{"kind":"textbox","id":"sh/oraporqx","slide":19,"name":"text-0-闭环的搭建顺序","text":"闭环的搭建顺序","textPreview":"闭环的搭建顺序","textChars":7,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/nq1ovmps","slide":19,"name":"text-1-先手动验证完整流程，再配","text":"先手动验证完整流程，再配置循环执行与定时启动","textPreview":"先手动验证完整流程，再配置循环执行与定时启动","textChars":22,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/2ps7mh87","slide":19,"name":"text-2-19","text":"19","textPreview":"19","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/xg361w7u","slide":19,"name":"text-3-01","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[68,211,72,55]}
+{"kind":"textbox","id":"sh/wfupsrq9","slide":19,"name":"text-4-手动完成一次任务","text":"手动完成一次任务","textPreview":"手动完成一次任务","textChars":8,"textLines":1,"bbox":[162,211,1000,44]}
+{"kind":"textbox","id":"sh/bulozmpo","slide":19,"name":"text-5-明确输入、操作步骤和验收","text":"明确输入、操作步骤和验收方法，保存检查报告。","textPreview":"明确输入、操作步骤和验收方法，保存检查报告。","textChars":22,"textLines":1,"bbox":[163,257,1020,48]}
+{"kind":"textbox","id":"sh/atc7qh83","slide":19,"name":"text-6-02","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[68,314,72,55]}
+{"kind":"textbox","id":"sh/lk3q5w7q","slide":19,"name":"text-7-将步骤写为 Skill","text":"将步骤写为 Skill","textPreview":"将步骤写为 Skill","textChars":11,"textLines":1,"bbox":[162,314,1000,44]}
+{"kind":"textbox","id":"sh/kjupwb65","slide":19,"name":"text-8-保存可复用步骤、允许的操","text":"保存可复用步骤、允许的操作范围和错误处理方法。","textPreview":"保存可复用步骤、允许的操作范围和错误处理方法。","textChars":23,"textLines":1,"bbox":[163,360,1020,48]}
+{"kind":"textbox","id":"sh/ah0fmxw3","slide":19,"name":"text-9-03","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[68,417,72,55]}
+{"kind":"textbox","id":"sh/b2tgf2d8","slide":19,"name":"text-10-配置循环执行与停止条件","text":"配置循环执行与停止条件","textPreview":"配置循环执行与停止条件","textChars":11,"textLines":1,"bbox":[162,417,1000,44]}
+{"kind":"textbox","id":"sh/c32xo7et","slide":19,"name":"text-11-加入检查、状态保存、资源","text":"加入检查、状态保存、资源限制和人工处理步骤。","textPreview":"加入检查、状态保存、资源限制和人工处理步骤。","textChars":22,"textLines":1,"bbox":[163,463,1020,48]}
+{"kind":"textbox","id":"sh/x4byhcve","slide":19,"name":"text-12-04","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[68,520,72,55]}
+{"kind":"textbox","id":"sh/y5kfqhwz","slide":19,"name":"text-13-设置事件触发或定时启动","text":"设置事件触发或定时启动","textPreview":"设置事件触发或定时启动","textChars":11,"textLines":1,"bbox":[162,520,1000,44]}
+{"kind":"textbox","id":"sh/z6tgjmdk","slide":19,"name":"text-14-连续试运行，记录完成情况","text":"连续试运行，记录完成情况、费用和失败原因。","textPreview":"连续试运行，记录完成情况、费用和失败原因。","textChars":21,"textLines":1,"bbox":[163,566,1020,48]}
+{"kind":"notes","id":"nt/duab5q","slide":19,"text":"先选择修改范围小、容易验证的任务，例如修复某个模块的构建失败。手动完成一次执行、检查和错误处理，确认流程可以使用。然后把步骤写为 Skill 文件，再加入自动检查、状态保存和停止条件。多次运行可靠后，可以设置事件触发或定时启动。试运行时记录完成比例、每项完成任务的费用、人工处理次数和故障原因。"}
+{"kind":"slide","id":"sl/vnzqsv","slide":20,"title":"首次试运行的配置内容","textShapes":7}
+{"kind":"textbox","id":"sh/ilwfatgr","slide":20,"name":"text-0-首次试运行的配置内容","text":"首次试运行的配置内容","textPreview":"首次试运行的配置内容","textChars":10,"textLines":1,"bbox":[64,48,1152,80]}
+{"kind":"textbox","id":"sh/5o7y58fi","slide":20,"name":"text-1-选择一个具体任务，明确验","text":"选择一个具体任务，明确验收标准、重试方式和停止条件","textPreview":"选择一个具体任务，明确验收标准、重试方式和停止条件","textChars":25,"textLines":1,"bbox":[66,135,1148,54]}
+{"kind":"textbox","id":"sh/knexc3yx","slide":20,"name":"text-2-20","text":"20","textPreview":"20","textChars":2,"textLines":1,"bbox":[1170,670,48,30]}
+{"kind":"textbox","id":"sh/7qpg7yx8","slide":20,"name":"text-3-验收：运行哪些检查，怎样","text":"验收：运行哪些检查，怎样算通过","textPreview":"验收：运行哪些检查，怎样算通过","textChars":15,"textLines":1,"bbox":[70,239,1130,76]}
+{"kind":"textbox","id":"sh/6pgfetg3","slide":20,"name":"text-4-重试：根据失败原因确定下","text":"重试：根据失败原因确定下一轮修改","textPreview":"重试：根据失败原因确定下一轮修改","textChars":16,"textLines":1,"bbox":[70,344,1130,76]}
+{"kind":"textbox","id":"sh/ts7y98fe","slide":20,"name":"text-5-停止：定义次数、时间和资","text":"停止：定义次数、时间和资源上限","textPreview":"停止：定义次数、时间和资源上限","textChars":15,"textLines":1,"bbox":[70,449,1130,76]}
+{"kind":"textbox","id":"sh/sryxg3yt","slide":20,"name":"text-6-执行后保存修改内容、检查","text":"执行后保存修改内容、检查报告、剩余问题和下一步操作。","textPreview":"执行后保存修改内容、检查报告、剩余问题和下一步操作。","textChars":26,"textLines":1,"bbox":[71,597,1130,57]}
+{"kind":"notes","id":"nt/vnzqsv","slide":20,"text":"首次试运行需要明确验收检查、失败后的处理方法和停止条件。选择一个真实任务，写明输入、允许调用的工具、需要输出的文件和检查方法。执行结束后保存代码修改、检查报告及剩余问题。配套 HTML 包含步骤说明、模拟器、完整伪代码和配置清单。"}

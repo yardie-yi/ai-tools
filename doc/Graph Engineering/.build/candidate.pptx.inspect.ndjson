@@ -1,0 +1,216 @@
+{"kind":"deck","id":"pr/ym7ez8","name":"Deck"}
+{"kind":"layout","layoutId":"7df32b90-04a8-446c-b1b0-3b533a362e12","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"0ec97e47-b4b3-4950-97d3-a93047107543","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/rkr4yn","slide":1,"title":"Graph Engineering","textShapes":6}
+{"kind":"textbox","id":"sh/wfeh0nmh","slide":1,"text":"Graph Engineering","textPreview":"Graph Engineering","textChars":17,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/vulgrilw","slide":1,"text":"中文技术分享","textPreview":"中文技术分享","textChars":6,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/utczyd4r","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/9s3yp836","slide":1,"text":"AI Agent 工作流的依赖、并行与验证","textPreview":"AI Agent 工作流的依赖、并行与验证","textChars":21,"textLines":1,"bbox":[72,204,1090,140]}
+{"kind":"textbox","id":"sh/8ruhwnml","slide":1,"text":"让任务按真实依赖执行，让结论经得起外部检验。","textPreview":"让任务按真实依赖执行，让结论经得起外部检验。","textChars":22,"textLines":1,"bbox":[74,393,1100,100]}
+{"kind":"textbox","id":"sh/7qlgnil0","slide":1,"text":"以代码审查和嵌入式开发为例","textPreview":"以代码审查和嵌入式开发为例","textChars":13,"textLines":1,"bbox":[74,558,1080,76]}
+{"kind":"notes","id":"nt/rkr4yn","slide":1,"text":"开场：今天的主题是如何组织AI工作的依赖关系。听众应能画出自己的工作流，区分可并行任务和必须等待的步骤，并为汇总结果定义验收条件。约25分钟分享，可在第6页切到配套HTML演示延迟，在第11页演示静默失败。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/bag83v","slide":2,"title":"单次调用、循环与图","textShapes":11}
+{"kind":"textbox","id":"sh/behw72lo","slide":2,"text":"单次调用、循环与图","textPreview":"单次调用、循环与图","textChars":9,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/wfqx07m9","slide":2,"text":"概念讲解 + 概念补充","textPreview":"概念讲解 + 概念补充","textChars":11,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/xgze9c3u","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/yh8f2h4f","slide":2,"text":"单次调用","textPreview":"单次调用","textChars":4,"textLines":1,"bbox":[70,172,310,58]}
+{"kind":"textbox","id":"sh/ji1gbml0","slide":2,"text":"一个请求得到一个结果，适合边界清楚的小任务。","textPreview":"一个请求得到一个结果，适合边界清楚的小任务。","textChars":22,"textLines":1,"bbox":[410,172,795,86]}
+{"kind":"textbox","id":"sh/kjax47ml","slide":2,"text":"循环 Loop","textPreview":"循环 Loop","textChars":7,"textLines":1,"bbox":[70,284,310,58]}
+{"kind":"textbox","id":"sh/lkjydc36","slide":2,"text":"产出、检查、修正，直到满足标准或触及上限。","textPreview":"产出、检查、修正，直到满足标准或触及上限。","textChars":21,"textLines":1,"bbox":[410,284,795,86]}
+{"kind":"textbox","id":"sh/elofqd4b","slide":2,"text":"依赖图 Graph","textPreview":"依赖图 Graph","textChars":9,"textLines":1,"bbox":[70,396,310,58]}
+{"kind":"textbox","id":"sh/fmxwzi5w","slide":2,"text":"明确多个任务的依赖，安排分支、汇合和反馈。","textPreview":"明确多个任务的依赖，安排分支、汇合和反馈。","textChars":21,"textLines":1,"bbox":[410,396,795,86]}
+{"kind":"textbox","id":"sh/r6lk3yl8","slide":2,"text":"图中的循环","textPreview":"图中的循环","textChars":5,"textLines":1,"bbox":[70,508,310,58]}
+{"kind":"textbox","id":"sh/qlcjutkn","slide":2,"text":"各分支可以独立迭代，汇合后仍需检查全局一致性。","textPreview":"各分支可以独立迭代，汇合后仍需检查全局一致性。","textChars":23,"textLines":1,"bbox":[410,508,795,86]}
+{"kind":"notes","id":"nt/bag83v","slide":2,"text":"将loop扩展为graph of loops。单次调用、串行链和循环都可以包含在执行图里。这里按工程复杂度解释，不是彼此取代的时代划分。图不一定是DAG，如果有反馈边就有环。用于耗时估计和调度时可以将局部循环限定次数或封装为有界节点。本文的Graph Engineering是工作流设计方法，并不要求图数据库。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/c8vu79","slide":3,"title":"节点与边","textShapes":8}
+{"kind":"textbox","id":"sh/83e1svix","slide":3,"text":"节点与边","textPreview":"节点与边","textChars":4,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/72l0za1c","slide":3,"text":"概念讲解","textPreview":"概念讲解","textChars":4,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/m1cjq507","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/wre1wfi9","slide":3,"text":"节点 Node","textPreview":"节点 Node","textChars":7,"textLines":1,"bbox":[70,193,350,54]}
+{"kind":"textbox","id":"sh/vq503a1o","slide":3,"text":"一个职责明确的任务\n可以由模型或代码执行","textPreview":"一个职责明确的任务 | 可以由模型或代码执行","textChars":20,"textLines":2,"bbox":[70,255,350,106]}
+{"kind":"textbox","id":"sh/upwju503","slide":3,"text":"边 Edge","textPreview":"边 Edge","textChars":6,"textLines":1,"bbox":[70,390,350,52]}
+{"kind":"textbox","id":"sh/5w7i9kjq","slide":3,"text":"传递结果或约束顺序\n下游满足条件后启动","textPreview":"传递结果或约束顺序 | 下游满足条件后启动","textChars":19,"textLines":2,"bbox":[70,454,350,106]}
+{"kind":"textbox","id":"sh/4vy10fi5","slide":3,"text":"本次讨论执行依赖图。知识图谱描述实体与事实关系。","textPreview":"本次讨论执行依赖图。知识图谱描述实体与事实关系。","textChars":24,"textLines":1,"bbox":[70,607,1140,40]}
+{"kind":"image","id":"im/4fix8f21","slide":3,"name":"","alt":"Graph Engineering 概念图","bbox":[450,167,760,430]}
+{"kind":"notes","id":"nt/c8vu79","slide":3,"text":"将节点描述为一个任务，将边描述为上游输出进入下游输入。工程补充：节点也可以是确定性代码、工具调用或人工检查，并非每个节点都需要模型。此处是执行依赖图；知识图谱的节点通常是实体、边是事实关系。两者可以结合，但解决的问题不同。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/u7s537","slide":4,"title":"节点契约","textShapes":11}
+{"kind":"textbox","id":"sh/kfex47il","slide":4,"text":"节点契约","textPreview":"节点契约","textChars":4,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/je5wb2hg","slide":4,"text":"方法说明 + 教学示例","textPreview":"方法说明 + 教学示例","textChars":11,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/idwf2x0v","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/t47ehczi","slide":4,"text":"职责","textPreview":"职责","textChars":2,"textLines":1,"bbox":[70,170,310,58]}
+{"kind":"textbox","id":"sh/s3ex8rix","slide":4,"text":"审查一个源文件的错误处理，只提交发现与证据。","textPreview":"审查一个源文件的错误处理，只提交发现与证据。","textChars":22,"textLines":1,"bbox":[410,170,795,86]}
+{"kind":"textbox","id":"sh/725wfmhc","slide":4,"text":"输入","textPreview":"输入","textChars":2,"textLines":1,"bbox":[70,272,310,58]}
+{"kind":"textbox","id":"sh/61wf6h0r","slide":4,"text":"job_id、commit、file、审查规则和只读权限。","textPreview":"job_id、commit、file、审查规则和只读权限。","textChars":29,"textLines":1,"bbox":[410,272,795,86]}
+{"kind":"textbox","id":"sh/h87elwze","slide":4,"text":"输出","textPreview":"输出","textChars":2,"textLines":1,"bbox":[70,374,310,58]}
+{"kind":"textbox","id":"sh/g7yxcrit","slide":4,"text":"status、findings[]、evidence、error、attempt。","textPreview":"status、findings[]、evidence、error、attempt。","textChars":41,"textLines":1,"bbox":[410,374,795,86]}
+{"kind":"textbox","id":"sh/u583qp4r","slide":4,"text":"{ job_id: \"J07\", status: \"ok\", findings: [] }","textPreview":"{ job_id: \"J07\", status: \"ok\", findings: [] }","textChars":45,"textLines":1,"bbox":[72,510,1140,55]}
+{"kind":"textbox","id":"sh/v6h4zu5c","slide":4,"text":"空 findings 表示检查后无发现。没有返回结果需要单独报错。","textPreview":"空 findings 表示检查后无发现。没有返回结果需要单独报错。","textChars":33,"textLines":1,"bbox":[72,581,1140,50]}
+{"kind":"notes","id":"nt/u7s537","slide":4,"text":"一个节点必须有受约束的任务、明确输入和固定输出形状。以下是工程教学示例。输入以不可变commit固定代码版本。输出将finding与执行status分开，无发现不等于没运行。生产中还需校验字段、枚举、来源存在性，失败时有限重试。schema正确只是结构正确，不保证结论真实。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/9zqwh0","slide":5,"title":"虚假依赖测试","textShapes":6}
+{"kind":"textbox","id":"sh/b2x8jit0","slide":5,"text":"虚假依赖测试","textPreview":"虚假依赖测试","textChars":6,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/w3qpcnal","slide":5,"text":"概念讲解","textPreview":"概念讲解","textChars":4,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/x4zql8b6","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/nex8fyt4","slide":5,"text":"B 要消费\nA 的结果吗？","textPreview":"B 要消费 | A 的结果吗？","textChars":13,"textLines":2,"bbox":[70,201,346,110]}
+{"kind":"textbox","id":"sh/of6p83ap","slide":5,"text":"需要：保留先后顺序。\n\n不需要：再检查共享资源，\n确认后才并行。","textPreview":"需要：保留先后顺序。 |  | 不需要：再检查共享资源， | 确认后才并行。","textChars":32,"textLines":4,"bbox":[70,341,348,198]}
+{"kind":"textbox","id":"sh/9gfqh8ba","slide":5,"text":"边的存在应当有理由：数据、控制条件或资源约束。","textPreview":"边的存在应当有理由：数据、控制条件或资源约束。","textChars":23,"textLines":1,"bbox":[70,608,1140,40]}
+{"kind":"image","id":"im/v2x0jmxs","slide":5,"name":"","alt":"Graph Engineering 概念图","bbox":[440,154,770,433]}
+{"kind":"notes","id":"nt/9zqwh0","slide":5,"text":"提出：后一个任务是否真正需要前一个任务的结果？例子是分别审查文件A和B。这里的关键补充是共用文件、API配额、硬件等资源也会形成约束。没有数据依赖只说明有并行的可能，还不能直接证明运行时无冲突。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/quqhq3","slide":6,"title":"并行收益取决于关键路径","textShapes":9}
+{"kind":"textbox","id":"sh/zat0bq5o","slide":6,"text":"并行收益取决于关键路径","textPreview":"并行收益取决于关键路径","textChars":11,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/0b2h4vm9","slide":6,"text":"工程推导 · 理想化教学数值","textPreview":"工程推导 · 理想化教学数值","textChars":14,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/lcbidgnu","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/mdkz6l4f","slide":6,"text":"准备 5s    独立任务 20s / 30s / 40s    汇总 10s","textPreview":"准备 5s    独立任务 20s / 30s / 40s    汇总 10s","textChars":39,"textLines":1,"bbox":[70,177,1140,60]}
+{"kind":"textbox","id":"sh/net0fq50","slide":6,"text":"105s","textPreview":"105s","textChars":4,"textLines":1,"bbox":[70,277,480,118]}
+{"kind":"textbox","id":"sh/8f2h8vml","slide":6,"text":"串行：5 + 20 + 30 + 40 + 10","textPreview":"串行：5 + 20 + 30 + 40 + 10","textChars":24,"textLines":1,"bbox":[70,420,530,60]}
+{"kind":"textbox","id":"sh/9gvih0nq","slide":6,"text":"55s","textPreview":"55s","textChars":3,"textLines":1,"bbox":[720,277,490,118]}
+{"kind":"textbox","id":"sh/2h0zu1ob","slide":6,"text":"理想并行：5 + max(20, 30, 40) + 10","textPreview":"理想并行：5 + max(20, 30, 40) + 10","textChars":29,"textLines":1,"bbox":[650,420,565,70]}
+{"kind":"textbox","id":"sh/3i90365g","slide":6,"text":"加入 15s 额外协调开销后为 70s。并发上限和资源争用还会增加耗时。","textPreview":"加入 15s 额外协调开销后为 70s。并发上限和资源争用还会增加耗时。","textChars":36,"textLines":1,"bbox":[70,554,1140,77]}
+{"kind":"notes","id":"nt/quqhq3","slide":6,"text":"工程推导，不是性能实测。假设先做准备5秒，再执行三个互相独立的任务，耗时分别为20、30、40秒，最后汇总10秒。资源足够且无额外调度开销时，串行105秒，并行55秒，约1.91倍。若并行新增协调开销15秒，则70秒，约1.50倍。一般DAG的无资源争用下界是关键路径长度，有限并发还受总工作量/并发数约束。循环需先设定展开范围。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/nhl7x0","slide":7,"title":"菱形工作流","textShapes":6}
+{"kind":"textbox","id":"sh/ji5oj2l0","slide":7,"text":"菱形工作流","textPreview":"菱形工作流","textChars":5,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/kje5sn2l","slide":7,"text":"概念讲解","textPreview":"概念讲解","textChars":4,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/lkn6ls36","slide":7,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/belofil4","slide":7,"text":"分发 Fan-out\n让独立任务同时进行","textPreview":"分发 Fan-out | 让独立任务同时进行","textChars":20,"textLines":2,"bbox":[70,186,300,103]}
+{"kind":"textbox","id":"sh/wfu5onmp","slide":7,"text":"归并 Reduce\n用代码整理和去重","textPreview":"归并 Reduce | 用代码整理和去重","textChars":18,"textLines":2,"bbox":[70,335,300,103]}
+{"kind":"textbox","id":"sh/xg36hs3a","slide":7,"text":"综合 Synthesize\n基于证据形成报告","textPreview":"综合 Synthesize | 基于证据形成报告","textChars":22,"textLines":2,"bbox":[70,483,300,107]}
+{"kind":"image","id":"im/byp4zqlo","slide":7,"name":"","alt":"Graph Engineering 概念图","bbox":[395,157,815,460]}
+{"kind":"notes","id":"nt/nhl7x0","slide":7,"text":"的核心模式是fan out、reduce、synthesize，并在汇总前加入验证。拆分任务后，不同worker处理互补角度。普通代码完成去重和结构化整理。独立验证者核查证据。最后汇总通过检查的结果，但报告仍须披露失败任务和未验证结论。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/ee14vr","slide":8,"title":"汇总前的数据整理","textShapes":11}
+{"kind":"textbox","id":"sh/bytszqdk","slide":8,"text":"汇总前的数据整理","textPreview":"汇总前的数据整理","textChars":8,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/wz2tsvu5","slide":8,"text":"方法说明 + 工程补充","textPreview":"方法说明 + 工程补充","textChars":11,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/x0ba10va","slide":8,"text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/y1kbu5cv","slide":8,"text":"先校验","textPreview":"先校验","textChars":3,"textLines":1,"bbox":[70,173,310,58]}
+{"kind":"textbox","id":"sh/j2ts3qdg","slide":8,"text":"job_id 是否匹配？格式和状态是否合法？","textPreview":"job_id 是否匹配？格式和状态是否合法？","textChars":22,"textLines":1,"bbox":[410,173,795,86]}
+{"kind":"textbox","id":"sh/k32twvu1","slide":8,"text":"再去重","textPreview":"再去重","textChars":3,"textLines":1,"bbox":[70,283,310,58]}
+{"kind":"textbox","id":"sh/l4va50vm","slide":8,"text":"按文件位置与问题规则等业务键合并重复发现。","textPreview":"按文件位置与问题规则等业务键合并重复发现。","textChars":21,"textLines":1,"bbox":[410,283,795,86]}
+{"kind":"textbox","id":"sh/654by5c7","slide":8,"text":"再压缩","textPreview":"再压缩","textChars":3,"textLines":1,"bbox":[70,393,310,58]}
+{"kind":"textbox","id":"sh/7qds7ads","slide":8,"text":"结果过多时分组摘要，保留证据 ID 和异常项。","textPreview":"结果过多时分组摘要，保留证据 ID 和异常项。","textChars":23,"textLines":1,"bbox":[410,393,795,86]}
+{"kind":"textbox","id":"sh/by5032hk","slide":8,"text":"最后综合","textPreview":"最后综合","textChars":4,"textLines":1,"bbox":[70,503,310,58]}
+{"kind":"textbox","id":"sh/axwzax0z","slide":8,"text":"只把必要证据交给汇总节点，注明覆盖范围。","textPreview":"只把必要证据交给汇总节点，注明覆盖范围。","textChars":20,"textLines":1,"bbox":[410,503,795,86]}
+{"kind":"notes","id":"nt/ee14vr","slide":8,"text":"建议用普通代码reduce，并在大规模输出时分层fan-in。补充：按来源去重会误删同一来源的不同结论，应采用任务ID、文件位置、规则等适当的业务键。分批摘要也可能丢掉少数异常，因此保留证据引用和原始产物。简单本地代码不消耗模型推理token，但系统存储和后续读取仍有成本。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/lyzp75","slide":9,"title":"独立验证节点","textShapes":11}
+{"kind":"textbox","id":"sh/lojelwfm","slide":9,"text":"独立验证节点","textPreview":"独立验证节点","textChars":6,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/y1sfq1wv","slide":9,"text":"概念讲解","textPreview":"概念讲解","textChars":4,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/z21wj6xg","slide":9,"text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/czqdore5","slide":9,"text":"给它什么","textPreview":"给它什么","textChars":4,"textLines":1,"bbox":[70,174,310,58]}
+{"kind":"textbox","id":"sh/x0jehwfq","slide":9,"text":"待验证结论、原始证据、验收标准。","textPreview":"待验证结论、原始证据、验收标准。","textChars":16,"textLines":1,"bbox":[410,174,795,86]}
+{"kind":"textbox","id":"sh/ax8vmhwz","slide":9,"text":"避免什么","textPreview":"避免什么","textChars":4,"textLines":1,"bbox":[70,284,310,58]}
+{"kind":"textbox","id":"sh/byhwfmxk","slide":9,"text":"把生产者整段对话当成既定事实传下去。","textPreview":"把生产者整段对话当成既定事实传下去。","textChars":18,"textLines":1,"bbox":[410,284,795,86]}
+{"kind":"textbox","id":"sh/wvux0ve9","slide":9,"text":"怎样检查","textPreview":"怎样检查","textChars":4,"textLines":1,"bbox":[70,394,310,58]}
+{"kind":"textbox","id":"sh/hw3etgfu","slide":9,"text":"尝试反驳结论，检查来源，执行可复现验证。","textPreview":"尝试反驳结论，检查来源，执行可复现验证。","textChars":20,"textLines":1,"bbox":[410,394,795,86]}
+{"kind":"textbox","id":"sh/9kjud472","slide":9,"text":"怎样裁决","textPreview":"怎样裁决","textChars":4,"textLines":1,"bbox":[70,504,310,58]}
+{"kind":"textbox","id":"sh/8jatkzqh","slide":9,"text":"通过、拒绝或证据不足，并记录理由。","textPreview":"通过、拒绝或证据不足，并记录理由。","textChars":17,"textLines":1,"bbox":[410,504,795,86]}
+{"kind":"notes","id":"nt/lyzp75","slide":9,"text":"强调验证者使用独立上下文，避免继承生产者的自我解释。独立不等于没有必要材料：验证者仍需任务要求、待审结论、代码版本、源文件和验收标准。给出正确性、时效性、来源真实性三个视角。工程补充：多数票不能代替测试，多个模型可能有相关性偏差。结论失败后可拒收或有限返工。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/f8rda5","slide":10,"title":"三类容易被掩盖的故障","textShapes":4}
+{"kind":"textbox","id":"sh/cre5wvm5","slide":10,"text":"三类容易被掩盖的故障","textPreview":"三类容易被掩盖的故障","textChars":10,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/bq54nqlk","slide":10,"text":"概念讲解","textPreview":"概念讲解","textChars":4,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/apwnul4z","slide":10,"text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/onu5svmt","slide":10,"text":"并行扩大了吞吐量，也扩大了对完整性和可观测性的要求。","textPreview":"并行扩大了吞吐量，也扩大了对完整性和可观测性的要求。","textChars":26,"textLines":1,"bbox":[70,581,1140,65]}
+{"kind":"table","id":"tb/8vul4r61","slide":10,"name":"","rows":4,"cols":3,"preview":"故障 | 表面现象 | 工程处理","bbox":[70,190,1140,355]}
+{"kind":"notes","id":"nt/f8rda5","slide":10,"text":"列出三类问题：输出集中导致上下文溢出、共享资源导致伪独立、worker失败而最终报告看似完整。此表将对策转为工程动作。分层摘要仍需要追溯原始证据。独立worktree防止覆盖，但不保证合并没有语义冲突。完整性检查不能只数返回条数，还应验证job_id集合。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/3fo8by","slide":11,"title":"任务完成与结果完整性","textShapes":7}
+{"kind":"textbox","id":"sh/fetgvih4","slide":11,"text":"任务完成与结果完整性","textPreview":"任务完成与结果完整性","textChars":10,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/gf2x4nyp","slide":11,"text":"工程补充 · 运行状态与 fan-in 检查","textPreview":"工程补充 · 运行状态与 fan-in 检查","textChars":22,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/1gbyxsza","slide":11,"text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/6p0fyd0n","slide":11,"text":"任务集：A、B、C","textPreview":"任务集：A、B、C","textChars":9,"textLines":1,"bbox":[70,180,470,58]}
+{"kind":"textbox","id":"sh/rq9grih8","slide":11,"text":"收到：A 成功、B 无发现、C 超时","textPreview":"收到：A 成功、B 无发现、C 超时","textChars":18,"textLines":1,"bbox":[70,264,1130,65]}
+{"kind":"textbox","id":"sh/sbix0nit","slide":11,"text":"结论：2 / 3 完成有效检查，C 待补查","textPreview":"结论：2 / 3 完成有效检查，C 待补查","textChars":21,"textLines":1,"bbox":[70,367,1130,75]}
+{"kind":"textbox","id":"sh/tcrytsze","slide":11,"text":"先核对 ID 集合和状态，再决定重试、输出部分报告或停止。\n有限重试只针对可恢复错误。所有报告都应披露未覆盖范围。","textPreview":"先核对 ID 集合和状态，再决定重试、输出部分报告或停止。 | 有限重试只针对可恢复错误。所有报告都应披露未覆盖范围。","textChars":57,"textLines":2,"bbox":[70,499,1130,116]}
+{"kind":"notes","id":"nt/3fo8by","slide":11,"text":"工程补充。每个job用固定ID，完成指进入success、failed、cancelled等终态，不代表全部成功。明确区分成功且无发现、超时、schema失败、验证不通过。重复回包不能弥补缺失ID。尝试次数、截止时间、预算都要有上限。被判定为代码缺陷是发现，不应自动触发worker重试。使用配套HTML切换失败演示。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/fbbo12","slide":12,"title":"Anchors：连接外部证据","textShapes":8}
+{"kind":"textbox","id":"sh/m9o7qdg7","slide":12,"text":"Anchors：连接外部证据","textPreview":"Anchors：连接外部证据","textChars":14,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/9wfqlsfi","slide":12,"text":"概念讲解","textPreview":"概念讲解","textChars":4,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/ov6psnyx","slide":12,"text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/e547mdgv","slide":12,"text":"真实运行","textPreview":"真实运行","textChars":4,"textLines":1,"bbox":[70,190,340,48]}
+{"kind":"textbox","id":"sh/18f6h8fm","slide":12,"text":"构建退出码、测试产物\n原始日志、板上测量","textPreview":"构建退出码、测试产物 | 原始日志、板上测量","textChars":20,"textLines":2,"bbox":[70,249,340,100]}
+{"kind":"textbox","id":"sh/076po3y1","slide":12,"text":"固定标准","textPreview":"固定标准","textChars":4,"textLines":1,"bbox":[70,389,340,48]}
+{"kind":"textbox","id":"sh/j2h8r2xk","slide":12,"text":"固件版本、测试条件\n不可由优化器自行放宽","textPreview":"固件版本、测试条件 | 不可由优化器自行放宽","textChars":20,"textLines":2,"bbox":[70,450,340,100]}
+{"kind":"textbox","id":"sh/y187yxgf","slide":12,"text":"验证的是外部事实，而非多个节点对同一份报告的赞同。","textPreview":"验证的是外部事实，而非多个节点对同一份报告的赞同。","textChars":25,"textLines":1,"bbox":[70,610,1140,39]}
+{"kind":"image","id":"im/al4buhov","slide":12,"name":"","alt":"Graph Engineering 概念图","bbox":[449,173,755,426]}
+{"kind":"notes","id":"nt/fbbo12","slide":12,"text":"强调拓扑结构不自动带来真实可靠的结论。节点互相看同一套报告，可能只是自洽。工程中的锚点可以是实际运行的测试、原始日志和固定验收规则。以下嵌入式例子是假设场景，不是项目实际记录。测试通过也只证明被测条件下的结果，需要考虑覆盖范围。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/wmnee6","slide":13,"title":"适用边界","textShapes":4}
+{"kind":"textbox","id":"sh/czqlovmd","slide":13,"text":"适用边界","textPreview":"适用边界","textChars":4,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/byhkvq5s","slide":13,"text":"适用性判断","textPreview":"适用性判断","textChars":5,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/ax83m54n","slide":13,"text":"13","textPreview":"13","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/ov6lkvmh","slide":13,"text":"判断依据是依赖关系和收益，不是 Agent 数量。","textPreview":"判断依据是依赖关系和收益，不是 Agent 数量。","textChars":25,"textLines":1,"bbox":[70,612,1140,41]}
+{"kind":"table","id":"tb/g7edgfq5","slide":13,"name":"","rows":5,"cols":2,"preview":"任务特征 | 更合适的起点","bbox":[70,179,1140,405]}
+{"kind":"notes","id":"nt/wmnee6","slide":13,"text":"图适合有宽度的工作，小任务、真正串行的任务以及仍在探索的任务可能更适合单Agent或简单循环。图本身可以包含串行结构，所以这里讨论是否值得增加并行编排。补充：流程中设置少量必要人工关卡是合理的，不等于必须每一步审批。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/7hbstl","slide":14,"title":"嵌入式案例：驱动审查","textShapes":11}
+{"kind":"textbox","id":"sh/ihk3ah8j","slide":14,"text":"嵌入式案例：驱动审查","textPreview":"嵌入式案例：驱动审查","textChars":10,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/5kv25w7u","slide":14,"text":"教学案例 · 无实际项目测试结果","textPreview":"教学案例 · 无实际项目测试结果","textChars":16,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/4jmlcrqp","slide":14,"text":"14","textPreview":"14","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/vutkzmps","slide":14,"text":"输入范围","textPreview":"输入范围","textChars":4,"textLines":1,"bbox":[70,178,310,58]}
+{"kind":"textbox","id":"sh/utk36h87","slide":14,"text":"固定 commit，选定 UART / SPI / I2C 驱动文件。","textPreview":"固定 commit，选定 UART / SPI / I2C 驱动文件。","textChars":35,"textLines":1,"bbox":[410,178,795,86]}
+{"kind":"textbox","id":"sh/hwb21w7y","slide":14,"text":"并行工作","textPreview":"并行工作","textChars":4,"textLines":1,"bbox":[70,288,310,58]}
+{"kind":"textbox","id":"sh/wv2l8rqd","slide":14,"text":"各自审查返回值、超时路径和资源释放，记录证据。","textPreview":"各自审查返回值、超时路径和资源释放，记录证据。","textChars":23,"textLines":1,"bbox":[410,288,795,86]}
+{"kind":"textbox","id":"sh/7q9kb2pw","slide":14,"text":"归并与验证","textPreview":"归并与验证","textChars":5,"textLines":1,"bbox":[70,398,310,58]}
+{"kind":"textbox","id":"sh/mp032x8b","slide":14,"text":"去重后检查调用链，复核问题是否可触发。","textPreview":"去重后检查调用链，复核问题是否可触发。","textChars":19,"textLines":1,"bbox":[410,398,795,86]}
+{"kind":"textbox","id":"sh/0fyhgvyl","slide":14,"text":"输出报告","textPreview":"输出报告","textChars":4,"textLines":1,"bbox":[70,508,310,58]}
+{"kind":"textbox","id":"sh/107yp0z6","slide":14,"text":"问题、证据、影响范围、未检查文件和下一步验证。","textPreview":"问题、证据、影响范围、未检查文件和下一步验证。","textChars":23,"textLines":1,"bbox":[410,508,795,86]}
+{"kind":"notes","id":"nt/7hbstl","slide":14,"text":"教学案例，未运行用户工程。目标是对同一提交的驱动文件做只读错误处理审查。可以对UART、SPI、I2C文件分别分发任务，输出统一finding契约。为了避免跨文件知识缺失，各worker应获得相关头文件和接口定义。归并处理重复问题，独立验证检查完整调用链或最小复现。最后输出带覆盖率的清单，需改代码时再进入修复、构建和测试阶段。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/tvqa7l","slide":15,"title":"FreeRTOS 场景里的真实依赖","textShapes":4}
+{"kind":"textbox","id":"sh/v2h4bmhc","slide":15,"text":"FreeRTOS 场景里的真实依赖","textPreview":"FreeRTOS 场景里的真实依赖","textChars":17,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/g3ql4rix","slide":15,"text":"教学案例 · 资源和版本约束","textPreview":"教学案例 · 资源和版本约束","textChars":14,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/hozmdwzi","slide":15,"text":"15","textPreview":"15","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/3q14f6ho","slide":15,"text":"代码版本、固件哈希和日志来源必须匹配。","textPreview":"代码版本、固件哈希和日志来源必须匹配。","textChars":19,"textLines":1,"bbox":[70,612,1140,36]}
+{"kind":"table","id":"tb/ju18byp4","slide":15,"name":"","rows":5,"cols":2,"preview":"候选任务 | 并行条件或必须等待的原因","bbox":[70,181,1140,414]}
+{"kind":"notes","id":"nt/tvqa7l","slide":15,"text":"教学案例，不描述任何实际板卡故障。对固定快照进行不同主题的只读检查通常可以并行，但跨模块约束必须进入上下文。并发烧录同一板卡、写同一构建目录会冲突。测试日志若来自旧固件，也不是当前补丁的证据。图只安排工作，无法消除物理资源排他性。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/deb8cb","slide":16,"title":"一份最小 Graph Spec","textShapes":11}
+{"kind":"textbox","id":"sh/2hwfexcf","slide":16,"text":"一份最小 Graph Spec","textPreview":"一份最小 Graph Spec","textChars":15,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/pk7y9cv6","slide":16,"text":"工程补充 · 可迁移的任务规格","textPreview":"工程补充 · 可迁移的任务规格","textChars":15,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/ojyxg7ul","slide":16,"text":"16","textPreview":"16","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/fu5w3id4","slide":16,"text":"目标与范围","textPreview":"目标与范围","textChars":5,"textLines":1,"bbox":[70,172,310,58]}
+{"kind":"textbox","id":"sh/etwfadcj","slide":16,"text":"审查指定 commit 下最多 12 个驱动文件，只读。","textPreview":"审查指定 commit 下最多 12 个驱动文件，只读。","textChars":28,"textLines":1,"bbox":[410,172,795,86]}
+{"kind":"textbox","id":"sh/1wne5svu","slide":16,"text":"任务与预算","textPreview":"任务与预算","textChars":5,"textLines":1,"bbox":[70,284,310,58]}
+{"kind":"textbox","id":"sh/0vexcnu9","slide":16,"text":"每文件一个任务，并发不超过 3，每任务最多 2 次尝试。","textPreview":"每文件一个任务，并发不超过 3，每任务最多 2 次尝试。","textChars":28,"textLines":1,"bbox":[410,284,795,86]}
+{"kind":"textbox","id":"sh/zq9gfmd8","slide":16,"text":"验证与失败","textPreview":"验证与失败","textChars":5,"textLines":1,"bbox":[70,396,310,58]}
+{"kind":"textbox","id":"sh/ypgfmhcn","slide":16,"text":"每个发现独立复核。超时和漏项必须出现在报告中。","textPreview":"每个发现独立复核。超时和漏项必须出现在报告中。","textChars":23,"textLines":1,"bbox":[410,396,795,86]}
+{"kind":"textbox","id":"sh/wvq147y1","slide":16,"text":"验收与交付","textPreview":"验收与交付","textChars":5,"textLines":1,"bbox":[70,508,310,58]}
+{"kind":"textbox","id":"sh/xgzidcfm","slide":16,"text":"逐项标注证据与覆盖状态，输出报告后结束。","textPreview":"逐项标注证据与覆盖状态，输出报告后结束。","textChars":20,"textLines":1,"bbox":[410,508,795,86]}
+{"kind":"notes","id":"nt/deb8cb","slide":16,"text":"这是框架无关的自然语言任务规格，不是可直接执行的SDK代码。限制参数是教学起点，不是通用最佳值。范围、并发、超时、失败策略、验收标准、输出目录都应具体。试点先只读，避免将发现问题和自动修复混在一次尚未验证的流程里。HTML中提供可复制的完整版本。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/a8ckcl","slide":17,"title":"编排层的职责","textShapes":5}
+{"kind":"textbox","id":"sh/mtsbul0r","slide":17,"text":"编排层的职责","textPreview":"编排层的职责","textChars":6,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/9w3u50ji","slide":17,"text":"工程补充 · 伪代码，非特定 SDK API","textPreview":"工程补充 · 伪代码，非特定 SDK API","textChars":22,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/8vatwvix","slide":17,"text":"17","textPreview":"17","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/vylc7a1o","slide":17,"text":"jobs = plan(scope, fixed_commit)\nresults = parallelBounded(jobs, limit=3, runChecked)\ncoverage = auditCoverage(jobs, results)\nfindings = dedupe(validResults(results))\nverified = verifyFresh(findings, acceptance_rules)\nreport(verified, coverage, failed_jobs)","textPreview":"jobs = plan(scope, fixed_commit) | results = parallelBounded(jobs, limit=3, runChecked) | coverage = auditCoverage(jobs, results) | findi...","textChars":257,"textLines":6,"bbox":[74,183,1120,340]}
+{"kind":"textbox","id":"sh/axcby503","slide":17,"text":"普通代码负责状态、格式与完整性。模型负责需要判断的任务。","textPreview":"普通代码负责状态、格式与完整性。模型负责需要判断的任务。","textChars":28,"textLines":1,"bbox":[74,567,1120,64]}
+{"kind":"notes","id":"nt/a8ckcl","slide":17,"text":"工程伪代码，仅描述顺序。parallelBounded需要实际实现并发上限、超时及取消，runChecked需要执行schema校验与有限重试，auditCoverage核验ID集合，verifyFresh需要独立上下文和证据访问。不要把函数名误读成某个框架的真实API。对有副作用的节点，重试前必须设计幂等键或状态检测。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/jz2eu4","slide":18,"title":"Claude Code 的产品入口","textShapes":10}
+{"kind":"textbox","id":"sh/ihsj2l0r","slide":18,"text":"Claude Code 的产品入口","textPreview":"Claude Code 的产品入口","textChars":17,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/5kjix0j2","slide":18,"text":"产品说明 · 核实于 2026.09.07","textPreview":"产品说明 · 核实于 2026.09.07","textChars":21,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/4ja14vih","slide":18,"text":"18","textPreview":"18","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/vuh0r610","slide":18,"text":"“请创建一个 workflow，按以下范围审查代码……”","textPreview":"“请创建一个 workflow，按以下范围审查代码……”","textChars":28,"textLines":1,"bbox":[70,180,1140,99]}
+{"kind":"textbox","id":"sh/ut8jy10f","slide":18,"text":"执行方式","textPreview":"执行方式","textChars":4,"textLines":1,"bbox":[70,311,310,58]}
+{"kind":"textbox","id":"sh/hgzitgj6","slide":18,"text":"Claude 编写编排脚本，运行时调度多个 subagent。","textPreview":"Claude 编写编排脚本，运行时调度多个 subagent。","textChars":31,"textLines":1,"bbox":[410,311,795,86]}
+{"kind":"textbox","id":"sh/wvq10bil","slide":18,"text":"需要确认","textPreview":"需要确认","textChars":4,"textLines":1,"bbox":[70,416,310,58]}
+{"kind":"textbox","id":"sh/7qh0n614","slide":18,"text":"查看计划中的范围、预算、权限和失败策略。","textPreview":"查看计划中的范围、预算、权限和失败策略。","textChars":20,"textLines":1,"bbox":[410,416,795,86]}
+{"kind":"textbox","id":"sh/mpozu10j","slide":18,"text":"复用方式","textPreview":"复用方式","textChars":4,"textLines":1,"bbox":[70,521,310,58]}
+{"kind":"textbox","id":"sh/cr25snmp","slide":18,"text":"保存适用的工作流，后续通过参数调整范围。","textPreview":"保存适用的工作流，后续通过参数调整范围。","textChars":20,"textLines":1,"bbox":[410,521,795,86]}
+{"kind":"notes","id":"nt/jz2eu4","slide":18,"text":"提出workflow用法。Dynamic workflows：Claude编写JavaScript编排脚本，runtime执行subagents，任务中间结果可保存在脚本变量中。当前支持明确请求创建workflow，也说明ultracode入口。功能可用性受套餐、配置和管理员设置影响。这里不实际启动workflow或改变配置。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/loc22j","slide":19,"title":"速度与成本是两笔账","textShapes":4}
+{"kind":"textbox","id":"sh/mtwjq5on","slide":19,"text":"速度与成本是两笔账","textPreview":"速度与成本是两笔账","textChars":9,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/9w721kny","slide":19,"text":"成本提醒 + 试点评估建议","textPreview":"成本提醒 + 试点评估建议","textChars":13,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/8vy1sfmd","slide":19,"text":"19","textPreview":"19","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/uxgjup4j","slide":19,"text":"更多并行可以缩短等待，但不会自动减少总工作量。","textPreview":"更多并行可以缩短等待，但不会自动减少总工作量。","textChars":23,"textLines":1,"bbox":[70,612,1140,38]}
+{"kind":"table","id":"tb/u94nu9wv","slide":19,"name":"","rows":5,"cols":3,"preview":"关注项 | 观察什么 | 控制方式","bbox":[70,183,1140,405]}
+{"kind":"notes","id":"nt/loc22j","slide":19,"text":"指出多Agent的总token花费会变大，调度方便并不意味着工作免费。工程补充建议按有效结果衡量收益：成功完成相同验收目标所用时间、总token、工具调用和人工复核投入。要同时控制并发峰值与总工作量。重试可能有新模型输入费用，重复派发不一定改善独立证据。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/3km89r","slide":20,"title":"试点与验收","textShapes":11}
+{"kind":"textbox","id":"sh/qlcbqx0j","slide":20,"text":"试点与验收","textPreview":"试点与验收","textChars":5,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/dona1cja","slide":20,"text":"工程补充 · 小范围试点","textPreview":"工程补充 · 小范围试点","textChars":12,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/snuts7ip","slide":20,"text":"20","textPreview":"20","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/3ylsv21s","slide":20,"text":"建立基线","textPreview":"建立基线","textChars":4,"textLines":1,"bbox":[70,175,310,58]}
+{"kind":"textbox","id":"sh/ixcbmx0n","slide":20,"text":"固定代码、规则和验收集，记录串行耗时与结果。","textPreview":"固定代码、规则和验收集，记录串行耗时与结果。","textChars":22,"textLines":1,"bbox":[410,175,795,86]}
+{"kind":"textbox","id":"sh/5k3axsjy","slide":20,"text":"只改一个维度","textPreview":"只改一个维度","textChars":6,"textLines":1,"bbox":[70,287,310,58]}
+{"kind":"textbox","id":"sh/4zuto7id","slide":20,"text":"先试 3 个并行任务，保留同一验证方式。","textPreview":"先试 3 个并行任务，保留同一验证方式。","textChars":20,"textLines":1,"bbox":[410,287,795,86]}
+{"kind":"textbox","id":"sh/nu5c7mhc","slide":20,"text":"比较结果","textPreview":"比较结果","textChars":4,"textLines":1,"bbox":[70,399,310,58]}
+{"kind":"textbox","id":"sh/2twbyh0r","slide":20,"text":"完整性、误报、漏报、时间和成本一起看。","textPreview":"完整性、误报、漏报、时间和成本一起看。","textChars":19,"textLines":1,"bbox":[410,399,795,86]}
+{"kind":"textbox","id":"sh/kfepgfet","slide":20,"text":"决定是否扩展","textPreview":"决定是否扩展","textChars":6,"textLines":1,"bbox":[70,511,310,58]}
+{"kind":"textbox","id":"sh/lg76pkve","slide":20,"text":"收益明确才加宽。失败先查契约、证据与资源冲突。","textPreview":"收益明确才加宽。失败先查契约、证据与资源冲突。","textChars":23,"textLines":1,"bbox":[410,511,795,86]}
+{"kind":"notes","id":"nt/3km89r","slide":20,"text":"工程落地建议。选择已知代码版本和固定问题集，先获得单Agent基线，再只增加一个并行维度，避免模型、范围、提示词同时变化导致无法归因。预先定义成功标准，不在结果不好时放宽规则。报告须包含未覆盖任务和成本。只有质量不下降且节省的等待值得新增成本，才扩大范围。\n教学示例不代表实际运行结果。"}
+{"kind":"slide","id":"sl/qxxdlp","slide":21,"title":"讨论：你会删掉哪一条边？","textShapes":5}
+{"kind":"textbox","id":"sh/1o7udcja","slide":21,"text":"讨论：你会删掉哪一条边？","textPreview":"讨论：你会删掉哪一条边？","textChars":12,"textLines":1,"bbox":[68,49,1144,80]}
+{"kind":"textbox","id":"sh/elgb2xkj","slide":21,"text":"现场练习 · 建议 2 分钟","textPreview":"现场练习 · 建议 2 分钟","textChars":14,"textLines":1,"bbox":[70,666,1000,28]}
+{"kind":"textbox","id":"sh/fmpcb214","slide":21,"text":"21","textPreview":"21","textChars":2,"textLines":1,"bbox":[1160,662,60,32]}
+{"kind":"textbox","id":"sh/szyt072d","slide":21,"text":"A 审查 UART 驱动       B 审查 SPI 驱动\nC 综合发现并生成补丁\nD 编译修复后的固件\nE 烧录同一块板卡并做回归","textPreview":"A 审查 UART 驱动       B 审查 SPI 驱动 | C 综合发现并生成补丁 | D 编译修复后的固件 | E 烧录同一块板卡并做回归","textChars":67,"textLines":4,"bbox":[72,183,1120,270]}
+{"kind":"textbox","id":"sh/d07a9cjy","slide":21,"text":"哪些任务可以并行？\n如果 B 没有返回，最终报告应该怎样写？","textPreview":"哪些任务可以并行？ | 如果 B 没有返回，最终报告应该怎样写？","textChars":30,"textLines":2,"bbox":[72,502,1120,113]}
+{"kind":"notes","id":"nt/qxxdlp","slide":21,"text":"互动题，教学答案在讲者备注中。A和B同读固定代码快照，在资源允许下可并行；C必须读取A和B的发现；D必须等待补丁；E读取D的固件产物并占用独立板卡。不要删掉C到D或D到E的真依赖。讨论额外问题：B超时是否输出部分报告，是否需要人工继续确认？由Graph Spec的失败政策决定。\n教学示例不代表实际运行结果。"}

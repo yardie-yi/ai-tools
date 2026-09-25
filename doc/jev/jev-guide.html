@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jev：把语义判断接入程序</title><style>
+:root{--bg:#f5f5f1;--ink:#182525;--muted:#536562;--accent:#007a68;--line:#d7dfda;--card:#fff;--pink:#b63184}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:25px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.85 system-ui,-apple-system,"Microsoft YaHei",sans-serif}
+a{color:var(--accent);text-underline-offset:4px;overflow-wrap:anywhere}a:hover{color:var(--pink)}button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:7px 15px}button:hover{border-color:var(--accent)}:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.hero{background:#113c35;color:#fff;padding:52px max(24px,calc((100vw - 1240px)/2)) 44px}.eyebrow{font-size:12px;letter-spacing:2px;color:#a5ded0}.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.2;margin:15px 0}.hero p{max-width:740px;color:#d6e9e2}.hero a{color:#b3f5db}.actions{display:flex;gap:15px;align-items:center;flex-wrap:wrap}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);gap:42px;padding:36px 24px}aside{position:sticky;top:20px;align-self:start;max-height:95vh;overflow:auto;font-size:13px}aside ul{padding:0;list-style:none}aside li{margin:10px 0}aside a{text-decoration:none}main{min-width:0}article>h1{font-size:30px}h2{font-size:27px;margin:58px 0 20px;padding-top:15px;border-top:1px solid var(--line);line-height:1.5}h3{font-size:20px;margin-top:30px}p{margin:16px 0}blockquote{border-left:4px solid var(--accent);background:#e8efea;padding:12px 20px;margin:24px 0;color:var(--muted)}blockquote p{margin:0}pre{background:#122a29;color:#dceddf;border-radius:12px;padding:22px;overflow:auto;font:13px/1.75 Consolas,monospace;tab-size:4}code{font:0.88em Consolas,monospace;background:#e5ebe5;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre code{background:none;padding:0;font-size:inherit;overflow-wrap:normal}table{border-collapse:collapse;width:100%;font-size:14px;margin:20px 0}td,th{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#e6eee7}tr:nth-child(even){background:#f9faf7}.table-wrap{overflow:auto}li{margin:8px 0}.lab{background:var(--card);padding:26px;border:1px solid var(--line);border-radius:16px;margin:24px 0}.lab h2{border:0;margin:0;padding:0;font-size:25px}.tag{display:inline-block;font-size:12px;background:#f6e7c4;color:#795a18;padding:2px 10px;border-radius:20px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.card{border:1px solid var(--line);border-radius:12px;padding:18px}.card strong{display:block;font-size:20px;color:var(--accent)}.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:center;margin:24px 0}.flow>div{background:#e8f2ec;border:1px solid #c9ddd1;border-radius:12px;padding:18px;text-align:center}.flow small{display:block}.note{color:var(--muted);font-size:13px}.control{display:grid;grid-template-columns:150px 1fr 65px;gap:12px;align-items:center;margin:17px 0}input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}.meter{display:flex;height:34px;border-radius:7px;overflow:hidden;margin:18px 0}.meter span{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;min-width:0;color:white;transition:width .15s}.meter span:nth-child(1){background:#007a68}.meter span:nth-child(2){background:#5669ab}.meter span:nth-child(3){background:#ad5b27}.result{padding:16px 18px;background:#eaf2ec;border-radius:10px;margin:15px 0;font-weight:600}.muted{color:var(--muted)}.buttons{display:flex;gap:8px;flex-wrap:wrap}footer{padding:25px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+@media(max-width:900px){.layout{grid-template-columns:1fr;gap:10px}aside{position:static;max-height:none}aside .toc ul{columns:2}.cards{grid-template-columns:1fr}.control{grid-template-columns:110px 1fr 50px}.hero{padding:32px 22px}.flow{grid-template-columns:1fr}.flow>b{text-align:center;transform:rotate(90deg)}.lab{padding:20px}td,th{min-width:115px}}
+@media print{aside,.actions,.interactive{display:none}.hero{background:white;color:black;padding:10px}.hero p{color:#333}.layout{display:block;padding:0}body{font-size:11pt;background:white}pre{white-space:pre-wrap;background:#eee;color:black}h2{break-after:avoid}a{color:black}.lab{break-inside:avoid}}
+</style></head>
+<body><header class="hero"><div class="eyebrow">TYPESAFE AI / JEV / ENGINEERING GUIDE</div><h1>把语义判断<br>接入你熟悉的程序</h1><p>从 Choice、Noul、Score，到 FreeRTOS 故障分流与 Agent 路由。用类型化结果连接模型理解与确定性代码。</p><div class="actions"><a href="jev-guide.md">阅读 Markdown 源文档</a><button id="print" type="button">打印 / 保存 PDF</button><span>资料核对：2026-09-20</span></div></header>
+<div class="layout"><aside aria-label="章节目录"><b>阅读导航</b><p><a href="#overview">图解与交互演示</a></p><div class="toc">
+<ul>
+<li><a href="#1">1. 先理解它解决什么问题</a></li>
+<li><a href="#2">2. 如何理解用户给出的文章</a></li>
+<li><a href="#3">3. 一次调用由什么组成</a></li>
+<li><a href="#4">4. 三个原语，三个不同问题</a></li>
+<li><a href="#5">5. 多问题并行，代码组合</a></li>
+<li><a href="#6">6. 最短上手路径</a></li>
+<li><a href="#7">7. 示例一：嵌入式故障报告分流</a></li>
+<li><a href="#8-jev">8. 示例二：让 Jev 选原文中的版本号</a></li>
+<li><a href="#9-langchain-agent">9. 示例三：放进 LangChain 的 Agent</a></li>
+<li><a href="#10">10. 版本、成本与性能怎样评估</a></li>
+<li><a href="#11">11. 已知限制与容易误解的地方</a></li>
+<li><a href="#12">12. 面向你工作的落地方案</a></li>
+<li><a href="#13">13. 来源与验证状态</a></li>
+</ul>
+</div>
+</aside><main>
+<section class="lab" aria-labelledby="overview"><span class="tag">概念图解</span><h2 id="overview">程序负责流程，Jev 提供语义判断</h2>
+<div class="flow"><div><b>准备 state</b><small>日志 · 工单 · 候选值</small></div><b aria-hidden="true">→</b><div><b>Jev 并行回答</b><small>Choice · Noul · Score</small></div><b aria-hidden="true">→</b><div><b>代码组合结果</b><small>分流 · 排序 · 复核</small></div></div>
+<div class="cards"><div class="card"><strong>Choice</strong>从给定候选中选一个<br><small>“首先交给哪个队列？”</small></div><div class="card"><strong>Noul</strong>返回 yes 的概率<br><small>“报告是否描述测试中断？”</small></div><div class="card"><strong>Score</strong>沿有序等级评分<br><small>“复现材料有多完整？”</small></div></div></section>
+<section class="lab interactive" aria-labelledby="choice-lab"><span class="tag">离线教学 · 不调用 Jev</span><h2 id="choice-lab">选项赢了，程序就应该采用吗？</h2>
+<p>改变三个候选的权重，观察归一化概率与路由结果。这里故意使用 <code>p_max</code> 作为自定义门槛，<b>没有模拟 API 的 confidence</b>。</p>
+<label class="control">驱动权重<input id="driver" type="range" min="0" max="100" value="85"><output id="driver-val"></output></label>
+<label class="control">构建权重<input id="build" type="range" min="0" max="100" value="5"><output id="build-val"></output></label>
+<label class="control">未知权重<input id="unknown" type="range" min="0" max="100" value="10"><output id="unknown-val"></output></label>
+<label class="control">采用门槛<input id="threshold" type="range" min="34" max="100" value="80"><output id="threshold-val"></output></label>
+<div class="meter" id="prob-bars" role="img" aria-label="候选概率"><span></span><span></span><span></span></div><div class="result" id="choice-result" role="status" aria-live="polite"></div>
+<div class="buttons"><button type="button" data-values="85,5,10">明显倾向</button><button type="button" data-values="45,40,15">两个候选接近</button><button type="button" data-values="10,10,80">材料不足</button></div>
+<p class="note">三权重全为 0 时按均匀分布演示；并列第一或 unknown 第一均进入复核。阈值仅用于讲解，不代表经过真实数据验证。</p></section>
+<section class="lab interactive" aria-labelledby="score-lab"><h2 id="score-lab">Noul 与 Score：0.5 到底意味着什么？</h2>
+<label class="control">P(测试中断)<input id="noul" type="range" min="0" max="100" value="50"><output id="noul-val"></output></label><div class="result" id="noul-result" role="status" aria-live="polite"></div>
+<p>下面两种 Score 分布的平均值都为 1，但反映不同情况：</p>
+<div class="cards"><div class="card"><strong>0 / 100 / 0%</strong>全部概率落在等级 1<br><small>score = 1</small></div><div class="card"><strong>50 / 0 / 50%</strong>概率落在两端等级<br><small>score = 1</small></div><div class="card"><strong>分布仍然重要</strong>相同均值不等于相同把握<br><small>结合 probabilities 与 confidence</small></div></div>
+<p class="note">Noul 表示条件为真的概率；Score 表示在已定义等级上的位置。本区所有数值均由页面构造。</p></section>
+<article><h1 id="jev">Jev：把语义判断接入程序</h1>
+<blockquote>
+<p>面向嵌入式、Linux 与 Agent 开发者的说明与实践。资料核对日期：2026-09-20。HTML 与 Markdown 由同一正文生成；所有自编日志、数值与交互演示均为教学数据，不是实测结果。</p>
+</blockquote>
+<h2 id="1">1. 先理解它解决什么问题</h2>
+<p><strong>Jev 是 TypeSafe AI 的旗舰模型，也是该公司首个 System One 模型：输入上下文和事先定义的问题，输出程序可直接使用的类型化判断及概率。</strong> 它适合判断“交给哪个模块”“这段材料是否支持某个说法”“某项指标处于什么程度”。官方接口提供 Choice、Noul、Score 三种原语。<a href="https://docs.typesafe.ai/introduction">官方介绍</a></p>
+<p>对嵌入式工程师，可以把它类比为一个通过网络调用的“语义判断函数”：普通代码擅长判定 <code>error_code == ETIMEDOUT</code>；Jev 可以辅助判断“这段工单描述更适合先让驱动组还是构建组处理”。这个类比描述其使用方式，不代表它有本地函数的确定性、时延保证或运行位置。</p>
+<pre><code class="language-text">普通规则：精确字段 → 确定性条件 → 结果
+Jev 判断：文本/状态 + 问题 + 候选答案 → 类型化结果 + 不确定性
+业务执行：规则检查 + Jev 结果 + 应用策略 → 分流、排序或人工复核
+</code></pre>
+<p>System One 借用了“快速直觉判断”的概念。TypeSafe 将其训练方法称为 RLCD（Reinforcement Learning for Calibrated Decisions，面向校准决策的强化学习）。所谓校准，是在大量预测上检查概率和实际结果是否匹配；不能把单次 <code>0.9</code> 当成正确性保证。官方文档说明了训练目标，但不足以让我们推断模型参数量、所有架构细节或可在 MCU 上部署。<a href="https://docs.typesafe.ai/concepts/system-one">System One</a> · <a href="https://docs.typesafe.ai/introduction/machine-learning-primer">AI primer</a></p>
+<h3 id="_1">与已有工具怎样分工</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>需求</th>
+<th>更合适的承担者</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>校验 CRC、比较寄存器位、计算超时次数</td>
+<td>普通代码</td>
+<td>结果可精确计算，无须语义推断</td>
+</tr>
+<tr>
+<td>工单分流、证据相关性评分、文本条件判断</td>
+<td>Jev</td>
+<td>有语义歧义，但答案空间可以定义</td>
+</tr>
+<tr>
+<td>写驱动、解释调用链、生成 RCA</td>
+<td>生成式/推理模型与工程师</td>
+<td>需要开放式推理与文本生成</td>
+</tr>
+<tr>
+<td>执行 shell、烧录、修改文件</td>
+<td>受控执行器</td>
+<td>权限、参数校验和执行结果由程序管理</td>
+</tr>
+<tr>
+<td>FreeRTOS 中断响应与实时控制</td>
+<td>本地实时软件</td>
+<td>网络模型调用不提供硬实时保证</td>
+</tr>
+</tbody>
+</table></div>
+<p>生成式 LLM 也可以提供工具调用和结构化输出。Jev 的区别在于模型和 API 专门面向有限答案空间的判断，不只是给聊天提示词增加“请输出 JSON”。这里的类型化接口减少了自由文本解析问题，但没有消除语义误判。<a href="https://docs.typesafe.ai/concepts/system-one">System One</a></p>
+<h2 id="2">2. 如何理解用户给出的文章</h2>
+<p>用户指定的 <a href="https://x.com/sydneyrunkle/status/2100754364545761643">Sydney Runkle X 链接</a> 在本次检索中返回 403，未直接取得全文。因此本文不声称逐字核对了该 X 文章。</p>
+<p>可直接查证的一手材料是 Sydney Runkle 与 Hunter Lovell 于 2026-09-17 在 LangChain 官网发布的 <a href="https://www.langchain.com/blog/building-a-harness-with-jev">Building a Harness with Jev</a>。它与用户所指主题相符，本文以这篇作者官方文章作为补充，并用 TypeSafe 当前文档核对技术细节。</p>
+<p>文章的主要价值是指出：Agent 循环里有不少步骤只是分类判断，可以让 Jev 承担；开放式工作仍由生成式模型处理。文章展示了 <code>TypeSafeClassifier</code>，以及模型选择和工具风险检查两类中间件。文中“最高 200 倍推理速度、400 倍成本优势”属于引用的厂商分类任务宣传数据，不能外推为整个 Agent、编译流程或任意任务的端到端收益。<a href="https://www.langchain.com/blog/building-a-harness-with-jev">作者官方文章</a></p>
+<pre><code class="language-text">输入请求
+   ↓
+Jev：选择处理路径
+   ↓
+生成式模型：分析问题、提出工具调用
+   ↓
+Jev：提供工具风险判断 ──→ 不确定/有风险 → 复核
+   ↓
+执行器：检查实际权限与参数，执行允许的操作
+   ↓
+读取结果 → 继续分析或结束
+</code></pre>
+<p>这里的 harness 是管理模型、工具、状态和执行流程的程序框架。本文建议将模型意见与执行权限分开：分类器提供信号，执行器决定实际允许什么。安装 typesafe-ai skill 只会给编码助手提供使用指导；它不会自动把 Codex 底层模型切换成 Jev，也不会自动替换已有审批机制。</p>
+<h2 id="3">3. 一次调用由什么组成</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>实践建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>state</code></td>
+<td>本次要判断的材料</td>
+<td>字符串、JSON 对象或数组；复杂情况用有名字的字段</td>
+</tr>
+<tr>
+<td><code>model</code></td>
+<td>模型 ID 或别名</td>
+<td>学习可用 <code>jev-latest</code>；评估后固定实际版本</td>
+</tr>
+<tr>
+<td><code>questions</code></td>
+<td>问题 ID 到问题对象的映射</td>
+<td>每个问题只承担一个明确判断</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>choice</code> / <code>noul</code> / <code>score</code></td>
+<td>按答案含义选择</td>
+</tr>
+<tr>
+<td><code>instructions</code></td>
+<td>模型需要回答什么</td>
+<td>包含完整问题及引用字段</td>
+</tr>
+<tr>
+<td><code>criteria</code></td>
+<td>选项或等级定义</td>
+<td>说明边界、排除条件、无匹配出口</td>
+</tr>
+</tbody>
+</table></div>
+<p>问题 ID 只是程序关联结果的键，不传给底层模型参与推断。例如键叫 <code>is_dma_failure</code>，但 instructions 只写“判断一下”，不能指望键名补全语义。Choice 的选项名称和描述则会参与判断。<a href="https://docs.typesafe.ai/api">HTTP API</a> · <a href="https://docs.typesafe.ai/primitives/choice">Choice</a></p>
+<pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-latest&quot;,
+  &quot;state&quot;: {
+    &quot;report&quot;: &quot;Linux 网口启动后偶发连接中断，尚未提供完整日志。&quot;,
+    &quot;environment&quot;: &quot;测试板，驱动升级后首次发现&quot;
+  },
+  &quot;questions&quot;: {
+    &quot;triage&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;根据 report 和 environment，选择最适合首先接手调查的队列；这不是根因判定。&quot;,
+      &quot;criteria&quot;: {
+        &quot;driver&quot;: &quot;设备驱动和链路初始化相关问题&quot;,
+        &quot;build&quot;: &quot;编译、链接或打包失败&quot;,
+        &quot;unknown&quot;: &quot;信息不足或不属于上述队列&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>在复杂 state 中，instructions 可以引用 <code>ticket.messages[0].text</code> 这样的路径。将“现场观察”“已有假设”“参考规则”分开命名，能减少把怀疑当事实的机会。模型只能使用实际提供的材料，不能凭空访问你的板卡、日志文件或 Git 仓库。<a href="https://docs.typesafe.ai/concepts/state">State</a></p>
+<h2 id="4">4. 三个原语，三个不同问题</h2>
+<h3 id="41-choice">4.1 Choice：从候选集合中选一个</h3>
+<p>适合“由谁处理”“哪个候选值符合要求”“下一步先做哪种检查”。返回 <code>choice</code>、每个选项的 <code>probabilities</code> 和 <code>confidence</code>。概率总和为 1，<code>choice</code> 是最高概率选项。当前最多 255 个选项。<a href="https://docs.typesafe.ai/primitives/choice">Choice</a> · <a href="https://docs.typesafe.ai/api">HTTP API</a></p>
+<p>教学分布：驱动 <code>0.85</code>、构建 <code>0.05</code>、未知 <code>0.10</code>。这表达相对于给定候选项的判断，不能直接读成“驱动一定有 bug”。如果候选中没有“硬件”或“需要更多信息”，模型也无法选出它们。因此候选覆盖率是应用效果的一部分。</p>
+<p>若一个报告可能同时涉及 DMA、缓存一致性和并发，应该给各标签分别定义 Noul，而不是强制一个 Choice 充当多选标签器。</p>
+<h3 id="42-noul">4.2 Noul：某条件成立的概率</h3>
+<p>Noul 返回 <code>noul</code>，范围为 0–1，表示 yes 的概率，不另带 <code>confidence</code>。例如问“报告是否明确说采集已经停止”。<code>0.9</code> 表示模型倾向 yes；<code>0.1</code> 倾向 no；<code>0.5</code> 表示二者难以区分，<strong>不表示采集停止了一半，也不是中等严重程度</strong>。<a href="https://docs.typesafe.ai/primitives/noul">Noul</a></p>
+<pre><code class="language-text">P(yes) ≤ 0.2       0.2 &lt; P(yes) &lt; 0.8       P(yes) ≥ 0.8
+倾向条件不成立       进入待核实区间              倾向条件成立
+</code></pre>
+<p>这些阈值只演示应用分支，不是官方推荐标准，也不是经过本项目数据校准的部署值。对精确错误码是否存在，直接用解析器；对文字是否表达某种含义，再考虑 Noul。</p>
+<h3 id="43-score">4.3 Score：在有序描述等级上评分</h3>
+<p>Score 的 <code>criteria</code> 是按顺序排列的等级描述，当前支持 2–10 级。若定义三档“正常 / 性能退化 / 功能不可用”，默认等级索引为 0、1、2，返回分数处于 0–2，而不是天然的百分数。<a href="https://docs.typesafe.ai/primitives/score">Score</a></p>
+<pre><code class="language-text">假设概率：P(0)=0.1，P(1)=0.3，P(2)=0.6
+score = 0×0.1 + 1×0.3 + 2×0.6 = 1.5
+若业务需要 0–1 归一化：normalized = score / 2
+</code></pre>
+<p>Score 返回 <code>score</code>、<code>legend</code>、<code>probabilities</code>、<code>confidence</code>。平均分相同不代表分布相同：全部集中在等级 1，和各半集中在等级 0、2，平均数都为 1，决策含义却不同。需要保留分布和置信度，尤其不能只看均值掩盖严重风险。</p>
+<h3 id="44-confidence">4.4 Confidence 怎样读</h3>
+<p>Choice/Score 的 confidence 是由答案概率分布计算出的 0–1 统计量。它便于程序决定是否复核，但不是独立证据，更不是整个工作流成功的概率。不要假定它等于最大选项概率，也不要把官方网页演示中的近似计算公式当成 API 的永久契约。<a href="https://docs.typesafe.ai/confidence">Confidence</a></p>
+<p>工程上应分开记录：选了什么、完整概率、confidence、用了哪个模型、state 与问题版本。设置阈值时要用真实标签评估误分率与自动处理覆盖率；“设为 0.95 就有 95% 正确率”没有这种保证。</p>
+<h2 id="5">5. 多问题并行，代码组合</h2>
+<p>同一请求中所有问题共享 state，但独立求值；第二个问题看不到第一个问题的答案。可把分流、是否紧急、材料完整度放在一次调用里。若必须先定位某条记录，再从数据库取证据并评估，应分成两次请求。<a href="https://docs.typesafe.ai/patterns/fan-out">Speculative fan-out</a></p>
+<pre><code class="language-text">                    ┌─ Choice：哪个调查队列？ ─────┐
+同一个报告 state ───┼─ Noul：是否描述业务中断？ ───┼─→ 代码组合 → 工单分流
+                    └─ Score：复现材料完整度？ ────┘
+</code></pre>
+<p>“并行”不代表问题数量、上下文大小和成本没有限制。多问题仍增加输入 tokens。把所有历史日志原样塞入 state 也不一定提高准确率；应按具体判断保留相关上下文。</p>
+<p>独立偏好维度可以加权，例如复现性与影响程度形成排序指标；硬性禁止条件应单独判断，不能让“其他指标很好”抵消它。这是应用策略设计，不是 Jev 自动推导出来的业务规则。</p>
+<h2 id="6">6. 最短上手路径</h2>
+<ol>
+<li>在 <a href="https://console.typesafe.ai/keys">TypeSafe 控制台</a> 获取可用 API key；可先到 <a href="https://console.typesafe.ai/playground">Playground</a> 验证问题定义。</li>
+<li>准备 Python 3.10 或以上版本，创建虚拟环境并安装 SDK。</li>
+<li>在当前进程环境设置 <code>TYPESAFE_API_KEY</code>。</li>
+<li>先运行一个 Noul，再组合 Choice 和 Score。</li>
+<li>记录实际返回结果，使用自己的报告做评估。</li>
+</ol>
+<p>安装与方法名依据 <a href="https://docs.typesafe.ai/introduction/quickstart">Quick start</a> 和 <a href="https://docs.typesafe.ai/sdk/python">Python SDK</a>。以下命令供用户执行，本次没有安装业务 SDK 或调用收费模型。</p>
+<p>Windows PowerShell：</p>
+<pre><code class="language-powershell">python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install typesafe-sdk
+$env:TYPESAFE_API_KEY = '&lt;替换为你的 API key，仅在本机设置&gt;'
+.\.venv\Scripts\python.exe minimal.py
+</code></pre>
+<p>Linux shell：</p>
+<pre><code class="language-bash">python3 -m venv .venv
+.venv/bin/python -m pip install typesafe-sdk
+export TYPESAFE_API_KEY='&lt;替换为你的 API key，仅在本机设置&gt;'
+.venv/bin/python minimal.py
+</code></pre>
+<p>将下面保存为 <code>minimal.py</code>；实际结果以运行返回为准，不在代码中假定概率值。</p>
+<pre><code class="language-python">from typesafe_sdk import Noul, TypeSafeClient
+
+with TypeSafeClient() as client:
+    result = client.system_one(
+        model=&quot;jev-latest&quot;,
+        state=&quot;The acquisition stopped and the current test cannot continue.&quot;,
+        questions={
+            &quot;interrupted&quot;: Noul(
+                instructions=&quot;Does the report explicitly say the current test cannot continue?&quot;
+            )
+        },
+    )
+    print(&quot;model:&quot;, result.model)
+    print(&quot;P(test interrupted):&quot;, result.answers[&quot;interrupted&quot;].noul)
+</code></pre>
+<p>可以不使用 LangChain，直接用 SDK；也可以用 HTTP：<code>POST https://api.typesafe.ai/v1/systemone</code>，请求头包含 <code>Authorization: Bearer &lt;API_KEY&gt;</code> 与 <code>Content-Type: application/json</code>，请求体见第 3 节。HTTP 错误包括 401（认证）、422（参数）、429（限流）、529（服务过载）；后两类应退避重试。SDK 默认包含重试机制。超时或失败时应显式进入待处理状态，不伪造模型判断。<a href="https://docs.typesafe.ai/api">HTTP API</a></p>
+<h2 id="7">7. 示例一：嵌入式故障报告分流</h2>
+<h3 id="_2">目标与边界</h3>
+<p>目标是帮工程团队确定谁先调查、材料是否足够以及是否需要优先处理。<strong>这里不自动确认根因，不自动修改驱动。</strong> 以下是人为编写的演示报告，没有对应的真实板卡实验。</p>
+<pre><code class="language-python">from typesafe_sdk import Choice, Noul, Score, TypeSafeClient
+
+state = {
+    &quot;report&quot;: (
+        &quot;On a FreeRTOS test build, SPI DMA capture stops intermittently &quot;
+        &quot;under load. The test cannot continue until the board is reset. &quot;
+        &quot;No DMA register snapshot or interrupt trace is attached.&quot;
+    ),
+    &quot;observed&quot;: [&quot;intermittent capture stop&quot;, &quot;reset restores capture&quot;],
+    &quot;unverified_hypotheses&quot;: [&quot;DMA interrupt handling&quot;, &quot;buffer ownership&quot;],
+}
+
+questions = {
+    &quot;owner&quot;: Choice(
+        instructions=(
+            &quot;Choose the first investigation queue for report. &quot;
+            &quot;Do not treat unverified_hypotheses as confirmed root causes.&quot;
+        ),
+        criteria={
+            &quot;driver&quot;: &quot;Peripheral, DMA, or interrupt investigation&quot;,
+            &quot;rtos&quot;: &quot;Task scheduling or RTOS synchronization investigation&quot;,
+            &quot;build&quot;: &quot;Compiler, linker, or packaging investigation&quot;,
+            &quot;unknown&quot;: &quot;Insufficient evidence to choose one queue, or no queue fits&quot;,
+        },
+    ),
+    &quot;blocked&quot;: Noul(
+        instructions=&quot;Does report explicitly say the current test cannot continue?&quot;
+    ),
+    &quot;completeness&quot;: Score(
+        instructions=&quot;How complete is report for attempting an independent reproduction?&quot;,
+        criteria=[
+            &quot;Only symptoms; no actionable trigger or reproduction conditions&quot;,
+            &quot;Some trigger or conditions are present, but essential setup or steps are missing&quot;,
+            &quot;Setup, ordered reproduction steps, and observable failure criteria are all present&quot;,
+        ],
+    ),
+}
+
+with TypeSafeClient() as client:
+    result = client.system_one(
+        state=state, questions=questions, model=&quot;jev-latest&quot;
+    )
+
+owner = result.answers[&quot;owner&quot;]
+blocked = result.answers[&quot;blocked&quot;].noul
+completeness = result.answers[&quot;completeness&quot;]
+
+# 教学阈值：用于演示分支，部署前必须在本团队数据上评估。
+queue = (
+    owner.choice
+    if owner.choice != &quot;unknown&quot; and owner.confidence &gt;= 0.8
+    else &quot;manual_review&quot;
+)
+impact = (
+    &quot;reported_test_blockage&quot; if blocked &gt;= 0.8
+    else &quot;no_clear_blockage&quot; if blocked &lt;= 0.2
+    else &quot;verify_impact&quot;
+)
+need_details = completeness.confidence &lt; 0.8 or completeness.score &lt; 1.5
+
+print({
+    &quot;model&quot;: result.model,
+    &quot;queue&quot;: queue,
+    &quot;queue_probabilities&quot;: owner.probabilities,
+    &quot;queue_confidence&quot;: owner.confidence,
+    &quot;impact&quot;: impact,
+    &quot;need_reproduction_details&quot;: need_details,
+})
+</code></pre>
+<p>这里采用英文问题与演示报告，是因为官方表示英语当前效果最好；中文和混合日志需要独立评估。<code>blocked</code> 判断的是“报告是否如此描述”，不是远程测量设备真的停机。<a href="https://docs.typesafe.ai/models">Models</a></p>
+<p>建议将下一步补充材料写成确定性模板：固件版本、硬件版本、复现步骤、时间戳、DMA 状态与中断轨迹。模板由工程师定义，Jev 只提供分流信号。若要进一步分析 DMA 根因，应查代码和现场证据，交给工程师或推理模型进行多步调查。</p>
+<p>在实际系统中，板端只采集日志，由 PC 或 Linux 网关整理并调用 API；不在 ISR 或实时任务关键路径中等待网络推断。此部署方式是本文针对嵌入式工作的工程建议。</p>
+<h2 id="8-jev">8. 示例二：让 Jev 选原文中的版本号</h2>
+<p>问题：“报告里有多个固件版本，哪个是失败构建？”普通代码先找出候选，Jev 判断语义角色，程序再从候选表取回原字符串。这遵循官方的“预解析候选值 → 选择 → 程序复制”模式。<a href="https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook">候选值提取 Cookbook</a></p>
+<pre><code class="language-python">import re
+from typesafe_sdk import Choice, TypeSafeClient
+
+report = &quot;v2.6.1 passed overnight testing. After upgrading to v2.7.0, capture stalls.&quot;
+versions = list(dict.fromkeys(re.findall(r&quot;\bv\d+\.\d+\.\d+\b&quot;, report)))
+candidates = {f&quot;v{i}&quot;: value for i, value in enumerate(versions)}
+
+if not candidates:
+    print(&quot;No version candidates: request more evidence&quot;)
+else:
+    criteria = {key: value for key, value in candidates.items()}
+    criteria[&quot;none&quot;] = &quot;No listed candidate is identifiable as the failing build&quot;
+    with TypeSafeClient() as client:
+        answer = client.system_one(
+            model=&quot;jev-latest&quot;,
+            state={&quot;report&quot;: report, &quot;candidates&quot;: candidates},
+            questions={
+                &quot;failing_version&quot;: Choice(
+                    instructions=&quot;Which candidate is reported as the failing build?&quot;,
+                    criteria=criteria,
+                )
+            },
+        ).answers[&quot;failing_version&quot;]
+
+    # 0.8 仍是教学阈值。
+    value = candidates.get(answer.choice) if answer.confidence &gt;= 0.8 else None
+    print(value if value is not None else &quot;Needs review&quot;)
+</code></pre>
+<p>人工阅读这个教学句子时，失败构建应是 <code>v2.7.0</code>，但本次没有模型实测结果。正则仅覆盖简单的 <code>v主.次.修订</code> 格式，不覆盖 RC、Git hash 等版本体系。若漏掉正确候选，Jev 无法补出；若候选齐全，它仍可能选错语义角色。该方法限制了值的来源，不保证选择正确。</p>
+<h2 id="9-langchain-agent">9. 示例三：放进 LangChain 的 Agent</h2>
+<p>官方集成使用 <code>langchain-typesafe</code> 的 <code>TypeSafeClassifier</code>。它返回分类结果，不是聊天消息。下面展示与前面 TypeSafe 原生 SDK 不同的访问方式：<code>response.nouls[...]</code>。<a href="https://www.langchain.com/blog/building-a-harness-with-jev">LangChain 作者文章</a></p>
+<pre><code class="language-bash">python -m pip install langchain-typesafe
+</code></pre>
+<pre><code class="language-python">from langchain_typesafe import Noul, TypeSafeClassifier
+
+classifier = TypeSafeClassifier()
+response = classifier.invoke(
+    state=&quot;The test bench is blocked until someone investigates the capture failure.&quot;,
+    questions={
+        &quot;urgent&quot;: Noul(
+            instructions=&quot;Does this report describe an ongoing blockage needing prompt attention?&quot;
+        )
+    },
+)
+print(response.nouls[&quot;urgent&quot;].noul)
+</code></pre>
+<p>集成中的 <code>experimental.middleware</code> 提供 <code>ModelRouterMiddleware</code> 和 <code>AutoModeMiddleware</code>。前者选择模型，后者检查工具调用。它们带有 experimental 标记，应固定依赖版本并按照对应版本文档验证行为；本文不把它们当作稳定安全边界。</p>
+<p>使用这两个中间件时，官方安装方式是 <code>python -m pip install "langchain-typesafe[experimental]"</code>。Router 根据最近用户消息为本次 run 选择模型；AutoMode 对指定工具的风险调用返回错误 ToolMessage，并不会自动发起人工批准。需要人工批准时应另行组合 HITL 中间件。<a href="https://docs.langchain.com/oss/python/integrations/providers/typesafe">LangChain 官方集成文档</a></p>
+<p>对本人的开发工作，可采用以下自定义组合逻辑（伪代码，并非 SDK 接口）：</p>
+<pre><code class="language-text">on(request):
+  check deterministic policy and configured access
+  ask Jev which route fits: lookup / local_debug / deep_analysis / unknown
+  if unknown or confidence below evaluated threshold:
+    use review or capable reasoning fallback
+  else:
+    invoke the configured handler
+
+before tool execution:
+  validate exact arguments and permissions in code
+  optionally ask Jev for contextual risk signals
+  if policy denies, service fails, or evidence is insufficient:
+    block or request review according to the application's policy
+  otherwise:
+    execute and record actual outcome
+</code></pre>
+<p>路由标签应对应你实际配置的处理器，而不是凭空填写模型名。简单查找可交给检索或脚本；需要跨驱动、调度与硬件证据的分析可交给推理模型。实际节约取决于分流准确率、回退比例以及任务分布。</p>
+<h2 id="10">10. 版本、成本与性能怎样评估</h2>
+<p>核对日官方 Models 页列出 <code>jev-1.13.0</code>，<code>jev-latest</code> 与 <code>jev-preview</code> 当时都指向它。官方输入价为 <strong>$0.042 / 百万 tokens</strong>，输出 tokens 免费。别名会移动，阈值经过验证后宜固定模型 ID，并记录响应的实际版本。<a href="https://docs.typesafe.ai/models">Models</a></p>
+<p>示例算账：假设每个请求实际计费输入为 2,000 tokens：</p>
+<pre><code class="language-text">单次输入费用 = 2,000 / 1,000,000 × $0.042 = $0.000084
+100,000 次费用 = $8.40
+</code></pre>
+<p>这是基于假设 token 数和当前单价的算术示例，不是账单或性能测试；不含重试、其他模型、存储和网络成本。业务总费用应按响应 usage 与平台账单统计。问题与选项也占用 token，不能只计算日志正文。</p>
+<p>官方当前上下文限制为：单请求总量 64k tokens，且 state 加最长单个问题不能超过 32k。页面列出的 250,000 tokens/秒与 1,200 请求/分钟是服务限流说明，并注明动态调整，不是性能承诺。<a href="https://docs.typesafe.ai/models">Models</a></p>
+<p>端到端时间包括状态整理、网络、排队、推断、程序组合和后续执行。假设原流程 80% 时间在编译和工具上，即便其余 20% 分类步骤无限加速，整体上限也只有 <code>1 / 0.8 = 1.25</code> 倍。这个算术例子说明为什么不能把分类加速倍数照搬给完整开发流程。</p>
+<h2 id="11">11. 已知限制与容易误解的地方</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>常见误解</th>
+<th>更准确的理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>返回类型正确，所以事实一定正确</td>
+<td>仍可能选择错误候选或给出错误判断</td>
+</tr>
+<tr>
+<td>Noul 的 0.5 是中等严重</td>
+<td>它表示 yes/no 概率接近；程度用 Score</td>
+</tr>
+<tr>
+<td>Score 的 0.8 一定是 80 分</td>
+<td>数值范围由等级索引决定，要看 legend</td>
+</tr>
+<tr>
+<td>confidence 高就有权限执行</td>
+<td>权限来自用户授权与执行策略</td>
+</tr>
+<tr>
+<td>可以直接给 Jev 截图、波形图片</td>
+<td>当前支持文本；先转成适当文本或结构化特征</td>
+</tr>
+<tr>
+<td>一次请求的后一个问题能读前一个答案</td>
+<td>问题独立；依赖前一答案时应重建请求</td>
+</tr>
+<tr>
+<td>安装 skill 就已经调用 Jev</td>
+<td>skill 是指导；真实调用仍需 SDK/API 与 key</td>
+</tr>
+</tbody>
+</table></div>
+<p>官方针对 Jev 1.13 公布了包括算术、日期比较、长上下文、间接引用、对抗内容和跨问题一致性在内的已知薄弱点。因此数量计算、版本比较、地址范围判定应保留在代码中；分开问出的多个答案也可能互相冲突，需要由程序检查约束。<a href="https://docs.typesafe.ai/model-jaggedness/jev-1.13">Jev 1.13 jaggedness</a></p>
+<p>工具风险检查尤其不能仅靠模型：待检查的命令、网页和文件可能包含影响判断的指令。将材料结构化能帮助表达边界，但不能保证免疫提示注入。对此应结合确定性权限控制与针对性测试；这也是将 Jev 用作工具门禁时必须考虑的实际限制。</p>
+<p>当前公开使用路径是托管 API。本文查阅的资料不足以支持“可离线跑在开发板”“已提供开源权重”或“支持客户 LoRA 微调”等说法。官方说明通过 state、instructions、criteria 适配领域，而不是为每个客户微调权重。<a href="https://docs.typesafe.ai/models">Models</a></p>
+<h2 id="12">12. 面向你工作的落地方案</h2>
+<p>建议先试做“历史故障报告分流助手”。它与现有 FreeRTOS/Linux 工作贴近，结果容易复核，可以同时覆盖三种原语。</p>
+<ol>
+<li><strong>整理样本</strong>：选取历史已结案报告，保留原始描述、实际接手团队与复现信息；删除不应外发的数据。</li>
+<li><strong>明确标签</strong>：工程师定义首接队列、是否中断工作、复现材料完整度，允许 unknown 与有争议标签。</li>
+<li><strong>建立基线</strong>：比较关键词规则、现有人工流程和 Jev，避免把规则已能解决的问题复杂化。</li>
+<li><strong>分开开发与验证</strong>：在开发集调问题和阈值，在独立保留集评估。相同故障的重复报告避免跨集合泄漏。</li>
+<li><strong>记录有用指标</strong>：各队列误分情况、自动处理覆盖率、待复核比例、中文/英文差异、P50/P95 延迟和真实费用。</li>
+<li><strong>影子运行</strong>：先只输出建议，并与人工处理结果对照；通过后再接低风险工单分派。</li>
+<li><strong>监控变更</strong>：固定模型与问题版本；模型、候选集合或报告分布变化后重新评估。</li>
+</ol>
+<p>测试材料至少覆盖：清晰单一问题、驱动与 RTOS 交叉问题、信息缺失、否定句、互相矛盾的描述、中文混合日志、异常长文本、诱导模型忽略规则的内容，以及 API 限流/超时。区分候选漏召回、输入证据缺失、模型误判、代码分支错误与服务错误，才能知道该改哪里。</p>
+<h2 id="13">13. 来源与验证状态</h2>
+<p>本文完成了官方接口与资料核对，并提供原创教学示例。未使用 API key，未调用 Jev 服务，未对延迟、准确率和费用进行实测。示例代码的语法验证不能替代实际 SDK/API 集成测试。HTML 的交互仅在本地演示概率与程序分支，不请求任何模型服务。</p>
+<p>交付检查覆盖 Python 示例语法、HTML 标题/锚点/本地链接与交互分支逻辑。自动浏览器预览被本地文件 URL 安全策略阻止，未完成浏览器视觉验收。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://x.com/sydneyrunkle/status/2100754364545761643">用户指定 X 链接</a></td>
+<td>原始入口；本次 403，未直接取得全文</td>
+</tr>
+<tr>
+<td><a href="https://www.langchain.com/blog/building-a-harness-with-jev">LangChain：Building a Harness with Jev</a></td>
+<td>作者一手文章；Agent 分工及集成方式</td>
+</tr>
+<tr>
+<td><a href="https://docs.langchain.com/oss/python/integrations/providers/typesafe">LangChain TypeSafe 集成</a></td>
+<td>Classifier 与实验性中间件的实际接口</td>
+</tr>
+<tr>
+<td><a href="https://docs.typesafe.ai/introduction">TypeSafe Introduction</a></td>
+<td>产品定位与三种原语</td>
+</tr>
+<tr>
+<td><a href="https://docs.typesafe.ai/concepts/system-one">System One</a> · <a href="https://docs.typesafe.ai/introduction/machine-learning-primer">AI primer</a></td>
+<td>决策模型、RLCD 与校准</td>
+</tr>
+<tr>
+<td><a href="https://docs.typesafe.ai/concepts/state">State</a> · <a href="https://docs.typesafe.ai/primitives/choice">Choice</a></td>
+<td>输入组织、候选语义</td>
+</tr>
+<tr>
+<td><a href="https://docs.typesafe.ai/primitives/noul">Noul</a> · <a href="https://docs.typesafe.ai/primitives/score">Score</a> · <a href="https://docs.typesafe.ai/confidence">Confidence</a></td>
+<td>概率、分数与置信度</td>
+</tr>
+<tr>
+<td><a href="https://docs.typesafe.ai/introduction/quickstart">Quick start</a> · <a href="https://docs.typesafe.ai/sdk/python">Python SDK</a> · <a href="https://docs.typesafe.ai/api">HTTP API</a></td>
+<td>安装、请求、响应与错误处理</td>
+</tr>
+<tr>
+<td><a href="https://docs.typesafe.ai/patterns/fan-out">Speculative fan-out</a></td>
+<td>独立问题并行与跨调用依赖</td>
+</tr>
+<tr>
+<td><a href="https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook">候选值提取 Cookbook</a></td>
+<td>先找候选、再选择、由代码复制</td>
+</tr>
+<tr>
+<td><a href="https://docs.typesafe.ai/models">Models</a></td>
+<td>核对日版本、价格、限制和语言支持</td>
+</tr>
+<tr>
+<td><a href="https://docs.typesafe.ai/model-jaggedness/jev-1.13">Jev 1.13 jaggedness</a></td>
+<td>当前版本已知限制</td>
+</tr>
+</tbody>
+</table></div></article></main></div><footer>本文件可离线阅读，无远程脚本、字体或模型调用。官方来源与验证边界见正文第 13 节。</footer><script>
+const ids=['driver','build','unknown'];
+const labels=['驱动','构建','未知'];
+function evaluate(weights,threshold){
+ const sum=weights.reduce((a,b)=>a+b,0);
+ const p=sum?weights.map(x=>x/sum):weights.map(()=>1/3);
+ const peak=Math.max(...p), winner=p.indexOf(peak);
+ const tied=p.filter(x=>Math.abs(x-peak)<1e-9).length>1;
+ return {p,peak,winner,review:tied||winner===2||peak<threshold};
+}
+function render(){
+ const weights=ids.map(id=>Number(document.getElementById(id).value));
+ const threshold=Number(document.getElementById('threshold').value)/100;
+ const result=evaluate(weights,threshold);
+ ids.forEach((id,i)=>document.getElementById(id+'-val').textContent=weights[i]);
+ document.getElementById('threshold-val').textContent=(threshold*100).toFixed(0)+'%';
+ document.querySelectorAll('#prob-bars span').forEach((bar,i)=>{
+   bar.style.width=(result.p[i]*100)+'%';
+   bar.textContent=result.p[i]>=.1?labels[i]+' '+(result.p[i]*100).toFixed(0)+'%':'';
+ });
+ document.getElementById('prob-bars').setAttribute('aria-label',result.p.map((p,i)=>labels[i]+(p*100).toFixed(1)+'%').join('，'));
+ document.getElementById('choice-result').textContent=(result.review?'进入人工复核':'建议分流至：'+labels[result.winner])+' · 最大选项概率 '+(result.peak*100).toFixed(1)+'%';
+ const noul=Number(document.getElementById('noul').value)/100;
+ document.getElementById('noul-val').textContent=noul.toFixed(2);
+ document.getElementById('noul-result').textContent=noul>=.8?'倾向 yes：报告描述测试中断':noul<=.2?'倾向 no：没有明确描述测试中断':'待核实：不是“中等严重”，而是 yes/no 不够明确';
+}
+document.querySelectorAll('input').forEach(input=>input.addEventListener('input',render));
+document.querySelectorAll('[data-values]').forEach(button=>button.addEventListener('click',()=>{button.dataset.values.split(',').forEach((value,i)=>document.getElementById(ids[i]).value=value);render()}));
+document.getElementById('print').addEventListener('click',()=>window.print());
+render();
+</script></body></html>

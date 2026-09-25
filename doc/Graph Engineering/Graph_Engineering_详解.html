@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Graph Engineering 详解 · 从依赖图到可验证的工程流程</title>
+<style>
+:root{--ink:#10283d;--navy:#0b1e30;--paper:#f5f1e7;--white:#fffdf8;--orange:#bf4b16;--pale:#ffead9;--muted:#536575;--line:#d6ddd9;--green:#196653;--red:#a52a36;--blue:#285d86}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:25px}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","微软雅黑",system-ui,sans-serif;font-size:16px;line-height:1.85}a{color:#215e8c;text-underline-offset:4px;overflow-wrap:anywhere}button,input,select,textarea{font:inherit}button,select{cursor:pointer}button{background:var(--ink);color:white;border:1px solid var(--ink);border-radius:8px;padding:9px 16px}button:hover{background:#214760}button.secondary{background:transparent;color:var(--ink)}:focus-visible{outline:3px solid var(--orange);outline-offset:4px}.skip{position:absolute;left:16px;top:-100px;z-index:9;background:white;padding:12px}.skip:focus{top:12px}.hero{background:var(--navy);color:var(--paper);padding:64px max(6vw,24px) 46px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:450px;height:450px;right:-270px;top:-170px;border:70px solid #15384d;border-radius:50%;pointer-events:none}.eyebrow{letter-spacing:.18em;font-size:12px;font-weight:700;color:#ffb17b}.hero h1{font-size:clamp(36px,5.5vw,72px);line-height:1.14;margin:18px 0 22px;letter-spacing:-.03em}.hero h1 span{display:block;font-size:.42em;letter-spacing:.03em;line-height:1.8;margin-top:14px}.hero p{max-width:780px;color:#d2dddf}.hero strong{color:#ffbd8c}.hero-bottom{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.hero-bottom span{border:1px solid #3f596b;padding:5px 13px;border-radius:30px;font-size:13px}.layout{display:grid;grid-template-columns:215px minmax(0,1050px);gap:44px;max-width:1380px;margin:auto;padding:42px 30px 70px}nav{position:sticky;top:24px;align-self:start;max-height:90vh;overflow:auto;font-size:13px}nav strong{display:block;font-size:12px;letter-spacing:.15em;margin-bottom:15px}nav a{display:block;text-decoration:none;padding:7px 10px;border-left:2px solid var(--line);color:var(--muted)}nav a:hover{color:var(--orange);border-color:var(--orange);background:var(--pale)}main{min-width:0}section{padding:16px 0 42px;margin-bottom:24px;border-bottom:1px solid #ccd3cf;scroll-margin-top:24px}.section-head{display:flex;align-items:baseline;gap:15px;margin-bottom:16px}.num{font-size:16px;font-weight:700;color:var(--orange);letter-spacing:.1em}h2{font-size:clamp(25px,3vw,33px);line-height:1.45;margin:0}h3{font-size:19px;line-height:1.5;margin:0 0 10px}p{margin:9px 0 15px}.lead{font-size:19px;line-height:1.75;max-width:850px}.tag{display:inline-block;padding:1px 8px;border-radius:4px;font-size:11px;font-weight:700;vertical-align:middle;margin-right:6px;background:#e2e9ee;color:#31516c}.tag.extra{background:var(--pale);color:#963900}.tag.official{background:#e0eee7;color:#215b49}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card,figure,.lab{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px;margin:14px 0}.card p:last-child{margin-bottom:0}figure{padding:20px}figcaption{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;margin-top:10px;line-height:1.65}.callout{border-left:4px solid var(--orange);background:var(--pale);padding:15px 19px;margin:18px 0;font-size:15px}.subtle{color:var(--muted);font-size:13px}.formula{background:var(--ink);color:#fff8ea;border-radius:10px;padding:18px 22px;font-family:Consolas,"Microsoft YaHei",monospace;font-size:15px;overflow-wrap:anywhere}pre{font-family:Consolas,"Microsoft YaHei",monospace;background:var(--navy);color:#e9efe9;padding:20px;border-radius:10px;line-height:1.65;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}code{font-family:Consolas,"Microsoft YaHei",monospace}p code,td code{font-size:.9em;background:#e6e9e5;padding:1px 4px;border-radius:3px}ul,ol{padding-left:23px}li{margin:7px 0}.table-wrap{overflow-x:auto;margin:18px 0}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;padding:13px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#e6eae6;color:var(--ink)}svg{display:block;width:100%;height:auto;font-family:"Microsoft YaHei",sans-serif}svg text{fill:var(--ink);font-size:15px}svg .box{fill:#f4f0e5;stroke:#8194a0;stroke-width:1.5}svg .accent{fill:#ffe4cd;stroke:var(--orange);stroke-width:1.5}svg .dark{fill:var(--ink);stroke:var(--ink)}svg .light{fill:#fffdf8}svg .small{font-size:12px}svg .edge{fill:none;stroke:#526d81;stroke-width:2;marker-end:url(#arrow)}svg .dash{stroke-dasharray:5 5}svg .ok{fill:#e0eee7;stroke:var(--green);stroke-width:1.5}.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.control label{display:block;font-size:13px;font-weight:700}.control input[type=range]{width:100%;accent-color:var(--orange)}select{width:100%;padding:9px;background:white;color:var(--ink);border:1px solid #8194a0;border-radius:7px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.metric{background:#eaf0ef;border-radius:10px;padding:15px}.metric b{display:block;font-size:27px;color:var(--ink);line-height:1.4}.metric span{font-size:12px;color:var(--muted)}.buttons{display:flex;gap:8px;flex-wrap:wrap}.buttons button[aria-pressed=true]{background:var(--orange);border-color:var(--orange);color:white}.status{padding:14px 16px;border-left:4px solid var(--green);background:#e0eee7;margin-top:15px}.status.bad{border-color:var(--red);background:#f9e8e5}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;margin:12px 0}.legend span:before{content:"";display:inline-block;width:12px;height:12px;background:var(--blue);margin-right:6px;border-radius:2px}.legend span:nth-child(2):before{background:var(--orange)}.legend span:nth-child(3):before{background:#6b7880}.code-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px}textarea{width:100%;min-height:730px;resize:vertical;background:var(--navy);color:#e9efe9;border:1px solid #375065;border-radius:10px;padding:20px;font-family:Consolas,"Microsoft YaHei",monospace;font-size:13px;line-height:1.7}.foot{font-size:12px;color:var(--muted);padding-top:20px}.nojs{padding:20px;background:#ffe0be}.print-only{display:none}@media(max-width:1050px){.layout{grid-template-columns:1fr;gap:15px;max-width:960px}nav{position:static;max-height:none;display:flex;flex-wrap:wrap;gap:4px}nav strong{width:100%}nav a{border-left:0;background:#e7eae4;border-radius:5px;padding:5px 9px}}@media(max-width:650px){body{font-size:15px}.hero{padding:40px 22px 32px}.layout{padding:24px 18px 45px}.grid,.three{grid-template-columns:1fr;gap:0}.controls{grid-template-columns:1fr 1fr}.metrics{gap:7px}.metric{padding:10px}.metric b{font-size:22px}.card,.lab,figure{padding:15px}.section-head{gap:10px}section{padding-bottom:25px;margin-bottom:12px}svg text{font-size:16px}svg .small{font-size:13px}.code-top{align-items:start}.lead{font-size:17px}th,td{padding:10px;min-width:95px}textarea{padding:13px}.hero-bottom{gap:6px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{@page{size:A4;margin:15mm}body{background:white;color:#12283a;font-size:10pt;line-height:1.6}.hero{background:white;color:var(--ink);padding:0 0 18px;border-bottom:3px solid var(--orange)}.hero:after,nav,.skip,.no-print,.controls,.buttons,.code-top button{display:none!important}.hero p,.hero strong,.eyebrow{color:var(--ink)}.hero h1{font-size:31pt}.hero-bottom span{border-color:#bbc5ca}.layout{display:block;padding:20px 0;max-width:none}.grid,.three{gap:12px}section{padding:10px 0 20px;margin:0}h2{font-size:19pt}h3{font-size:13pt}p{orphans:3;widows:3}figure,.card,.lab,table,pre{break-inside:avoid}.card,figure,.lab{padding:12px;margin:10px 0}h2,h3,.section-head{break-after:avoid}pre,.formula{background:#edf0ef;color:#10283d;border:1px solid #ccd3cf;font-size:8pt}textarea{display:none}.print-only{display:block}a{color:#163e5a}.metric b{font-size:20pt}svg{max-height:105mm}.tag{border:1px solid #aaa}.foot{font-size:8pt}}
+.diagram-scroll{overflow-x:auto}.diagram-scroll svg{min-width:620px}@media(max-width:650px){figure{overflow-x:auto}figure svg{min-width:440px}#s3 figure svg,#s5 figure svg,#s10 figure svg{min-width:720px}}@media print{.diagram-scroll svg,figure svg{min-width:0!important}.diagram-scroll{overflow:visible}}
+/* Keep the decorative cover ring behind content and make mobile diagram scrolling discoverable. */
+.hero> *{position:relative;z-index:1}
+.hero:after{z-index:0}
+@media(max-width:650px){
+  .hero:after{display:none}
+  figure:before,.diagram-scroll:before{content:"左右滑动查看完整图解";display:block;font-size:12px;color:var(--muted);margin-bottom:10px}
+}
+</style></head><body>
+<a class="skip" href="#main">跳到正文</a><svg width="0" height="0" aria-hidden="true" style="position:absolute;width:0;height:0"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#526d81"/></marker></defs></svg>
+<header class="hero"><div class="eyebrow">ENGINEERING FIELD GUIDE / 2026.09</div><h1>Graph Engineering<span>把工作画成依赖图，把结论接到证据上。</span></h1><p>并行能缩短独立工作的等待；<strong>契约、完整性检查与外部证据</strong>决定结果是否值得使用。图的价值来自正确拆分与可验证执行，不能仅靠增加 agent 数量获得。</p><div class="hero-bottom"><span>12 章中文详解</span><span>SVG 图解 · 原生交互</span><span>嵌入式 / FreeRTOS 场景</span><span>单文件 · 离线可用</span></div></header>
+<noscript><div class="nojs">JavaScript 未启用：正文与图解仍可阅读；模拟器需启用脚本。Graph Spec 可直接选择复制。</div></noscript>
+<div class="layout"><nav aria-label="章节目录"><strong>阅读路线 / CONTENTS</strong><a href="#s1">01 概念与边界</a><a href="#s2">02 Node contract</a><a href="#s3">03 真假依赖</a><a href="#s4">04 Diamond 与独立验证</a><a href="#s5">05 状态与有限重试</a><a href="#s6">06 三大故障 · 互动</a><a href="#s7">07 Anchors：证据锚点</a><a href="#s8">08 何时不用图</a><a href="#s9">09 时间与成本 · 互动</a><a href="#s10">10 嵌入式工程案例</a><a href="#s11">11 可复制 Graph Spec</a><a href="#s12">12 使用边界</a></nav><main id="main">
+<section id="s1"><div class="section-head"><span class="num">01</span><h2>图描述工作，也暴露等待</h2></div><p class="lead">节点负责有边界的任务，边表达任务之间的依赖。画图的第一步，是说清楚“谁必须等谁，以及为什么”。</p><div class="grid"><div><h3>从单个循环到协作流程</h3><p>Graph Engineering 可以组织多个工作与检查循环。它沿用图、依赖调度和工作流思想；本文将其当作工程设计方法，而非新的标准或算法。</p><p><span class="tag extra">教学补充</span>节点可以是模型、脚本、编译器或人工审批。结构化输出可以包含多个产物引用。</p><p>直线也是图。DAG 是无环依赖图；图可含回路；带修复回边的局部循环必须有次数、时间或预算上限。不要把所有图都当成 DAG。</p></div><figure tabindex="0" aria-label="图解区域，可用方向键横向滚动"><svg viewBox="0 0 540 260" role="img" aria-label="线性流程为采集、分析、报告依次执行；图式流程将日志和代码分析并行后汇合验证。"><text x="14" y="23" class="small">线性：顺序是否真的必要？</text><rect class="box" x="15" y="39" width="130" height="45" rx="8"/><text x="80" y="68" text-anchor="middle">采集</text><path class="edge" d="M145 62H191"/><rect class="box" x="195" y="39" width="130" height="45" rx="8"/><text x="260" y="68" text-anchor="middle">分析</text><path class="edge" d="M325 62H371"/><rect class="accent" x="375" y="39" width="150" height="45" rx="8"/><text x="450" y="68" text-anchor="middle">报告</text><text x="14" y="125" class="small">共同输入：先分支，再汇合</text><rect class="box" x="15" y="167" width="105" height="48" rx="8"/><text x="67" y="197" text-anchor="middle">固定快照</text><path class="edge" d="M120 188L192 156M120 193L192 224"/><rect class="box" x="196" y="134" width="137" height="44" rx="8"/><text x="264" y="162" text-anchor="middle">日志分析</text><rect class="box" x="196" y="203" width="137" height="44" rx="8"/><text x="264" y="231" text-anchor="middle">代码分析</text><path class="edge" d="M333 156L398 187M333 225L398 196"/><rect class="accent" x="403" y="167" width="120" height="48" rx="8"/><text x="463" y="197" text-anchor="middle">汇合 / 验证</text></svg><figcaption>图 1｜两个分支仍然依赖同一输入快照，汇合仍要等待它们。</figcaption></figure></div><div class="three"><div class="card"><h3>Node · 做什么</h3><p>任务、输入、输出、边界、完成判据。</p></div><div class="card"><h3>Edge · 为什么等</h3><p>产物依赖、控制条件，或需要显式管理的资源约束。</p></div><div class="card"><h3>State · 到了哪里</h3><p>状态、尝试次数、产物、证据和版本。</p></div></div></section>
+<section id="s2"><div class="section-head"><span class="num">02</span><h2>Node contract：让下游不用猜</h2></div><p class="lead">固定任务范围与输出结构，才能把一个节点可靠地接到下一个节点。</p><div class="grid"><figure tabindex="0" aria-label="图解区域，可用方向键横向滚动"><svg viewBox="0 0 480 295" role="img" aria-label="输入经契约校验进入节点，输出经结构和证据检查后交给下游；不合格结果进入失败处理。"><rect class="box" x="40" y="15" width="400" height="48" rx="8"/><text x="240" y="44" text-anchor="middle">输入：快照 ID + 文件清单 + 检查规则</text><path class="edge" d="M240 63V94"/><rect class="dark" x="70" y="98" width="340" height="65" rx="9"/><text class="light" x="240" y="125" text-anchor="middle">单一职责：检查 ISR 调用点</text><text class="light small" x="240" y="147" text-anchor="middle">只读源码 / 不更改阈值 / 有超时</text><path class="edge" d="M240 163V192"/><rect class="accent" x="40" y="197" width="400" height="45" rx="8"/><text x="240" y="225" text-anchor="middle">输出校验：结构 → ID → 版本 → 证据</text><path class="edge" d="M160 242V272M330 242V272"/><text x="160" y="291" text-anchor="middle">通过：可消费</text><text x="345" y="291" text-anchor="middle">失败：登记原因</text></svg><figcaption>图 2｜结构校验回答“能否解析”，证据校验回答“是否成立”。二者不能互相替代。</figcaption></figure><div><h3>契约最小字段</h3><div class="table-wrap"><table><thead><tr><th>字段</th><th>要约束的事情</th></tr></thead><tbody><tr><td>job / input</td><td>做一件事；输入显式传入。</td></tr><tr><td>output / schema</td><td>状态、发现列表、证据引用、版本可解析。</td></tr><tr><td>acceptance</td><td>可执行通过判据；空发现不等于执行失败。</td></tr><tr><td>limits / effects</td><td>超时、预算、重试次数、可写范围和资源锁。</td></tr></tbody></table></div><p><span class="tag extra">教学补充</span>自由文本可保留在说明字段中；路由与验收字段应有机器可检查的结构。</p></div></div><pre><code>{
+  "schema_version": "1.0", "run_id": "demo-run", "node_id": "isr-audit",
+  "snapshot_id": "&lt;git commit + config hash&gt;",
+  "status": "succeeded", "findings": [],
+  "evidence": [{"kind": "analysis", "artifact": "&lt;report path&gt;"}],
+  "coverage": {"expected_files": 8, "checked_files": 8}, "attempt": 1
+}</code></pre><p class="subtle">教学示例数据，不是实际测试结果。findings=[] 仅说明该检查在声明范围内未发现问题，不能证明整套系统无缺陷。</p></section>
+<section id="s3"><div class="section-head"><span class="num">03</span><h2>真假依赖：先找输入，再查资源</h2></div><p class="lead">问：B 是否真的要用 A 的结果？如果不用，顺序可能只是提示词的书写顺序。</p><figure tabindex="0" aria-label="图解区域，可用方向键横向滚动"><svg viewBox="0 0 870 195" role="img" aria-label="协议解析依赖帧定义；两个只读文件检查没有数据依赖；两个烧录任务共享开发板，需要互斥。"><text x="145" y="23" text-anchor="middle">① 真数据依赖</text><rect class="box" x="15" y="45" width="112" height="53" rx="8"/><text x="71" y="77" text-anchor="middle">帧定义</text><path class="edge" d="M127 72H165"/><rect class="accent" x="170" y="45" width="108" height="53" rx="8"/><text x="224" y="77" text-anchor="middle">解析实现</text><text x="145" y="135" text-anchor="middle" class="small">B 读取 A 定义的布局</text><text x="145" y="161" text-anchor="middle" class="small">保留依赖顺序</text><text x="440" y="23" text-anchor="middle">② 假顺序</text><rect class="box" x="312" y="45" width="114" height="53" rx="8"/><text x="369" y="77" text-anchor="middle">只读查 A</text><text x="443" y="78" text-anchor="middle">×</text><rect class="box" x="459" y="45" width="114" height="53" rx="8"/><text x="516" y="77" text-anchor="middle">只读查 B</text><text x="442" y="135" text-anchor="middle" class="small">输入快照相同，输出隔离</text><text x="442" y="161" text-anchor="middle" class="small">可并行，另查跨文件关系</text><text x="738" y="23" text-anchor="middle">③ 隐含资源冲突</text><rect class="box" x="609" y="45" width="111" height="53" rx="8"/><text x="664" y="77" text-anchor="middle">烧录 A</text><rect class="box" x="747" y="45" width="110" height="53" rx="8"/><text x="802" y="77" text-anchor="middle">烧录 B</text><path class="edge" d="M665 98L709 129M802 98L756 129"/><rect class="accent" x="671" y="132" width="126" height="43" rx="8"/><text x="734" y="160" text-anchor="middle">开发板互斥锁</text></svg><figcaption>图 3｜没有数据依赖仍不够。共享写入、设备独占、API 配额也限制并发。</figcaption></figure><div class="grid"><div class="card"><h3>删除假边的检查顺序</h3><ol><li>列出 B 读取的输入，确认是否来自 A。</li><li>列出双方写入的文件、设备与外部状态。</li><li>确认公共快照不可变，产物路径不碰撞。</li><li>确定可用并发和汇合规则，再并行执行。</li></ol></div><div class="card"><h3>保留必要同步</h3><p><span class="tag extra">教学补充</span>资源冲突可用锁、队列或隔离管理，不必把所有工作永久串成一条链。</p><p>独立 worktree 隔离文件修改；合并仍可能出现文本与语义冲突。跨模块接口与全量构建需要另行验证。</p></div></div></section>
+<section id="s4"><div class="section-head"><span class="num">04</span><h2>Diamond：分开探索，带证据汇合</h2></div><p class="lead">Fan-out → Reduce → Verify → Synthesize：让任务并行，让代码整理结果，让独立检查先于最终报告。</p><div class="grid"><figure tabindex="0" aria-label="图解区域，可用方向键横向滚动"><svg viewBox="0 0 510 530" role="img" aria-label="目标拆成三个调查分支，完整性检查后去重，独立验证正确性、时效性和来源，最后综合并经过人工门禁。"><rect class="dark" x="145" y="10" width="220" height="48" rx="8"/><text class="light" x="255" y="40" text-anchor="middle">固定问题 / 范围 / 快照</text><path class="edge" d="M220 58L86 103M255 58V103M290 58L424 103"/><rect class="box" x="14" y="108" width="145" height="55" rx="8"/><text x="86" y="141" text-anchor="middle">调查 A</text><rect class="box" x="183" y="108" width="145" height="55" rx="8"/><text x="255" y="141" text-anchor="middle">调查 B</text><rect class="box" x="352" y="108" width="145" height="55" rx="8"/><text x="424" y="141" text-anchor="middle">调查 C</text><path class="edge" d="M86 163L218 201M255 163V201M424 163L292 201"/><rect class="accent" x="88" y="205" width="334" height="52" rx="8"/><text x="255" y="237" text-anchor="middle">完整性门禁 → 代码去重 / 规整</text><path class="edge" d="M220 257L86 300M255 257V300M290 257L424 300"/><rect class="ok" x="14" y="305" width="145" height="62" rx="8"/><text x="86" y="331" text-anchor="middle">正确性</text><text x="86" y="353" class="small" text-anchor="middle">独立复核</text><rect class="ok" x="183" y="305" width="145" height="62" rx="8"/><text x="255" y="331" text-anchor="middle">时效性</text><text x="255" y="353" class="small" text-anchor="middle">版本 / 日期</text><rect class="ok" x="352" y="305" width="145" height="62" rx="8"/><text x="424" y="331" text-anchor="middle">来源真实性</text><text x="424" y="353" class="small" text-anchor="middle">原始证据</text><path class="edge" d="M86 367L220 404M255 367V404M424 367L290 404"/><rect class="dark" x="90" y="409" width="330" height="48" rx="8"/><text class="light" x="255" y="439" text-anchor="middle">综合：已证实 / 未证实 / 被反驳</text><path class="edge" d="M255 457V478"/><rect class="accent" x="145" y="483" width="220" height="40" rx="8"/><text x="255" y="509" text-anchor="middle">人工门禁 → 发布或合入</text></svg><figcaption>图 4｜完整性门禁为教学增强。验证未执行时保留“未验证”，不能当成“已反驳”或“已通过”。</figcaption></figure><div><h3>每层只做擅长的事情</h3><p><b>Fan-out：</b>按范围或角度分工，覆盖可追踪。分得更宽提升覆盖机会，不自动改善判断。</p><p><b>Reduce：</b>先检查任务结果，再用代码去重、排序、限制体积。仅按 URL 去重可能误删同页不同发现；宜使用发现 ID 与证据定位。</p><p><b>Verify：</b>只给结论、必要材料和独立取证入口，避免复用生成者整段对话。</p><p><b>Synthesize：</b>汇总证据与分歧，不把报告的流畅程度当作通过条件。</p><div class="callout"><b>独立上下文不等于独立证据。</b><br>相同模型和来源仍可能产生相关错误。关键结论需要真实测试、原始材料或人工复核。</div><p><span class="tag extra">教学补充</span>多个验证者可以采用多数投票。工程关键验收项应逐项通过；不能用两票赞同抵消一个实测失败。</p></div></div></section>
+<section id="s5"><div class="section-head"><span class="num">05</span><h2>状态、失败与有限重试</h2></div><p class="lead"><span class="tag extra">教学补充</span>“没有返回”不是状态。为每个任务保留结果信封，即使它失败、超时或被取消。</p><figure tabindex="0" aria-label="图解区域，可用方向键横向滚动"><svg viewBox="0 0 870 220" role="img" aria-label="pending 到 ready 到 running；成功后 succeeded；瞬态错误在有预算时进入 retry_wait，永久失败或重试耗尽进入失败终态。"><rect class="box" x="15" y="80" width="125" height="48" rx="8"/><text x="77" y="109" text-anchor="middle">pending</text><path class="edge" d="M140 104H182"/><rect class="box" x="187" y="80" width="120" height="48" rx="8"/><text x="247" y="109" text-anchor="middle">ready</text><path class="edge" d="M307 104H350"/><rect class="accent" x="355" y="80" width="130" height="48" rx="8"/><text x="420" y="109" text-anchor="middle">running</text><path class="edge" d="M485 92L677 38M485 112L677 174"/><rect class="ok" x="682" y="13" width="165" height="48" rx="8"/><text x="764" y="42" text-anchor="middle">succeeded</text><rect class="box" x="682" y="150" width="165" height="48" rx="8"/><text x="764" y="179" text-anchor="middle">failed / timed_out</text><path class="edge" d="M420 128V169H520"/><rect class="box" x="525" y="148" width="132" height="48" rx="8"/><text x="591" y="177" text-anchor="middle">retry_wait</text><path class="edge" d="M590 148V30H420V76"/><text x="523" y="21" text-anchor="middle" class="small">瞬态错误 + 剩余预算</text><text x="164" y="62" text-anchor="middle" class="small">依赖通过</text><text x="166" y="172" text-anchor="middle" class="small">上游失败 → 下游 blocked</text><text x="166" y="197" text-anchor="middle" class="small">主动停止 → cancelled</text></svg><figcaption>图 5｜状态转换写入可靠存储。断点恢复先检查已完成产物，避免重复副作用。</figcaption></figure><div class="grid"><div><h3>按失败性质处理</h3><ul><li><b>超时 / 限流：</b>有上限的退避重试，遵守服务端等待建议。</li><li><b>格式错误：</b>返回具体校验信息，可限次修正。</li><li><b>权限不足 / 版本错误：</b>先修复前置条件。</li><li><b>实测断言失败：</b>进入有边界的修复循环，保留失败证据。</li></ul></div><pre><code>// 教学伪代码：描述处理顺序，不是某个 SDK 的可执行 API。
+// 输入：任务结果 result、当前尝试次数 attempt、固定版本 snapshot。
+// 运行时负责超时、预算扣减和持久化；超时也要生成结果记录。
+max_attempts = 2  // 总尝试上限：首次执行 + 最多 1 次重试
+
+on_result(result):  // 每次尝试结束时处理成功、失败或超时结果
+  // 先保存结果、尝试次数和输入版本，方便追踪与断点恢复。
+  persist(result, attempt, snapshot)
+
+  // accepted 检查执行状态、输出结构及验收条件，不能只听模型说完成。
+  if accepted(result):
+    mark_succeeded()  // 标记节点成功，供下游检查启动条件
+
+  // 可恢复的瞬态错误、剩余尝试次数和剩余预算，三个条件必须同时满足。
+  else if transient(result)
+       and attempt &lt; max_attempts
+       and budget_remaining:
+    wait(backoff_with_jitter)  // 退避并加入随机延迟，避免集中重试
+    // 同一逻辑操作复用幂等键，防止重复副作用。
+    // 重试函数须增加 attempt，并在执行前再次核对预算和远端状态。
+    retry_with_same_idempotency_key()
+
+  else:
+    mark_terminal_failure()       // 保存终态失败及原因，不再自动重试
+    block_required_dependents()  // 阻断必须依赖该结果的下游节点
+// 输出：持久化的任务状态；失败不能冒充“成功但没有发现”。</code></pre></div><div class="callout">超时不意味着远端操作已停止。烧录、写库等副作用需要状态核对与幂等机制；重试不能简单再次发送同一操作。</div></section>
+<section id="s6"><div class="section-head"><span class="num">06</span><h2>三大故障：并行成功也可能是假象</h2></div><p class="lead">上下文坍缩、虚假独立、静默失败，是扩大图规模时最容易暴露的三个问题。</p><div class="three"><div class="card"><h3>01 上下文坍缩</h3><p>原始结果挤进一个综合节点，输入超限或关键细节丢失。</p><p><b>处理：</b>分批归并；摘要保留证据 ID 与原始产物引用，压缩后仍可回查。</p></div><div class="card"><h3>02 虚假独立</h3><p>任务不同，却改同一个文件、占同一块板或争 API 配额。</p><p><b>处理：</b>隔离工作区、资源锁与限流；汇合后做集成验证。</p></div><div class="card"><h3>03 静默失败</h3><p>过滤空值后直接汇总，少做一项也能产出“完整报告”。</p><p><b>处理：</b>核对预期 ID 集合、状态、版本与覆盖，不只比较长度。</p></div></div>
+<div class="lab"><h3>互动 A · 让一个分支出问题</h3><p class="subtle">模拟三个必需节点 A / B / C。选择情形，观察 fan-in 是否允许生成完整报告。按钮支持 Tab 与 Enter / 空格。</p><div class="buttons" id="failure-buttons" role="group" aria-label="选择节点返回情形"><button data-case="ok" aria-pressed="true">全部成功</button><button class="secondary" data-case="missing" aria-pressed="false">C 未返回</button><button class="secondary" data-case="duplicate" aria-pressed="false">B 重复，缺 C</button><button class="secondary" data-case="failed" aria-pressed="false">C 执行失败</button><button class="secondary" data-case="stale" aria-pressed="false">C 旧版结果</button></div>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="完整性图，可用方向键横向滚动"><svg id="fanin-svg" viewBox="0 0 760 180" role="img" aria-label="三个必需分支汇合到完整性门禁，当前全部成功"><rect class="box" x="15" y="25" width="160" height="48" rx="8"/><text x="95" y="55" text-anchor="middle">A · 成功</text><rect class="box" x="300" y="25" width="160" height="48" rx="8"/><text x="380" y="55" text-anchor="middle">B · 成功</text><rect id="c-box" class="ok" x="585" y="25" width="160" height="48" rx="8"/><text id="c-label" x="665" y="55" text-anchor="middle">C · 成功</text><path class="edge" d="M95 73L320 119M380 73V119M665 73L440 119"/><rect class="accent" x="255" y="124" width="250" height="46" rx="8"/><text x="380" y="153" text-anchor="middle">完整性 + 状态 + 版本门禁</text></svg></div>
+<div id="fanin-status" class="status" role="status" aria-live="polite">允许综合：A、B、C 均已成功，ID 唯一且快照一致。</div><pre id="fanin-detail" aria-label="完整性检查结果">expected = [A, B, C]
+received = [A, B, C]
+missing = [] · duplicates = [] · invalid = []</pre><p class="subtle">这里采用严格策略：必需节点缺失或不合格均阻断综合。可选分支可允许降级，但必须在契约中预先声明，并在报告显著标出缺口。</p></div><pre><code>// 教学伪代码：先验收任务结果，再对结果中的“发现”去重。
+// 输入：计划任务 ID 清单，以及各任务返回的结果信封。
+expected = set(planned_node_ids)  // 本轮应该收到哪些任务的结果
+
+// 收集成功、失败和超时结果，并保留 node_id，不过滤失败记录。
+// 运行时须设置截止时间，避免一个不结束的任务阻塞整个汇合。
+received = all_settled_results_with_node_ids()
+
+// 同一 ID 重复返回不能顶替缺失任务；未知 ID 也不能混入当前运行。
+// reject 表示门禁不通过：登记原因并停止生成“完整报告”。
+reject duplicate_ids(received), unknown_ids(received)
+
+// 集合差集找出缺失 ID：例如预期 {A,B,C}、收到 {A,B}，缺失为 {C}。
+reject expected - set(received.ids)
+
+// 每个必需结果都必须通过下列检查；可选节点的降级规则需另行声明。
+require every required result:
+  status == succeeded AND schema_valid  // 执行成功，字段和类型符合契约
+  AND snapshot_id == current_snapshot   // 结果属于当前代码与配置版本
+  AND coverage_complete                 // 声明的检查范围没有漏项
+
+// 输出：允许汇合，或带具体缺口的失败状态。
+// 全部通过后才归并 findings；零发现也必须保留成功信封。
+// 这里的门禁检查完整性，发现是否真实仍需后续独立验证。</code></pre></section>
+<section id="s7"><div class="section-head"><span class="num">07</span><h2>Anchors：让结论落在可追溯证据上</h2></div><p class="lead">多个节点彼此认可，可能只是重复同一个错误。拓扑本身不能证明结论为真。</p><div class="grid"><figure tabindex="0" aria-label="图解区域，可用方向键横向滚动"><svg viewBox="0 0 500 300" role="img" aria-label="上层报告互相引用形成闭环；真实测试日志、原始数据和冻结判据为检查结论提供外部锚点。"><rect class="box" x="25" y="20" width="185" height="52" rx="8"/><text x="117" y="51" text-anchor="middle">生成者：我已完成</text><rect class="box" x="290" y="20" width="185" height="52" rx="8"/><text x="382" y="51" text-anchor="middle">检查者：看起来对</text><path class="edge" d="M210 39H285M290 61H215"/><text x="250" y="112" text-anchor="middle" class="small">只互相引用：一致，但未验证</text><rect class="accent" x="127" y="143" width="246" height="49" rx="8"/><text x="250" y="174" text-anchor="middle">验收：读取原始证据</text><path class="edge" d="M82 244L180 197M250 244V197M418 244L320 197"/><rect class="ok" x="10" y="249" width="145" height="43" rx="8"/><text x="82" y="277" text-anchor="middle">实际运行的测试</text><rect class="ok" x="177" y="249" width="145" height="43" rx="8"/><text x="249" y="277" text-anchor="middle">原始数据 / 版本</text><rect class="ok" x="345" y="249" width="145" height="43" rx="8"/><text x="417" y="277" text-anchor="middle">冻结验收规则</text></svg><figcaption>图 7｜证据从外部进入评估。验收规则由需求或负责人控制，不能由优化节点为了过关而放宽。</figcaption></figure><div><h3>可执行的锚点是什么</h3><p><b>实际运行：</b>测试命令、退出码、原始日志、运行时间、构建 ID，能够一起定位到一次执行。</p><p><b>原始来源：</b>结论对应到文档版本、日志行、波形区间或可复现输入。</p><p><b>固定门槛：</b>运行前约定的功能断言、时间限制与失败处理，不在修复过程中悄悄降低。</p><div class="callout"><span class="tag extra">教学补充</span>锚点也有适用范围。测试通过只覆盖本次配置、输入与观测能力；陈旧固件、错误仪器设置或不充分用例仍会产生误导。</div></div></div><p>证据至少关联 <code>run_id → commit → config → toolchain → board → artifact</code>。不要把不同版本的通过记录拼成当前版本“全部通过”。</p></section>
+<section id="s8"><div class="section-head"><span class="num">08</span><h2>何时不用：简单路径也很专业</h2></div><p class="lead">任务小、步骤真正串行、目标仍在探索，或每步都必须人工确认时，复杂编排可能只增加开销。</p><div class="grid"><figure tabindex="0" aria-label="图解区域，可用方向键横向滚动"><svg viewBox="0 0 500 330" role="img" aria-label="选型路径：目标不清先探索；没有独立工作用串行循环；有独立工作但没有资源或验证先补条件；全部具备后小规模试跑。"><rect class="dark" x="20" y="15" width="230" height="44" rx="8"/><text class="light" x="135" y="43" text-anchor="middle">目标与验收清楚？</text><path class="edge" d="M250 37H314"/><text x="280" y="27" class="small">否</text><text x="322" y="43">先探索 / 单 agent</text><path class="edge" d="M135 59V94"/><text x="146" y="84" class="small">是</text><rect class="box" x="20" y="99" width="230" height="44" rx="8"/><text x="135" y="127" text-anchor="middle">至少两项独立工作？</text><path class="edge" d="M250 121H314"/><text x="280" y="111" class="small">否</text><text x="322" y="127">串行 / 单个循环</text><path class="edge" d="M135 143V178"/><text x="146" y="168" class="small">是</text><rect class="box" x="20" y="183" width="230" height="44" rx="8"/><text x="135" y="211" text-anchor="middle">资源与验证足够？</text><path class="edge" d="M250 205H314"/><text x="280" y="195" class="small">否</text><text x="322" y="211">限流 / 先补证据</text><path class="edge" d="M135 227V264"/><text x="146" y="252" class="small">是</text><rect class="accent" x="20" y="269" width="230" height="44" rx="8"/><text x="135" y="297" text-anchor="middle">小范围 graph 试跑</text></svg><figcaption>图 8｜教学选型路径。是否采用并行图，应由可分解性、资源与验证能力共同决定。</figcaption></figure><div><h3>几类常见选择</h3><p><b>一个难复现的板级 bug：</b>先补现象、复现条件和观测，使用可随时调整的调查循环。</p><p><b>几十个模块同规则审查：</b>适合分片只读分析，随后检查跨模块关系。</p><p><b>一块板上顺序烧录与测量：</b>设备阶段串行；旁路静态分析仍可并行。</p><p><b>逐步审批的敏感变更：</b>在自然里程碑设置门禁，收益按实际等待重新计算。</p><p class="subtle">从能解决问题的最简单方案开始，再按需要增加复杂度。</p></div></div></section>
+<section id="s9"><div class="section-head"><span class="num">09</span><h2>算时间，也算完整执行的成本</h2></div><p class="lead"><span class="tag extra">教学补充</span>图的总耗时受关键路径与资源限制。只有一层完全独立任务、资源足够且忽略开销时，才能直接取最慢任务时间。</p>
+<div class="formula">关键路径 L = max（每条依赖路径上节点耗时之和）<br>理想调度下界 T ≥ max(L, W / C)<br>W = 所有节点的工作量；C = 同质执行资源数。此下界不保证可达到。</div>
+<div class="lab"><h3>互动 B · 串行与并行，究竟差多少？</h3><p>模型：准备 P → 三个独立任务 A / B / C → 独立验证 V → 综合 S。拖动任务耗时、并发上限与额外编排开销。</p>
+<div class="controls">
+<div class="control"><label for="ta">任务 A：<output id="oa" for="ta">20</output> 秒</label><input id="ta" type="range" min="1" max="60" step="1" value="20"></div>
+<div class="control"><label for="tb">任务 B：<output id="ob" for="tb">30</output> 秒</label><input id="tb" type="range" min="1" max="60" step="1" value="30"></div>
+<div class="control"><label for="tc">任务 C：<output id="oc" for="tc">40</output> 秒</label><input id="tc" type="range" min="1" max="60" step="1" value="40"></div>
+<div class="control"><label for="concurrency">并发上限 C</label><select id="concurrency"><option value="1">1 个执行槽</option><option value="2">2 个执行槽</option><option value="3" selected>3 个执行槽</option></select></div>
+<div class="control"><label for="overhead">额外总开销 H：<output id="oh" for="overhead">15</output> 秒</label><input id="overhead" type="range" min="0" max="120" step="1" value="15"></div>
+<div class="control"><label for="reset-sim">恢复教学参数</label><button id="reset-sim" type="button">重置模拟</button></div></div>
+<div class="metrics" aria-live="polite" aria-atomic="true"><div class="metric"><span>串行基线</span><b id="serial-value">105 s</b></div><div class="metric"><span>当前并行调度</span><b id="parallel-value">70 s</b></div><div class="metric"><span>加速比 / 串行 ÷ 并行</span><b id="speed-value">1.50×</b></div></div>
+<div class="legend"><span>任务执行</span><span>额外编排开销 H</span><span>准备 / 验证 / 综合</span></div>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="甘特图，可用方向键横向滚动"><svg id="timeline" viewBox="0 0 860 300" role="img" aria-label="串并行执行甘特图；启用 JavaScript 后绘制"><text x="20" y="40">默认教学参数：串行 105 秒，并行 70 秒。</text></svg></div>
+<p id="schedule-note" class="status" role="status">默认并发为 3：A、B、C 同时开始；分支阶段耗时 40 秒。</p>
+<p id="sim-math" class="subtle">P=5，V+S=10 秒；串行 5+20+30+40+10=105 秒；理想无限并发 55 秒，增加 H=15 后为 70 秒。</p>
+</div>
+<div class="grid"><div class="card"><h3>模拟器假设与适用范围</h3><ul><li>P=5、V=4、S=6 秒固定（V+S 对应 PPT 的汇总 10 秒）；两方案做同样任务与验证。</li><li>A/B/C 耗时固定，互不依赖，不可抢占；执行槽同质。</li><li>按 A→B→C 入队，把下一项分给最早空闲槽；这是可复现调度，<b>不保证最优</b>。</li><li>H 仅为图方案额外的一次串行开销，放在准备后；共同开销已包含在各任务时间中。</li><li>无失败、限流、缓存与 I/O 争用；独立验证 V 是一个全量检查节点。</li></ul></div><div class="card"><h3>如何读关键路径</h3><p>本例原始依赖图的 L=15+max(A,B,C)。当 C=3，任务都能启动，理想图耗时为 L+H。</p><p>C&lt;3 时，有些独立任务被资源迫使排队；实际耗时是 15+H+分支调度长度。不要把资源等待误称为原有数据依赖。</p><p>多层图应计算完整依赖路径；只有显式层间屏障时，才可逐层取最大值后相加。</p></div></div>
+<h3>Token 与工程成本是另一张账</h3><div class="table-wrap"><table><thead><tr><th>成本项</th><th>为何发生</th><th>控制方式</th></tr></thead><tbody><tr><td>模型输入 / 输出</td><td>每个 worker、verifier、synthesizer 都会消费 token。</td><td>按节点统计实际用量；控制输入与输出上限。</td></tr><tr><td>上下文传递</td><td>脚本变量可以避免主会话反复接收中间结果；下游模型阅读材料仍需输入 token。</td><td>结构化摘取、引用原始产物、合理缓存。</td></tr><tr><td>重试与重复验证</td><td>失败会增加尝试次数、工具调用与等待。</td><td>attempt、时间、token、总任务数多重硬上限。</td></tr><tr><td>工程与设备</td><td>编排、日志、存储、设备占用、集成和人工审查。</td><td>先跑少量任务，比较总费用与已验证结果。</td></tr></tbody></table></div><div class="callout">代码中的去重与排序本身不调用模型；它们仍消耗计算资源。不能据此推导“结果传递零 token”或“整个协调过程免费”。</div>
+
+</section>
+<section id="s10"><div class="section-head"><span class="num">10</span><h2>嵌入式 / FreeRTOS：并行调查，串行占板</h2></div><p class="lead"><span class="tag extra">教学补充 · 假设案例</span>假设要调查“高负载下偶发丢帧”。以下是工作流设计示例，没有对应真实板卡、日志或已确认根因。</p>
+<figure tabindex="0" aria-label="图解区域，可用方向键横向滚动"><svg viewBox="0 0 850 330" role="img" aria-label="固定代码配置和日志快照后，ISR审查、队列路径分析、日志分析并行；汇合证据后形成修复候选，构建与板级验证串行，再形成报告。"><rect class="dark" x="235" y="10" width="380" height="45" rx="8"/><text class="light" x="425" y="39" text-anchor="middle">代码 commit / 配置 / 工具链 / 日志快照</text><path class="edge" d="M340 55L145 90M425 55V90M510 55L705 90"/><rect class="box" x="30" y="95" width="230" height="58" rx="8"/><text x="145" y="120" text-anchor="middle">A · ISR / 调用边界审查</text><text x="145" y="142" text-anchor="middle" class="small">只读源码与移植层约束</text><rect class="box" x="310" y="95" width="230" height="58" rx="8"/><text x="425" y="120" text-anchor="middle">B · 队列 / 缓冲区分析</text><text x="425" y="142" text-anchor="middle" class="small">所有权、容量、错误路径</text><rect class="box" x="590" y="95" width="230" height="58" rx="8"/><text x="705" y="120" text-anchor="middle">C · 日志 / 时序分析</text><text x="705" y="142" text-anchor="middle" class="small">定位时间窗，不先定根因</text><path class="edge" d="M145 153L340 185M425 153V185M705 153L510 185"/><rect class="accent" x="245" y="190" width="360" height="44" rx="8"/><text x="425" y="219" text-anchor="middle">ID 与证据汇合 → 独立复核 → 修复候选</text><path class="edge" d="M425 234V252H117V265"/><rect class="box" x="20" y="270" width="195" height="46" rx="8"/><text x="117" y="299" text-anchor="middle">单一集成者 / 构建</text><rect class="accent" x="325" y="270" width="220" height="46" rx="8"/><text x="435" y="299" text-anchor="middle">设备锁：烧录 → 测量</text><path class="edge" d="M215 295H320M545 295H605"/><rect class="ok" x="610" y="270" width="220" height="46" rx="8"/><text x="720" y="299" text-anchor="middle">证据报告 / 人工门禁</text></svg><figcaption>图 10｜主机上的只读分析可以分工；一块开发板上的烧录、复位与测量需要独占。硬件阶段使用同一候选构建与记录清单。</figcaption></figure>
+<div class="grid"><div><h3>先界定现象</h3><p>补齐负载、输入速率、丢帧判据、触发概率与固件版本。没有这些信息时，先做观测方案，不能让多个节点放大猜测。</p><h3>再形成可证伪怀疑点</h3><p>A 检查中断上下文中的 API 使用与项目移植约束；B 检查生产消费路径、返回值处理与缓冲区生命周期；C 对齐丢帧与时序证据。</p><p>以上都是检查方向，<b>不是已确认的 FreeRTOS 缺陷或该项目根因</b>。具体约束以项目 FreeRTOS 版本、port 与配置为准。</p></div><div><h3>最后执行验证</h3><p>独立检查者读取源码位置、候选变更和原始数据，提出能推翻假设的实验。由单一集成者形成一致构建后执行基线与候选对照。</p><p>设备任务记录板号、二进制哈希、配置、采集设置与原始日志。测试未执行时，报告写“待验证”；阈值必须来自项目验收要求。</p><div class="callout"><b>编排图不是 RTOS 调度图。</b><br>这里的节点是开发与验证工作，不是固件 task。它不能证明固件满足实时截止时间、ISR 延迟或并发安全要求。</div></div></div>
+<pre><code>// 教学调用树：缩进表示包含关系，同级步骤默认依次执行。
+// parallel_read_only 内的三个分支可并行，结束后才进入汇合检查。
+// 输入：待调查现象、代码与配置、已有日志和冻结的验收条件。
+run_investigation
+  freeze_inputs  // 固定 commit、配置和日志快照，避免分支分析不同版本
+
+  parallel_read_only  // 只读共享输入，各分支写入独立产物目录
+    audit_isr_calls                 // 检查 ISR 调用边界与项目约束
+    inspect_queue_and_buffer_paths  // 检查队列、缓冲区所有权和错误路径
+    correlate_existing_logs         // 对齐已有日志与时序，形成待验证线索
+
+  check_fan_in_integrity  // 核对分支 ID、状态、版本和覆盖，缺项不得放行
+  independent_verify_hypotheses  // 新上下文复核假设，回查原始证据
+  produce_patch_candidate       // 依据复核结果形成候选补丁，标出未验证项
+  integrate_and_build           // 单一集成者合并变更，构建一致固件
+
+  acquire_board_lock  // 独占目标板卡，避免另一任务同时烧录或复位
+    flash_exact_artifact    // 烧录本次构建产物，记录二进制哈希
+    run_frozen_test_plan    // 按预先确定的条件测试，不为过关放宽阈值
+    save_raw_measurements  // 保存原始日志、测量值、板号与时间
+  release_board_lock_in_finally  // 无论成功或异常，都在安全收束后释放锁
+
+  write_report_with_evidence  // 输出结论、证据、覆盖情况和待验证项
+  human_gate                 // 展示候选变更与风险，批准后方可合入或发布
+// 前置步骤失败时，停止依赖它的后续操作，登记缺口并输出诊断报告。
+// 输出：可追溯的调查报告和候选变更，不把未运行测试写成已通过。</code></pre></section>
+<section id="s11"><div class="section-head"><span class="num">11</span><h2>可复制的框架无关 Graph Spec</h2></div><p class="lead"><span class="tag extra">教学补充</span>先把契约、资源与验收写清楚，再映射到脚本、任务队列或 agent 框架。下面是设计规格，不是某个运行时的可直接执行 API。</p>
+<div class="code-top"><h3 id="spec-label">Graph Spec · 嵌入式调查模板</h3><button id="copy-spec" type="button">复制完整规格</button></div><p id="copy-status" role="status" aria-live="polite" class="subtle">把尖括号占位符替换为项目参数；数值上限是教学起点，执行前按预算调整。</p>
+<textarea id="graph-spec" aria-labelledby="spec-label" readonly spellcheck="false">GRAPH SPEC / version: 1.0 / framework-neutral
+GOAL:
+  调查 &lt;现象&gt;，生成有证据的根因候选、验证计划与结果报告。
+  不把未执行的测试写成通过；不自动发布或合入。
+INPUTS:
+  snapshot: &lt;commit + config_hash + toolchain_version&gt;
+  scope: &lt;文件清单 / 模块边界；首轮最多 12 文件&gt;
+  evidence: &lt;日志清单 + 时间范围 + 数据来源&gt;
+  acceptance: &lt;已确认的判据与阈值；缺失则阻断验收&gt;
+
+PLAN:
+  freeze -&gt; [A, B, C] -&gt; integrity -&gt; verify -&gt; candidate
+         -&gt; integrate_build -&gt; board_test -&gt; report -&gt; human_gate
+  A: 只读检查 ISR 调用与项目约束
+  B: 只读分析队列、缓冲区、错误处理路径
+  C: 分析已有日志与时序证据
+  required_node_ids: [A, B, C]
+  每个发现保留 finding_id；每个计划任务保留独立结果信封。
+
+NODE CONTRACT:
+  input: run_id, node_id, snapshot, scope, evidence_refs
+  output:
+    schema_version, run_id, node_id, snapshot_id, status
+    findings[], evidence_refs[], coverage, attempt, error
+  findings item:
+    finding_id, claim, code_location, evidence_refs,
+    verification_state [confirmed | unverified | refuted]
+  不允许把空值当成功；零发现使用 succeeded + findings=[]。
+  结构、身份、版本、覆盖和证据分别检查。
+
+RESOURCES:
+  concurrency: 3       # 教学上限；不是 RTOS task 数
+  workers: read_only; output_path: &lt;run_id&gt;/&lt;node_id&gt;/
+  patch_integration: 单一集成者；修改任务另用隔离工作区
+  board_test: exclusive_lock(&lt;board_id&gt;)
+  shared_apis: &lt;请求速率 / 同时请求限制&gt;
+  设备锁必须覆盖烧录、复位、测量，结束和异常时均正确释放。
+
+FAN-IN:
+  检查 expected_ids == unique(received_ids)，拒绝重复和未知 ID。
+  所有必需节点必须 succeeded，schema 与 snapshot 匹配。
+  核对范围覆盖；任何缺失、失败或旧版本结果阻断完整报告。
+  失败时允许生成诊断报告，明确 complete=false 和缺口。
+  对发现去重须保留全部来源及原始产物引用。
+
+VERIFY:
+  使用新上下文；只接收结论、材料和独立取证入口。
+  复核源码与原始日志；不能只读生成者的总结。
+  关键断言逐项通过；多数投票不能覆盖硬性失败。
+  无法验证记 unverified；与 refuted 严格区分。
+
+LIMITS:
+  max_attempts_per_node: 2  # 首次加最多一次重试
+  max_total_node_executions: 30  # 含验证、重试和修复循环
+  max_wall_time: &lt;项目时间预算，必填&gt;
+  max_token_or_currency_budget: &lt;硬上限，必填&gt;
+  对瞬态错误退避重试；永久错误终止并登记原因。
+  全局预算耗尽：停止派发，取消或收束运行任务，保存状态。
+  副作用重试前先核对状态，使用幂等键，不重复盲目烧录。
+
+ANCHORS:
+  freeze: &lt;验收规则 / 阈值 / 输入场景&gt;
+  capture: 命令、退出码、原始日志、构建哈希、板号、时间。
+  对照基线和候选使用一致条件，标注测量与覆盖局限。
+  禁止修改验收阈值、伪造证据或省略失败项目。
+
+OUTPUT:
+  &lt;报告路径&gt;：现象、范围、证据、根因候选、验证结果、
+  未验证项、覆盖清单、失败节点、用量、下一步动作。
+HUMAN GATE:
+  展示报告、候选变更与风险；批准后方可合入或发布。
+STOP:
+  验收满足，或达到预算/次数上限，或前置条件不可用。
+  未完成时交付明确缺口；不无限扩展发现与修复循环。</textarea>
+<pre id="print-spec" class="print-only" aria-hidden="true"></pre>
+<div class="grid"><div class="card"><h3>映射到框架时检查什么</h3><p>运行时需要实现调度、状态持久化、超时、资源锁与预算。自然语言中的“硬上限”不会自动变成执行限制。</p><p>LangGraph 支持工作流、并行与 orchestrator-worker 等模式，并区分预定代码路径和 agent 动态决策。上面的 Spec 不是 LangGraph API。</p></div><div class="card"><h3>Claude Code 产品特定入口</h3><p>Dynamic workflows 由 JavaScript 脚本编排 subagents，中间结果保留在 script variables。</p><p>可明确请求 <code>Create a workflow</code>。也可以通过 <code>ultracode</code> 入口使用。</p><p>产品入口随版本变化：v2.1.160 之前的字面触发词是 <code>workflow</code>，当前介绍 <code>ultracode</code> 与自然语言请求。入口受版本、配置、输入渠道和组织设置影响，不保证所有配置都可用，也不是跨框架通用指令。</p></div></div></section>
+<section id="s12"><div class="section-head"><span class="num">12</span><h2>使用边界</h2></div>
+<p class="lead">模拟参数与嵌入式案例用于解释工作流设计，实际效果需要在项目中验证。</p>
+<div class="grid"><div class="card"><h3>示例与实测</h3><p>模拟秒数不是实际测量结果，嵌入式案例不代表已执行固件或板级测试。伪代码与 Graph Spec 需要映射到实际运行时。</p></div><div class="card"><h3>产品与环境</h3><p>产品入口可能随版本、配置与组织设置变化。运行前确认功能可用性、资源限制和验收条件。</p></div></div>
+<div class="callout"><b>落地起点：</b>选一个小范围流程，写出每条边的理由、每个节点的契约、每项结论的证据，再用时间和用量测量决定是否扩大。</div>
+<div class="foot">Graph Engineering 中文工程详解<br>内联 SVG / CSS / JavaScript，无网络运行依赖。可使用浏览器“打印 / 保存为 PDF”。</div></section>
+<script>
+'use strict';
+(function () {
+  const $ = id => document.getElementById(id);
+  const expected = ['A', 'B', 'C'];
+  function fanin(mode) {
+    const row = id => ({id, status:'succeeded', snapshot:'v1'});
+    const rows = [row('A'), row('B')];
+    if (mode !== 'missing') rows.push(row(mode === 'duplicate' ? 'B' : 'C'));
+    if (mode === 'failed') rows[2].status = 'failed';
+    if (mode === 'stale') rows[2].snapshot = 'v0';
+    const ids = rows.map(r => r.id);
+    const missing = expected.filter(id => !ids.includes(id));
+    const duplicates = [...new Set(ids.filter((id, i) => ids.indexOf(id) !== i))];
+    const invalid = rows.filter(r => r.status !== 'succeeded' || r.snapshot !== 'v1').map(r => r.id);
+    const unknown = ids.filter(id => !expected.includes(id));
+    const pass = !missing.length && !duplicates.length && !invalid.length && !unknown.length;
+    const reasons = {ok:'A、B、C 均成功，ID 唯一且快照一致。',missing:'缺少 C，必须登记未返回并处理超时。',duplicate:'虽收到 3 份结果，但 B 重复且 C 缺失。数量相等不能证明完整。',failed:'C 已返回，但状态为 failed；不得当作零发现。',stale:'C 的快照是 v0，不能用于当前 v1 的完整性证明。'};
+    $('fanin-status').textContent = (pass ? '允许综合：' : '阻断完整报告：') + reasons[mode];
+    $('fanin-status').className = pass ? 'status' : 'status bad';
+    $('fanin-detail').textContent = 'expected = [A, B, C]\nreceived = [' + ids.join(', ') + ']\nmissing = [' + missing.join(', ') + '] · duplicates = [' + duplicates.join(', ') + ']\ninvalid = [' + invalid.join(', ') + '] · unknown = [' + unknown.join(', ') + ']\ncomplete = ' + pass;
+    const labels = {ok:'C · 成功',missing:'C · 未返回',duplicate:'B · 重复结果',failed:'C · 失败',stale:'C · 旧快照 v0'};
+    $('c-label').textContent = labels[mode];
+    $('c-box').setAttribute('class', pass ? 'ok' : 'accent');
+    $('fanin-svg').setAttribute('aria-label', reasons[mode]);
+    document.querySelectorAll('[data-case]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.case === mode)));
+  }
+  $('failure-buttons').addEventListener('click', event => {
+    const b = event.target.closest('button[data-case]');
+    if (b) fanin(b.dataset.case);
+  });
+  const NS = 'http://www.w3.org/2000/svg';
+  function element(name, attrs, content) {
+    const el = document.createElementNS(NS, name);
+    Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, String(value)));
+    if (content !== undefined) el.textContent = content;
+    return el;
+  }
+  function compute(times, count, overhead) {
+    const free = Array(count).fill(0), jobs = [];
+    times.forEach((time, i) => {
+      const lane = free.indexOf(Math.min(...free));
+      const start = free[lane];
+      free[lane] += time;
+      jobs.push({name:'ABC'[i],lane,start,end:free[lane],time});
+    });
+    const span = Math.max(...free);
+    return {jobs,span,serial:15+times.reduce((a,b)=>a+b,0),parallel:15+overhead+span,critical:15+Math.max(...times)};
+  }
+  function simulate() {
+    const times = ['ta','tb','tc'].map(id => Number($(id).value));
+    const count = Number($('concurrency').value), overhead = Number($('overhead').value);
+    ['oa','ob','oc'].forEach((id,i) => { $(id).textContent = times[i]; });
+    $('oh').textContent = overhead;
+    const result = compute(times,count,overhead);
+    $('serial-value').textContent = result.serial + ' s';
+    $('parallel-value').textContent = result.parallel + ' s';
+    $('speed-value').textContent = (result.serial/result.parallel).toFixed(2) + '×';
+    const delta = result.serial-result.parallel;
+    $('schedule-note').className = delta >= 0 ? 'status' : 'status bad';
+    $('schedule-note').textContent = '分支调度长度 '+ result.span +' 秒；原始依赖关键路径 L='+ result.critical +' 秒（不含 H）。当前方案'+ (delta>0?'节省 '+delta+' 秒':delta<0?'慢 '+(-delta)+' 秒':'与串行耗时相同') +'。';
+    $('sim-math').textContent = '串行 = 5 + ('+times.join(' + ')+') + 4 + 6 = '+result.serial+' 秒。并行 = 5 + H('+overhead+') + '+result.span+' + 4 + 6 = '+result.parallel+' 秒。P=准备，V=独立验证，S=综合。';
+    const svg = $('timeline'); svg.replaceChildren();
+    const total = Math.max(result.serial,result.parallel), left=100, width=730, scale=width/total;
+    const rect = (start,duration,y,name,color) => {
+      const x=left+start*scale,w=duration*scale;
+      const group=element('g',{});
+      group.appendChild(element('rect',{x,y,width:w,height:26,rx:3,fill:color}));
+      group.appendChild(element('title',{},name+'：'+start+'–'+(start+duration)+' 秒'));
+      if(w>=20) group.appendChild(element('text',{x:x+w/2,y:y+18,'text-anchor':'middle',style:'fill:white;font-size:12px'},name));
+      svg.appendChild(group);
+    };
+    const label = (txt,y) => svg.appendChild(element('text',{x:8,y:y+18,class:'small'},txt));
+    label('串行',35); let cursor=0; rect(cursor,5,35,'P','#6b7880');cursor+=5;
+    times.forEach((t,i)=>{rect(cursor,t,35,'ABC'[i],'#285d86');cursor+=t;});
+    rect(cursor,4,35,'V','#6b7880');rect(cursor+4,6,35,'S','#6b7880');
+    label('协调',93);rect(0,5,93,'P','#6b7880');if(overhead)rect(5,overhead,93,'H','#bf4b16');
+    result.jobs.forEach(job => {rect(5+overhead+job.start,job.time,137+job.lane*40,job.name,'#285d86');});
+    for(let i=0;i<count;i++)label('执行槽 '+(i+1),137+i*40);
+    rect(5+overhead+result.span,4,93,'V','#6b7880');rect(9+overhead+result.span,6,93,'S','#6b7880');
+    const bottom=137+count*40;
+    for(let i=0;i<=5;i++){
+      const value=total*i/5,x=left+value*scale;
+      svg.appendChild(element('line',{x1:x,x2:x,y1:bottom,y2:bottom+5,stroke:'#8194a0'}));
+      svg.appendChild(element('text',{x,y:bottom+22,'text-anchor':'middle',class:'small'},value.toFixed(1)+'s'));
+    }
+    svg.setAttribute('viewBox','0 0 870 '+(bottom+36));
+    svg.setAttribute('aria-label','甘特图：串行 '+result.serial+' 秒；并发 '+count+'，额外开销 '+overhead+' 秒；并行 '+result.parallel+' 秒。任务分配 '+result.jobs.map(j=>j.name+' 在槽 '+(j.lane+1)+' 的分支时间 '+j.start+' 至 '+j.end+' 秒').join('；'));
+  }
+  ['ta','tb','tc','concurrency','overhead'].forEach(id=>$(id).addEventListener('input',simulate));
+  $('reset-sim').addEventListener('click',()=>{
+    ['ta','tb','tc','concurrency','overhead'].forEach((id,i)=>{$(id).value=[20,30,40,3,15][i];});simulate();
+  });
+  $('print-spec').textContent = $('graph-spec').value;
+  $('copy-spec').addEventListener('click',async()=>{
+    const field=$('graph-spec');
+    try {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('clipboard unavailable');
+      await navigator.clipboard.writeText(field.value);
+      $('copy-status').textContent='已复制完整 Graph Spec。执行前填写项目参数与硬预算。';
+    } catch (_) {
+      field.focus();field.select();
+      $('copy-status').textContent='已选中完整规格。请按 Ctrl+C（macOS：Command+C）复制。';
+    }
+  });
+  fanin('ok');simulate();
+})();
+</script>
+</main></div></body></html>

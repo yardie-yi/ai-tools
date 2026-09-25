@@ -1,0 +1,35 @@
+{
+  "ppt_slides": 26,
+  "ppt_article_residue": [],
+  "ppt_external_links": [],
+  "commented_code_slides": [
+    {
+      "slide": "ppt/slides/slide8.xml",
+      "comments": 10
+    },
+    {
+      "slide": "ppt/slides/slide17.xml",
+      "comments": 10
+    },
+    {
+      "slide": "ppt/slides/slide18.xml",
+      "comments": 10
+    },
+    {
+      "slide": "ppt/slides/slide19.xml",
+      "comments": 11
+    }
+  ],
+  "html_article_residue": [],
+  "html_remote_dependencies": [],
+  "files": [
+    {
+      "name": "Context Engineering 分享.pptx",
+      "bytes": 1544190
+    },
+    {
+      "name": "Context Engineering 详细解释.html",
+      "bytes": 80072
+    }
+  ]
+}

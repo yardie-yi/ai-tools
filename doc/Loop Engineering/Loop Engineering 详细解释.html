@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="通过五步说明、闭环模拟、中文注释伪代码与 UART 案例，说明 Loop Engineering 的实现方法。">
+<title>Loop Engineering · AI 任务执行与验证</title>
+<style>
+:root{--bg:#081321;--panel:#0e2033;--panel2:#12283e;--line:#284158;--text:#eaf1f7;--muted:#a5b7c9;--accent:#52e0bb;--blue:#8dbdff;--amber:#f8ca81;--red:#ffa4a4;--side:228px;--radius:16px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:42px}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.8 "Segoe UI","Microsoft YaHei",system-ui,sans-serif}a{color:var(--accent);text-decoration:none}button,input,select{font:inherit}button,select,input{color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:8px}button{cursor:pointer;padding:9px 16px;transition:background .15s,border-color .15s}button:hover{border-color:var(--accent);background:#17394a}button:disabled{opacity:.45;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}h1,h2,h3,p{margin:0}h1{font-size:clamp(36px,4.1vw,64px);line-height:1.2;letter-spacing:-1.7px}h2{font-size:clamp(27px,2.7vw,38px);line-height:1.35;letter-spacing:-.8px}h3{font-size:19px;line-height:1.5}p+p{margin-top:12px}strong{font-weight:650}ul,ol{padding-left:22px;margin:12px 0 0}li+li{margin-top:7px}.mono,code,pre{font-family:Consolas,"Cascadia Code",monospace}.muted{color:var(--muted)}.accent{color:var(--accent)}.tiny{font-size:12px}.small{font-size:14px}.eyebrow{font-size:12px;font-weight:700;letter-spacing:2.3px;text-transform:uppercase;color:var(--accent);margin-bottom:18px}.reading-progress{position:fixed;left:0;top:0;height:3px;background:var(--accent);z-index:10;width:0}.skip-link{position:absolute;top:-60px;left:240px;background:var(--accent);color:var(--bg);padding:10px;z-index:30}.skip-link:focus{top:10px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);padding:34px 23px;background:#08121f;border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:5}.brand{font-size:16px;font-weight:750;letter-spacing:.2px;line-height:1.3}.brand b{color:var(--accent)}.edition{font-size:11px;color:var(--muted);margin-top:9px;letter-spacing:1.6px}.nav{margin-top:34px;display:grid;gap:3px}.nav a{display:flex;align-items:center;gap:12px;padding:8px 9px;color:var(--muted);font-size:13px;border-left:2px solid transparent}.nav a span{font:11px Consolas,monospace;opacity:.65}.nav a:hover,.nav a.active{background:var(--panel);color:var(--text);border-left-color:var(--accent)}.sidebar-foot{margin-top:auto;padding-top:20px;font-size:11px;line-height:1.8;color:var(--muted)}main{margin-left:var(--side);max-width:1560px;padding:0 6.2vw 60px}.hero{padding:72px 0 60px;border-bottom:1px solid var(--line);position:relative}.hero:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 85% 20%,#17403f66,transparent 55%)}.hero .lead{max-width:800px;margin-top:27px;font-size:20px;line-height:1.85;color:#b9c9d8}.hero-tag{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;padding:4px 11px;border:1px solid #326453;border-radius:30px;font-size:12px;color:var(--accent)}.hero-tag:before{content:"";height:6px;width:6px;background:var(--accent);border-radius:50%}.hero-bottom{margin-top:36px;display:flex;gap:26px;flex-wrap:wrap;font-size:13px;color:var(--muted)}.hero-bottom b{color:var(--text)}.hero-formula{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:35px;padding:19px 22px;background:#0d2532;border:1px solid #285546;border-radius:12px}.hero-formula b{color:var(--accent);font-size:17px}.hero-formula span{color:var(--muted)}section{padding:56px 0;border-bottom:1px solid var(--line);scroll-margin-top:16px}.section-head{display:flex;align-items:flex-start;gap:17px;margin-bottom:24px}.section-no{font:13px Consolas,monospace;color:var(--accent);border:1px solid var(--line);padding:5px 9px;margin-top:6px}.section-lead{font-size:17px;color:var(--muted);max-width:860px;margin:12px 0 26px}.grid{display:grid;gap:16px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px}.card p{margin-top:10px;font-size:14px;color:var(--muted)}.card .label{font:12px Consolas,monospace;letter-spacing:1px;color:var(--accent);margin-bottom:14px}.callout{padding:19px 22px;background:#102d30;border-left:3px solid var(--accent);border-radius:0 10px 10px 0;margin-top:20px;font-size:15px}.callout.warning{background:#302b22;border-left-color:var(--amber)}.callout.warning strong{color:var(--amber)}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;vertical-align:top;padding:15px 18px;border-bottom:1px solid var(--line)}th{background:var(--panel2);font-weight:600;font-size:12px;color:var(--muted);letter-spacing:.5px}tr:last-child td{border-bottom:0}td:first-child{font-weight:600;color:var(--text)}td{color:#b9cbd9}.diagram{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;margin:22px 0;overflow:auto}.diagram svg{display:block;width:100%;min-width:540px;height:auto}.diagram figcaption{font-size:12px;color:var(--muted);margin-top:15px}.flowline{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:14px}.flowbox{padding:14px 16px;background:var(--panel2);border:1px solid var(--line);border-radius:9px}.flowbox.key{border-color:#3b967d;color:var(--accent)}.arrow{color:var(--muted)}
+.phase-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:23px 0 14px}.phase-tab{text-align:left;padding:17px 13px}.phase-tab span{display:block;font:11px Consolas,monospace;color:var(--muted);margin-bottom:6px}.phase-tab b{font-size:14px}.phase-tab[aria-selected="true"]{background:#173c3e;border-color:var(--accent);color:var(--accent)}.phase-panel{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;padding:28px;border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);min-height:228px}.phase-panel p{margin-top:12px;color:var(--muted);font-size:14px}.phase-example{background:#091827;border-radius:10px;padding:18px;font-size:14px}.phase-example .label{font-size:11px;color:var(--accent);letter-spacing:1px;margin-bottom:10px}.phase-signal{display:block;margin-top:14px;color:var(--amber);font-size:12px}.component-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.component{padding:20px 17px}.component h3{font-size:16px}.component .num{font:30px Consolas,monospace;color:#366278;margin-bottom:15px}.component p{font-size:13px}.component small{display:block;color:var(--accent);font-size:11px;margin-top:14px}.severity{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600;background:#133c37;color:var(--accent);white-space:nowrap}.severity.amber{background:#3b3021;color:var(--amber)}.severity.red{background:#382733;color:var(--red)}
+.sim{margin-top:25px;border:1px solid #3d695e;border-radius:18px;background:linear-gradient(140deg,#102a38,#0c1c2e);padding:26px}.sim-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px}.sim-top p{font-size:12px;color:var(--muted);margin-top:7px}.sim select{width:235px;padding:10px;font-size:13px}.sim-layout{display:grid;grid-template-columns:1.15fr 1fr;gap:23px}.sim-stage{display:flex;gap:5px;margin:20px 0}.sim-stage span{flex:1;min-width:0;border-radius:6px;background:#172e41;text-align:center;padding:9px 2px;font-size:11px;color:var(--muted)}.sim-stage .current{background:var(--accent);color:#082b26;font-weight:700}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.metric{background:#0a1b2a;border:1px solid var(--line);border-radius:10px;padding:14px}.metric .value{font:27px Consolas,monospace;color:var(--text);line-height:1.2}.metric .name{font-size:11px;color:var(--muted);margin-top:7px}.budgetbar{height:5px;background:#243d4c;border-radius:5px;margin-top:18px;overflow:hidden}.budgetbar div{height:100%;width:0;background:var(--accent);transition:width .2s}.sim-outcome{font-size:14px;min-height:92px;margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:10px}.sim-outcome b{display:block;color:var(--accent);margin-bottom:3px}.sim-outcome.stop b{color:var(--amber)}.sim-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.primary{background:var(--accent);color:#07281f;border-color:var(--accent);font-weight:650}.primary:hover{background:#7af2d0;color:#082c24}.sim-log{height:330px;overflow:auto;background:#081723;border:1px solid var(--line);border-radius:11px;padding:15px;font-size:12px;line-height:1.7}.sim-log li{margin-top:0;padding:9px 0;border-bottom:1px solid #193347;list-style:none;color:#bbcede}.sim-log li:last-child{border-bottom:0}.sim-log .log-stage{color:var(--accent);font:11px Consolas,monospace;display:block;margin-bottom:3px}.sim-evidence{margin-top:15px;color:var(--muted);font-size:12px;line-height:1.9}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.chip{font-size:11px;background:#132b3e;border:1px solid var(--line);padding:3px 9px;border-radius:20px;color:var(--muted)}.codebox{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:20px}.codehead{padding:12px 18px;background:var(--panel2);color:var(--muted);font-size:12px;display:flex;justify-content:space-between;align-items:center}.codehead button{font-size:12px;padding:4px 10px}pre{margin:0;padding:24px;overflow:auto;background:#07101c;font-size:12.5px;line-height:1.8;color:#d4e5f6;tab-size:4}.code-comment{color:#79ad99}.code-key{color:#b4bbfc}.code-str{color:#f1d1a2}details{border:1px solid var(--line);border-radius:12px;background:var(--panel);margin-top:13px}summary{padding:18px 22px;cursor:pointer;font-weight:600;font-size:15px}details>div{padding:0 22px 22px;color:var(--muted);font-size:14px}details .codebox{margin-top:0}.frame{display:flex;gap:4px;margin:23px 0 13px}.frame div{padding:18px 8px;flex:1;text-align:center;background:var(--panel2);border:1px solid var(--line);font-size:13px}.frame div:first-child{border-radius:8px 0 0 8px;color:var(--accent)}.frame div:last-child{border-radius:0 8px 8px 0;color:var(--amber)}.frame .payload{flex:3}.frame small{display:block;color:var(--muted);font-size:10px}.case-timeline{display:grid;gap:0;margin:23px 0 0;border-left:1px solid #377b6b;margin-left:9px}.case-step{position:relative;padding:0 0 24px 27px}.case-step:before{content:"";position:absolute;width:9px;height:9px;background:var(--accent);border-radius:50%;left:-5px;top:9px}.case-step h3{font-size:16px}.case-step p{color:var(--muted);font-size:14px;margin-top:8px}.calculator{margin-top:21px;display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:25px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.calc-inputs{display:grid;grid-template-columns:1fr 1fr;gap:14px}.calc-inputs label{font-size:12px;color:var(--muted);display:block}.calc-inputs input{display:block;width:100%;padding:9px 12px;margin-top:5px}.calc-result{border-left:1px solid var(--line);padding-left:25px}.calc-result .big{font:36px Consolas,monospace;color:var(--accent);margin:8px 0}.calc-result p{font-size:12px;color:var(--muted);margin-top:9px}.cost-bars{margin-top:15px}.cost-row{display:grid;grid-template-columns:76px 1fr 55px;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-top:10px}.cost-track{height:13px;background:#213c4d;border-radius:3px;overflow:hidden}.cost-track div{height:100%;background:#75a9e0}.cost-row:last-child .cost-track div{background:var(--accent)}.roadmap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:24px}.roadmap .card{padding:20px}.roadmap h3{font-size:16px}.checklist{list-style:none;padding:0;margin-top:19px;display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}.checklist li{margin:0;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:8px;display:flex;gap:10px;font-size:13px}.checklist input{accent-color:var(--accent);width:17px;height:17px;flex:none;margin-top:3px}.checklist label{cursor:pointer}.check-progress{display:flex;gap:14px;align-items:center;color:var(--muted);font-size:12px;margin-top:16px}.check-progress button{font-size:12px;padding:4px 10px}.closing{padding:38px 0 12px;font-size:25px;line-height:1.6;max-width:900px}.footer{color:var(--muted);font-size:11px;margin-top:26px;display:flex;justify-content:space-between;gap:10px}.print-button{padding:3px 8px;font-size:11px;background:transparent}.copy-status{color:var(--accent);font-size:11px;margin-right:10px}
+@media(min-width:1650px){main{padding-left:90px;padding-right:90px}}
+@media(max-width:1200px){:root{--side:194px}main{padding-left:4vw;padding-right:4vw}.sidebar{padding:28px 15px}.component-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.component-grid .component:last-child{grid-column:span 2}.phase-tab{padding:14px 9px}.phase-tab b{font-size:12px}.roadmap{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.sidebar{position:static;width:auto;display:block;padding:20px;border-right:0;border-bottom:1px solid var(--line)}.brand{font-size:15px}.brand br{display:none}.edition{margin-top:5px}.nav{display:flex;overflow:auto;gap:5px;margin-top:18px;padding-bottom:3px}.nav a{white-space:nowrap;padding:6px 9px}.nav a span{display:none}.sidebar-foot{display:none}main{margin-left:0;padding:0 6vw 35px}.hero{padding:45px 0}.hero h1{font-size:48px}.hero .lead{font-size:18px}.skip-link{left:15px}.phase-panel{gap:20px}.sim-layout{grid-template-columns:1fr}.sim-log{height:260px}.three{grid-template-columns:1fr}.component-grid{grid-template-columns:1fr 1fr}.component-grid .component:last-child{grid-column:span 2}.sim-top{align-items:center}.sim-top select{width:230px}.calculator{grid-template-columns:1fr}.calc-result{border-left:0;border-top:1px solid var(--line);padding:20px 0 0}}
+@media(max-width:560px){body{font-size:15px}main{padding:0 20px 30px}.hero h1{font-size:38px;letter-spacing:-1px}.hero .lead{font-size:16px}.hero-formula{gap:8px;padding:16px;font-size:13px}.hero-formula b{font-size:14px}.hero-bottom{gap:12px;font-size:11px}section{padding:40px 0}.section-head{gap:11px}.section-no{font-size:11px}.section-head h2{font-size:26px}.two{grid-template-columns:1fr}.card{padding:20px}.phase-tabs{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.phase-tab{padding:11px 3px;text-align:center}.phase-tab span{font-size:8px;letter-spacing:-.3px}.phase-tab b{font-size:11px}.phase-panel{grid-template-columns:1fr;padding:20px}.component-grid{grid-template-columns:1fr}.component-grid .component:last-child{grid-column:auto}.sim{padding:17px}.sim-top{display:block}.sim select{width:100%;margin-top:17px}.metric{padding:8px}.metric .value{font-size:clamp(13px,4.1vw,17px);white-space:nowrap}.metric .name{font-size:10px}.sim-stage span{font-size:9px}.sim-controls button{padding:8px 10px;font-size:12px}.frame div{font-size:10px;padding:14px 4px}.frame .payload{flex:2}.frame small{font-size:8px}.calculator{padding:19px}.calc-inputs{gap:12px}.roadmap,.checklist{grid-template-columns:1fr}pre{font-size:11px;padding:16px}.codehead{padding:10px}.diagram{padding:14px}.closing{font-size:22px}.footer{display:block}.footer button{margin-top:12px}th,td{padding:12px;min-width:125px}.section-lead{font-size:15px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{body{background:white;color:#102338;font-size:10pt;line-height:1.6}.sidebar,.reading-progress,.sim-controls,.print-button,.codehead button,.skip-link{display:none}main{margin:0;padding:0;max-width:none}.hero{padding:20px 0}.hero:before{display:none}section{padding:24px 0;break-inside:auto}h1{font-size:32pt}h2{font-size:22pt}.card,.diagram,.phase-panel,.sim,.calculator,details{background:#f4f7f8;color:#13283b;border-color:#c2cfd9;break-inside:avoid}.muted,.section-lead,.card p,td,p,.hero .lead{color:#405466!important}.accent,.eyebrow,.hero-formula b{color:#08644e}.card,.metric,.phase-example,.sim-log{background:#f0f5f6}.hero-formula{background:#f0f5f6}.phase-tab,.sim-stage span{background:#eff5f8;color:#102338}.sim-stage .current{background:#c4eddf}.codebox,pre{background:#eff3f5;color:#142c42;white-space:pre-wrap}.code-comment{color:#356852}.code-key{color:#5c3785}.code-str{color:#9c6527}.component-grid{grid-template-columns:repeat(3,1fr)}.footer{color:#405466}.callout{background:#eef7f2}.callout.warning{background:#fff5dd}.metric .value,.metric .name,.calc-result .big{color:#142c42}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a><div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+<aside class="sidebar" aria-label="文章导航">
+  <a class="brand" href="#top">LOOP<br> ENGINEERING <b>↻</b></a><div class="edition">ENGINEERING FIELD GUIDE</div>
+  <nav class="nav" id="sectionNav">
+    <a href="#concept"><span>01</span>概念与边界</a><a href="#cycle"><span>02</span>闭环的五个步骤</a><a href="#parts"><span>03</span>五个组成部分</a><a href="#verify"><span>04</span>验证方法</a><a href="#state"><span>05</span>状态与停止</a><a href="#simulator"><span>06</span>闭环运行模拟</a><a href="#pseudocode"><span>07</span>控制器伪代码</a><a href="#embedded"><span>08</span>嵌入式案例</a><a href="#cost"><span>09</span>成本计算</a><a href="#failure"><span>10</span>常见失败模式</a><a href="#adoption"><span>11</span>从手动到调度</a><a href="#checklist"><span>12</span>启动前检查</a>
+  </nav>
+  <div class="sidebar-foot">中文技术详解 · 约 20 分钟<br>离线单文件 / 可交互 / 可打印<br>示例与数值均为教学假设</div>
+</aside>
+<main id="main">
+<header class="hero" id="top">
+  <div class="hero-tag">面向工程工作的 AI 闭环</div>
+  <div class="eyebrow">TASK EXECUTION AND VERIFICATION</div>
+  <h1>Loop Engineering<br><span class="accent">任务执行与验证</span></h1>
+  <p class="lead">AI 按目标执行任务，通过测试或其他检查判断任务是否完成。检查未通过时，根据失败原因继续修改；达到资源上限或无法继续时停止。Loop Engineering 负责设计这套执行、检查和停止规则。</p>
+  <div class="hero-formula"><b>定义任务</b><span>→</span><b>执行与检查</b><span>→</span><b>保存状态</b><span>→</span><b>继续或停止</b></div>
+  <div class="hero-bottom"><span><b>验收要求</b> 哪些检查通过后，任务才能完成？</span><span><b>示例任务</b> UART 流式协议解析器</span><span><b>运行模拟</b> 四种预设停止结果</span></div>
+</header>
+
+<section id="concept">
+  <div class="section-head"><span class="section-no">01</span><h2>概念与相关术语</h2></div>
+  <p class="section-lead">一次请求通常返回一份回答或代码。闭环程序检查结果是否满足要求，再决定继续修改、结束任务或转交人工。Loop Engineering 是设计这套流程的方法，不限定具体模型或工具。</p>
+  <div class="table-wrap"><table><thead><tr><th>层次</th><th>主要设计对象</th><th>UART 解析器示例</th></tr></thead><tbody>
+  <tr><td>Prompt Engineering</td><td>设计单次请求中的任务说明、限制条件和输出格式</td><td>“补齐分片输入逻辑，并解释变更。”</td></tr>
+  <tr><td>Context Engineering</td><td>选择模型本次推理需要读取的规格、代码与日志</td><td>提供帧规格、现有代码、失败样例与上一轮结论。</td></tr>
+  <tr><td>Harness Engineering</td><td>设计 Agent 的运行环境（Harness）。Agent 指能调用工具执行任务的 AI 程序</td><td>工作区、工具接口、测试执行、超时、权限与日志。</td></tr>
+  <tr><td class="accent">Loop Engineering</td><td>根据检查结果安排下一轮工作，并定义停止条件</td><td>修改代码 → 跑固定测试 → 读取结果 → 继续修改或停止。</td></tr>
+  <tr><td>Graph / Workflow</td><td>Graph / Workflow 用图表示任务之间的依赖、分支和执行顺序</td><td>构建后分支跑静态检查与协议测试；图中可包含循环。</td></tr>
+  </tbody></table></div>
+  <div class="callout">这些设计方法可以同时使用。<strong>Graph 描述任务之间的连接关系，Loop 规定检查结果如何影响下一步。</strong>流程图中即使有循环，也需要明确检查什么，以及何时继续或停止。</div>
+  <div class="grid two" style="margin-top:20px">
+    <div class="card"><div class="label">ONE SHOT</div><h3>人工决定每次请求</h3><div class="flowline" style="margin-top:18px"><span class="flowbox">人提问</span><span class="arrow">→</span><span class="flowbox">AI 回答</span><span class="arrow">→</span><span class="flowbox">人判断</span></div><p>适合一次性、小规模、以主观判断为主的任务。由人决定下一次输入。</p></div>
+    <div class="card"><div class="label">CLOSED LOOP</div><h3>控制程序根据检查结果安排下一轮</h3><div class="flowline" style="margin-top:18px"><span class="flowbox">AI 修改代码</span><span class="arrow">→</span><span class="flowbox key">验证器</span><span class="arrow">→</span><span class="flowbox">继续 / 停止</span></div><p>人先确定目标、允许的操作和验收范围；系统按这些要求执行。遇到异常或缺少必要检查结果时，转交人工。</p></div>
+  </div>
+</section>
+
+<section id="cycle">
+  <div class="section-head"><span class="section-no">02</span><h2>闭环的五个步骤</h2></div>
+  <p class="section-lead">每轮包含发现、计划、执行、验证和反馈五个步骤。验证未通过时，记录失败原因，下一轮针对这些原因修改。点击阶段可查看具体动作；发现阶段首次收集完整信息，后续更新变化和失败记录，每一步不一定需要调用模型。</p>
+  <div class="phase-tabs" role="tablist" aria-label="闭环五阶段">
+    <button class="phase-tab" id="phaseTab0" role="tab" aria-selected="true" aria-controls="phasePanel" data-phase="0"><span>01 DISCOVER</span><b>发现问题</b></button>
+    <button class="phase-tab" id="phaseTab1" role="tab" aria-selected="false" aria-controls="phasePanel" data-phase="1" tabindex="-1"><span>02 PLAN</span><b>计划一步</b></button>
+    <button class="phase-tab" id="phaseTab2" role="tab" aria-selected="false" aria-controls="phasePanel" data-phase="2" tabindex="-1"><span>03 EXECUTE</span><b>执行变更</b></button>
+    <button class="phase-tab" id="phaseTab3" role="tab" aria-selected="false" aria-controls="phasePanel" data-phase="3" tabindex="-1"><span>04 VERIFY</span><b>验证结果</b></button>
+    <button class="phase-tab" id="phaseTab4" role="tab" aria-selected="false" aria-controls="phasePanel" data-phase="4" tabindex="-1"><span>05 ITERATE</span><b>反馈决策</b></button>
+  </div>
+  <div class="phase-panel" id="phasePanel" role="tabpanel" aria-labelledby="phaseTab0" tabindex="0"><div><div class="eyebrow" id="phaseEyebrow">DISCOVER / 收集信息</div><h3 id="phaseTitle">确认问题、复现条件与任务范围</h3><p id="phaseDescription">收集规格、代码版本、失败用例、日志与环境状态。确认故障来自产品代码、测试代码还是工具。缺少关键协议约定时，标记为待确认并停止相关修改。</p></div><div class="phase-example"><div class="label">当前案例</div><div id="phaseExample">输入：固定帧规格、解析器代码与跨两次接收的失败样例。<br>发现的问题：第二次输入到来前，解析器错误丢弃了尚未接收完整的帧；该问题可以复现。</div><span class="phase-signal" id="phaseSignal">下一步需要：复现方法、失败记录和验收范围</span></div></div>
+  <figure class="diagram"><svg viewBox="0 0 880 198" role="img" aria-label="发现、计划、执行、验证、反馈；检查未通过且允许继续时重复，检查通过或达到上限时停止">
+    <defs><marker id="arrowHead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#52e0bb" stroke-width="1.5"/></marker></defs>
+    <g font-family="Segoe UI,Microsoft YaHei,sans-serif" text-anchor="middle" font-size="14" fill="#eaf1f7">
+    <rect x="10" y="40" width="130" height="64" rx="10" fill="#12283e" stroke="#284158"/><text x="75" y="66" font-size="10" fill="#a5b7c9">DISCOVER</text><text x="75" y="87">发现</text>
+    <rect x="180" y="40" width="130" height="64" rx="10" fill="#12283e" stroke="#284158"/><text x="245" y="66" font-size="10" fill="#a5b7c9">PLAN</text><text x="245" y="87">计划</text>
+    <rect x="350" y="40" width="130" height="64" rx="10" fill="#12283e" stroke="#284158"/><text x="415" y="66" font-size="10" fill="#a5b7c9">EXECUTE</text><text x="415" y="87">执行</text>
+    <rect x="520" y="40" width="130" height="64" rx="10" fill="#123b37" stroke="#52e0bb"/><text x="585" y="66" font-size="10" fill="#52e0bb">VERIFY</text><text x="585" y="87">验证</text>
+    <rect x="690" y="40" width="170" height="64" rx="10" fill="#12283e" stroke="#284158"/><text x="775" y="66" font-size="10" fill="#a5b7c9">ITERATE / DECIDE</text><text x="775" y="87">继续 / 停止</text>
+    <g stroke="#52e0bb" stroke-width="1.5" fill="none" marker-end="url(#arrowHead)"><path d="M141 72H174"/><path d="M311 72H344"/><path d="M481 72H514"/><path d="M651 72H684"/><path d="M775 106V158H75V110"/></g>
+    <rect x="257" y="141" width="335" height="33" rx="8" fill="#0e2033"/><text x="425" y="162" font-size="12" fill="#52e0bb">允许继续时：记录失败原因、已试方法和下步修改</text>
+    <text x="775" y="24" font-size="11" fill="#f8ca81">通过、超限或无法检查时停止</text>
+    </g></svg><figcaption>每轮反馈应包含失败用例、相关日志、代码版本和已尝试的方法。下一轮根据这些记录选择修改内容，并检查失败用例是否减少。</figcaption></figure>
+  <div class="grid three"><div class="card"><div class="label">VERIFY</div><h3>按既定要求判断是否完成</h3><p>运行规格要求的测试、静态检查和必要的外部测量。模型自评分仅用于辅助定位问题，不能替代这些检查。</p></div><div class="card"><div class="label">STATE</div><h3>保存每轮操作和检查结果</h3><p>保存已尝试的修改、代码差异、失败用例和下一步。重启后读取这些记录，避免重复无效修改。</p></div><div class="card"><div class="label">STOP</div><h3>定义未完成时的停止条件</h3><p>检查通过时结束任务；预算不足、超时、轮数用尽、连续无进展或无法处理的故障，也必须停止并说明原因。</p></div></div>
+</section>
+
+<section id="parts">
+  <div class="section-head"><span class="section-no">03</span><h2>闭环系统的五个组成部分</h2></div>
+  <p class="section-lead">下面五类功能常用于完整的自动化系统。最小实现可先包含执行任务的程序、运行检查的程序，以及负责保存状态和决定下一步的控制程序。</p>
+  <div class="grid component-grid">
+    <div class="card component"><div class="num">01</div><h3>触发 / 调度</h3><p>通过手动操作、事件或定时规则启动任务；防止重复启动和冲突任务同时运行。</p><small>何时开始一轮任务</small></div>
+    <div class="card component"><div class="num">02</div><h3>Skill</h3><p>Skill 是保存任务步骤的指令文件，包含输入要求、验收方法和禁止修改的内容。</p><small>重复使用相同任务步骤</small></div>
+    <div class="card component"><div class="num">03</div><h3>执行 / 审查角色</h3><p>执行者修改代码，审查者检查遗漏。可用多个 Agent 分工，也可先用一个 Agent。</p><small>由不同角色执行和检查</small></div>
+    <div class="card component"><div class="num">04</div><h3>工具 / 连接器</h3><p>读写工作区、运行构建、查询工单与调用设备；限制范围并记录操作。</p><small>执行文件、工具和设备操作</small></div>
+    <div class="card component"><div class="num">05</div><h3>验证器</h3><p>按事先确定的规则检查代码或文件，返回通过、失败或无法完成检查。</p><small>判断修改是否符合要求</small></div>
+  </div>
+  <div class="callout"><strong>定时启动和反馈闭环是两项不同功能。</strong>定时规则决定何时执行任务；反馈闭环根据上次检查结果和保存的状态决定本次做什么。只重复同一条指令不一定构成反馈闭环，独立审查也不能替代外部测试。</div>
+</section>
+
+<section id="verify">
+  <div class="section-head"><span class="section-no">04</span><h2>验证方法与适用范围</h2></div>
+  <p class="section-lead">执行前先确定验收条件。每份报告记录被检查的代码版本，不同方法分别检查不同问题。测试通过只能说明本次测试覆盖的内容符合要求。</p>
+  <div class="table-wrap"><table><thead><tr><th>检查方法</th><th>能证明什么</th><th>不能单独证明什么</th></tr></thead><tbody>
+  <tr><td>模型自检 / 评分</td><td>回答或代码是否明显偏离要求，是否存在可疑逻辑。</td><td>实际运行是否正确、安全，或满足时序要求。模型评分高不能作为通过依据。</td></tr>
+  <tr><td>独立审查</td><td>另一个角色按检查表寻找遗漏、边界和不一致。</td><td>两个模型意见一致仍可能共同出错。</td></tr>
+  <tr><td>机器可执行检查</td><td>构建、静态规则、固定用例、属性测试在声明环境下的结果。</td><td>未测输入、实板电气行为、长期稳定性。</td></tr>
+  <tr><td>外部系统 / 硬件测量</td><td>指定固件、板卡和测量条件下，实际运行满足明确要求。</td><td>不同硬件版本或未覆盖环境同样正确。</td></tr>
+  </tbody></table></div>
+  <div class="grid two" style="margin-top:20px"><div class="card"><div class="label">FIXED ACCEPTANCE RULES</div><h3>执行时不得自行修改原定验收标准</h3><ul class="small muted"><li>执行前确定验收规格与关键测试的版本。</li><li>执行者不能自行删用例、跳过检查或降低阈值。</li><li>发现规格或测试有误，单独提出修改并重新确认验收。</li><li>保留执行者未见过的测试或独立回归用例，检查修改能否处理其他输入。</li></ul></div><div class="card"><div class="label">REPORT AND CODE VERSION</div><h3>检查报告必须对应本次代码</h3><ul class="small muted"><li>代码内容哈希（用于识别内容是否变化）或提交标识。</li><li>规格哈希、测试集哈希与验证器版本。</li><li>构建环境、工具链和设备标识（如适用）。</li><li>检查命令、退出码、日志或报告位置及时间。</li></ul></div></div>
+  <div class="callout warning"><strong>检查返回 PASS（通过）、FAIL（失败）或 UNKNOWN（无法确认）。</strong>检查未执行、工具超时、设备断开，或报告对应的代码版本不同，都应标记为 UNKNOWN。只有必需检查明确返回通过，才能标记任务完成。</div>
+</section>
+
+<section id="state">
+  <div class="section-head"><span class="section-no">05</span><h2>持久状态与停止条件</h2></div>
+  <p class="section-lead">把任务状态写入文件或数据库后，程序重启时可以继续处理。保存状态不会训练模型，也不会改变模型参数。每轮向模型提供必要摘要，定位问题时再读取详细日志。</p>
+  <div class="grid two"><div class="card"><div class="label">CHECKPOINT</div><h3>状态文件需要保存的信息</h3><div class="codebox"><pre># 状态文件示意；注释解释每个字段的用途
+task_id: uart_parser_fix       # 稳定任务标识，恢复时沿用
+spec_hash: spec_v1_hash        # 记录原定规格，恢复时检查标准是否被修改
+candidate_hash: src_v3_hash    # 本次待检查的代码版本
+iteration: 3                  # 已消耗轮数，恢复后不清零
+budget_used: 15                # 已用示意额度，恢复后继续累计
+passed_cases: [T1, T2, T3]     # 当前版本已通过的固定测试
+attempted: [retain_partial]    # 记录已试方案及其结果
+next_action: review_bounds    # 下一步，或明确的人工待办
+status: NEEDS_HUMAN           # 缺少必需检查结果时标记为转交人工
+stop_reason: device_missing   # 保存停止原因，供恢复任务时读取
+evidence_ref: reports/run_3   # 大型日志独立存储，摘要只留索引</pre></div></div><div class="card"><div class="label">STOP POLICY</div><h3>不同停止状态的触发条件</h3><div class="table-wrap" style="margin-top:16px"><table><thead><tr><th>状态</th><th>触发条件</th></tr></thead><tbody><tr><td><span class="severity">ACCEPTED</span></td><td>当前代码版本的全部必需检查通过。</td></tr><tr><td><span class="severity amber">LIMIT_REACHED</span></td><td>调用前预算不足，或达到总时限/轮数。</td></tr><tr><td><span class="severity amber">NO_PROGRESS</span></td><td>连续规定轮数内，失败用例没有减少。</td></tr><tr><td><span class="severity red">NEEDS_HUMAN</span></td><td>缺少必要规格、设备不可用、操作超出允许范围或故障无法恢复。</td></tr></tbody></table></div><p>提前定义“有效进展”，例如在同一测试集下，失败用例减少且没有新增失败。模型评分上升、回答变长或重复应用同一修改，均不能代替检查结果。</p></div></div>
+  <div class="callout">写状态时采用<strong>同目录临时文件 → 同步写入存储 → 原子替换</strong>。原子替换指新文件完整写入后一次替换旧文件，避免只覆盖一部分。每轮保存，停止前再保存一次；恢复时核对代码和报告版本，不一致就重新检查。外部写入采用幂等键，即用唯一操作编号识别重复请求，避免重复提交。<strong>重复执行不保证任务最终完成</strong>，因此必须设置无进展和资源上限等停止条件。</div>
+</section>
+
+<section id="simulator">
+  <div class="section-head"><span class="section-no">06</span><h2>闭环运行模拟：四种停止结果</h2></div>
+  <p class="section-lead">选择场景，点击“下一步”查看本轮操作、检查结果和停止原因。模拟中一次执行消耗 3 个额度单位，一次验证消耗 2 个。调用前检查余额，额度不足时不发起调用。</p>
+  <div class="sim" aria-label="使用预设结果的闭环教学模拟器">
+    <div class="sim-top"><div><h3>UART 修复 · 运行模拟</h3><p>步骤和结果均为预设，仅在本页运行，不调用真实 AI、测试工具或硬件。</p></div><label class="small" for="scenario"><span class="muted tiny">选择场景</span><br><select id="scenario"><option value="success">A · 三轮后通过宿主机验收</option><option value="stalled">B · 重复失败，无进展退出</option><option value="budget">C · 预算不足，提前退出</option><option value="device">D · 设备不可用，转人工</option></select></label></div>
+    <div class="sim-layout"><div><div class="metrics"><div class="metric"><div class="value" id="simRound">0 / 4</div><div class="name">当前轮次 / 上限</div></div><div class="metric"><div class="value" id="simPass">—</div><div class="name">固定用例通过数</div></div><div class="metric"><div class="value" id="simBudget">0 / 18</div><div class="name">已用 / 总额度</div></div></div><div class="budgetbar" role="progressbar" id="budgetProgress" aria-label="已用模拟预算" aria-valuemin="0" aria-valuemax="18" aria-valuenow="0"><div id="budgetFill"></div></div><div class="sim-stage" aria-label="当前阶段"><span>发现</span><span>计划</span><span>执行</span><span>验证</span><span>反馈</span></div><div class="sim-outcome" id="simOutcome" role="status" aria-live="polite"><b>READY · 尚未启动</b>先读取规格和已有失败用例，再修改一个具体问题。</div><div class="sim-controls"><button id="stepSim" class="primary">下一步 →</button><button id="runSim">运行至停止</button><button id="resetSim">重置</button></div><div class="sim-evidence" id="simEvidence">验收范围：宿主机协议单元测试；不包含实板、电气或性能验收。</div></div><div><ol class="sim-log" id="simLog" aria-label="模拟运行日志"><li><span class="log-stage">INITIALIZED</span>已加载场景。点击“下一步”观察状态变化。</li></ol><div class="chips"><span class="chip">固定规格 spec-v1</span><span class="chip">固定测试 tests-v1</span><span class="chip" id="simCheckpoint">状态：尚未保存</span></div></div></div>
+  </div>
+  <div class="callout">成功场景中的“通过”是<strong>脚本预设的宿主机检查结果</strong>，不是实际运行解析器得到的测试结果。设备场景还要求实板检查；没有这些结果时，不能标记任务完成。模拟中的“已保存”指状态暂存在页面内存，重置或刷新后会清空，没有写入磁盘。</div>
+</section>
+
+<section id="pseudocode">
+  <div class="section-head"><span class="section-no">07</span><h2>闭环控制程序伪代码</h2></div>
+  <p class="section-lead">下面用 Python 风格伪代码说明预算检查、三态验证、进度判断、状态保存和停止处理。辅助函数只描述所需功能，并非可直接运行的 SDK。代码快照指某一时刻保存的完整代码版本，验证期间禁止修改这份代码。</p>
+  <div class="codebox"><div class="codehead"><span>loop_controller.pseudo · 全部关键路径含中文注释</span><div><span class="copy-status" id="copyStatus" role="status"></span><button id="copyCode" type="button">复制伪代码</button></div></div><pre id="mainCode"># 先确定目标与验收要求；执行者不可自行修改规格、检查规则和受保护测试
+spec = load_locked_spec()
+state = load_or_create_checkpoint(spec.task_id)
+
+try:
+    assert_resume_compatible(state, spec)  # 核对规格和工作区版本；不一致时转交人工
+    while state.round &lt; spec.max_rounds:
+        check_total_deadline()  # 使用持久化任务起始时间，恢复后不重置
+        state.round += 1
+        atomic_checkpoint(state)  # 调用前保存轮数，程序崩溃恢复后仍计入已用轮数
+
+        # DISCOVER：读取必要的规格、代码和日志；缺少关键协议约定时停止
+        context = collect_context(spec, state, bounded_call)
+        if context.has_blocking_unknown:
+            stop("NEEDS_HUMAN", context.unknowns)
+
+        # PLAN：根据失败用例和已试方法，选择本轮要修改的一个问题
+        plan = bounded_call(planner, context, spec.plan_budget_cap)
+        enforce_scope(plan, spec.allowed_paths, spec.allowed_actions)
+
+        # EXECUTE：所有模型、工具和子代理调用都必须检查预算并设置超时
+        candidate = bounded_call(executor, plan, spec.execute_budget_cap)
+        candidate_id = snapshot_hash(candidate)  # 保存该版本的代码标识，验证期间禁止修改
+
+        # VERIFY：在固定测试与环境中检查；超时/跳过/缺日志都不是通过
+        evidence = bounded_call(verifier,
+            (candidate_id, spec.locked_acceptance), spec.verify_budget_cap)
+        state.evidence_ref = save_evidence(evidence)
+        state.candidate_id = candidate_id
+
+        # 检查报告记录代码、规格、测试集、验证器和环境版本；不一致则不能通过
+        if not evidence.matches(candidate_id, spec):
+            stop("NEEDS_HUMAN", "报告对应的代码或验收规格与本次任务不一致")
+        if evidence.status == "UNKNOWN":
+            stop("NEEDS_HUMAN", evidence.missing_requirements)
+
+        # 只有全部必需检查通过，且代码未再次修改，才标记任务完成
+        if evidence.status == "PASS" and evidence.all_required_executed:
+            assert snapshot_hash(candidate) == candidate_id
+            stop("ACCEPTED", "当前版本已通过约定范围内的全部检查")
+
+        # ITERATE：按固定测试比较失败是否减少，不使用模型自评分
+        improved = strict_progress(state.previous_evidence, evidence)
+        state.stalled_rounds = 0 if improved else state.stalled_rounds + 1
+        state.attempted.append(summary(plan, evidence))  # 避免重复无效尝试
+        state.previous_evidence = evidence
+        state.next_action = choose_next_from_failures(evidence)
+        atomic_checkpoint(state)  # 每轮结束保存当前失败与下一步
+
+        if state.stalled_rounds &gt;= spec.max_stalled_rounds:
+            stop("NO_PROGRESS", "相同验收标准下连续多轮失败用例没有减少")
+
+    stop("LIMIT_REACHED", "已达到最大轮数")
+
+except BudgetLimit as error:
+    state.finish("LIMIT_REACHED", error.reason)  # 调用前拒绝超预算操作
+except DeadlineExceeded as error:
+    state.finish("LIMIT_REACHED", error.reason)  # 时限触发，工具已取消
+except PlannedStop as result:
+    state.finish(result.status, result.reason)  # 记录预定停止条件对应的状态和原因
+except Exception as error:
+    state.finish("NEEDS_HUMAN", safe_error(error))  # 无法处理的异常转交人工，不标记完成
+finally:
+    state.actual_usage = budget.current_ledger()  # 包含失败、取消与子代理消耗
+    try:
+        atomic_checkpoint(state)  # 所有退出均尝试保存，包含最终失败
+    except SaveError:
+        state.finish("NEEDS_HUMAN", "状态落盘失败；禁止后续变更")
+        emit_report(state, persisted=False)  # 报告状态保存失败，不能承诺可恢复到当前进度
+    else:
+        emit_report(state, persisted=True)  # 输出检查报告、停止原因及恢复任务所需的信息</pre></div>
+  <details open><summary>展开：预算检查、超时取消和状态保存</summary><div><div class="codebox"><pre># 模型、工具和子代理均通过此函数调用，统一检查资源限制
+def bounded_call(operation, payload, maximum_cost):
+    check_total_deadline()  # 先检查整项任务的剩余运行时间
+    ticket = budget.reserve(maximum_cost)  # 调用前保存本次额度预留；余额不足则不发起
+    # reserve 将预留额完整写入账本；恢复后继续累计已用和未结算额度
+    handle = None
+    try:
+        # 被调用程序必须能限制消耗；无法设置额度上限时不自动执行
+        handle = operation.start(payload, hard_cap=ticket.limit)
+        timeout = min(PER_CALL_TIMEOUT, remaining_total_time())
+        return handle.wait(timeout=timeout)
+    except Timeout:
+        handle.cancel()  # 超时后发送取消请求，并检查后台操作是否停止
+        if not handle.wait_until_stopped(CANCEL_GRACE):
+            quarantine_workspace()  # 无法确认取消时隔离工作区，阻止后续写操作
+            stop("NEEDS_HUMAN", "操作未确认停止，需要人工处理")
+        raise DeadlineExceeded("单次调用超时，未采用该次输出")
+    finally:
+        # 成功、失败和取消均记录消耗；用量未知时不释放已预留额度
+        budget.settle_or_keep_reserved(ticket, usage_if_known(handle))
+
+def atomic_checkpoint(state):
+    temporary = same_directory_temp(state.path)  # 在状态文件同一目录创建临时文件，以支持原子替换
+    write_all(temporary, serialize(state))  # 先写完整的新状态文件，保留旧状态文件
+    flush_and_fsync(temporary)  # 数据同步后再替换
+    atomic_replace(temporary, state.path)  # 采用平台支持的原子替换操作
+    sync_directory_if_supported(state.path)  # 按操作系统要求同步目录，保证文件替换记录写入存储
+    # 保存失败时报告错误并停止修改；不得显示状态已保存</pre></div><p style="margin-top:16px">实际实现需要按操作系统验证取消操作、文件替换和断电后的恢复行为。工具超时后，运行环境必须确认后台操作已停止；只停止等待结果，后台操作仍可能继续。</p></div></details>
+  <div class="callout warning"><strong>本段仅说明程序逻辑。</strong>执行硬件烧写、复位、发布或对外写入前，应确认允许的操作、防止并发冲突、识别重复请求，并定义失败后的恢复方法。缺少必要检查结果时，转交人工。</div>
+</section>
+
+<section id="embedded">
+  <div class="section-head"><span class="section-no">08</span><h2>工程案例：UART 流式协议解析器</h2></div>
+  <p class="section-lead">以下是原创教学案例，所有问题、轮次与结果均为假设，不是实测记录。任务范围先限定为宿主机上的纯解析逻辑，目标是正确处理任意分片输入。</p>
+  <div class="frame" aria-label="协议帧格式"><div>AA 55<small>2 字节固定帧头</small></div><div>LEN<small>1 字节 · 载荷长度</small></div><div class="payload">PAYLOAD<small>0…64 字节 · 教学上限</small></div><div>CRC16<small>2 字节</small></div></div>
+  <p class="small muted">教学约定：LEN 只计载荷；接收缓存有固定容量上限。CRC 多项式、初值、输入/输出反射、最终异或、覆盖字节与字节序必须由协议规格确定，此处不假定具体参数。采集层只提供字节流，不保证一次接收就是一帧。</p>
+  <div class="grid two" style="margin-top:22px"><div class="card"><div class="label">GOAL &amp; SCOPE</div><h3>本次宿主机验收要求</h3><ul class="small muted"><li>任意分片和连续多帧输入都能恢复完整合法帧。</li><li>长度越界、CRC 错误、噪声与不完整输入不会越界访问。</li><li>错误后按固定重新同步策略恢复，避免无限扫描。</li><li>接口与正确行为保持不变；宿主机检查全部通过。</li></ul></div><div class="card"><div class="label">NOT YET VERIFIED</div><h3>另建实板验收清单</h3><ul class="small muted"><li>UART 中断 / DMA 缓冲交接和并发一致性。</li><li>任务栈、水位、优先级与 FreeRTOS 调度影响。</li><li>溢出、丢字节、长期吞吐与超时恢复。</li><li>烧写、复位后的真实设备行为与逻辑分析仪测量。</li></ul><p>上述硬件动作未执行，不能由宿主机单测代替并标为通过。</p></div></div>
+  <h3 style="margin-top:28px">修改前确定测试用例和预期结果</h3>
+  <div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>用例组</th><th>输入构造</th><th>必须观察的结果</th></tr></thead><tbody>
+  <tr><td>完整帧 / 分片</td><td>完整帧；在帧内每个位置切成两段；逐字节输入。</td><td>仅收齐并校验成功后输出一次；未收齐保留状态。</td></tr>
+  <tr><td>粘包 / 多帧</td><td>两个或多个合法帧一次输入，末尾带半帧。</td><td>完整帧顺序输出，尾部半帧留待下一次输入。</td></tr>
+  <tr><td>长度边界</td><td>LEN = 0、64、65；不足以构成合法帧的数据。</td><td>按规格接受边界值；越界长度拒绝，不越界读写。</td></tr>
+  <tr><td>校验错误 / 恢复</td><td>修改 CRC 字节；错误帧之后追加合法帧。</td><td>错误帧不输出；按重新同步策略找到后续合法帧。</td></tr>
+  <tr><td>噪声 / 假帧头</td><td>随机前缀、重复 AA、载荷中出现 AA 55。</td><td>长度与校验共同决定边界；每次处理有有限工作量。</td></tr>
+  <tr><td>属性 / 回归</td><td>同一字节流采用不同切分；固定随机种子生成输入。</td><td>不同切分产生相同合法帧序列；宿主机检测无非法访问。</td></tr>
+  </tbody></table></div>
+  <div class="case-timeline"><div class="case-step"><h3>第 0 轮 · 记录初始代码、测试和任务范围</h3><p>把帧规格、CRC 约定、测试集和代码版本写入任务状态。先复现分片丢失，再将失败输入保存为最小样例。测试组数量不等于模拟台中的十个简化检查点。</p></div><div class="case-step"><h3>第 1 轮 · 保留不完整帧</h3><p>本轮修改：接收不足完整帧时返回“等待更多数据”，保留缓存。验证重点：分片成功，同时多帧解析和错误恢复没有回归。</p></div><div class="case-step"><h3>第 2 轮 · 先验证长度，再计算访问范围</h3><p>本轮修改：在访问载荷或 CRC 前检查 LEN 上限、累计长度与缓存剩余容量。验证重点：边界输入被正确处理，越界样例被拒绝。</p></div><div class="case-step"><h3>第 3 轮 · 实现重新同步策略，运行完整回归</h3><p>本轮修改：错误帧不会让解析器永久停在同一位置；新一轮必须消费字节、产生帧或等待新输入。全部必需宿主机检查通过后，保存被测代码和对应报告。</p></div><div class="case-step"><h3>交付 · “宿主机验收通过，实板验证待执行”</h3><p>报告修改范围、固定测试结果、尚未覆盖的条件和待执行的设备检查。若完成条件（Done）包含实板验收，则状态保持 NEEDS_HUMAN，等待人工处理，不能提前标记整项任务完成。</p></div></div>
+  <details><summary>展开：解析器伪代码与中文注释</summary><div><div class="codebox"><pre># 伪代码说明长度检查和字节处理过程；CRC 参数由事先确定的规格提供
+def feed(bytes):
+    append_with_capacity_policy(bytes)  # 满缓存如何丢弃/报错由规格定义
+    while buffered_length() &gt;= MIN_FRAME_LENGTH:
+        if not starts_with_header(0xAA, 0x55):
+            consume(1)  # 跳过一个噪声字节，再寻找帧头，避免重复检查同一位置
+            continue
+        length = peek_length()  # 当前已具备最短帧长度，读取 LEN 是安全的
+        if length &gt; MAX_PAYLOAD:
+            consume(1)  # 长度超限时丢弃一个字节，按协议规定重新寻找帧头
+            continue
+        needed = HEADER_SIZE + LENGTH_SIZE + length + CRC_SIZE
+        if buffered_length() &lt; needed:
+            return NEED_MORE  # 半帧保留，等待后续字节，不在原地忙循环
+        if not crc_matches(peek(needed), LOCKED_CRC_SPEC):
+            consume(1)  # CRC 错误不输出；此处采用教学上的逐字节重新同步
+            continue
+        emit(copy_payload(length))  # 复制载荷后再输出，避免调用方引用已移动的接收缓存
+        consume(needed)  # 合法帧处理完毕，继续解析后面可能粘连的帧</pre></div><p style="margin-top:14px">若头部看似合法但长度对应的数据迟迟不到，何时丢弃待确认帧应由协议超时/恢复规格决定。不要让 AI 为了通过当前测试自行猜测协议语义。</p></div></details>
+</section>
+
+<section id="cost">
+  <div class="section-head"><span class="section-no">09</span><h2>成本计算与人工时间统计</h2></div>
+  <p class="section-lead">提供给模型的信息、执行轮数、独立审查、测试资源和人工复核都会影响成本。若每轮附上全部历史记录，输入会持续增加。保存摘要、使用缓存和只读取修改部分，可以减少重复输入。</p>
+  <div class="grid two"><div class="card"><div class="label">TOTAL COST</div><h3>一次任务的成本构成</h3><p class="mono" style="line-height:2.1">C = Σ(输入成本 + 输出成本)<br>　 + 工具 / 计算 / 设备成本<br>　 + 人工复核 / 返工成本<br>　 + 分摊的建设与维护成本</p><p>按实际模型、计费方式、缓存命中和重试统计。失败、取消和子代理工作也要计入。</p></div><div class="card"><div class="label">ACCEPTED OUTCOME</div><h3>需要同时记录的四项指标</h3><ul class="small muted"><li>每个验收通过结果的成本：总成本 ÷ 通过数量。</li><li>人工时间：复核、返工与故障接管所需时间。</li><li>质量：验收后发现的缺陷、错误标记通过的次数及新增故障。</li><li>交付时间：从启动任务到代码或文件通过验收的总耗时。</li></ul></div></div>
+  <div class="calculator"><div><h3>调整假设数值，查看成本变化</h3><p class="tiny muted" style="margin:7px 0 17px">以下全部是人为设置的教学假设，单位为“成本单位”，不代表价格、性能或实测收益。</p><div class="calc-inputs"><label for="calcAttempts">尝试任务数<input id="calcAttempts" type="number" min="1" max="1000" step="1" value="10"></label><label for="calcAccepted">验收通过数量<input id="calcAccepted" type="number" min="0" max="10" step="1" value="7"></label><label for="calcRunCost">每任务模型 + 工具成本<input id="calcRunCost" type="number" min="0" max="100000" step="1" value="6"></label><label for="calcReviewCost">每任务人工复核成本<input id="calcReviewCost" type="number" min="0" max="100000" step="1" value="4"></label><label for="calcSetup">本批分摊建设 / 维护成本<input id="calcSetup" type="number" min="0" max="1000000" step="1" value="40"></label></div></div><div class="calc-result" aria-live="polite"><span class="tiny muted">每个验收通过结果的成本</span><div class="big" id="costPerAccepted">20.00</div><div class="small" id="costSummary">总成本 140 / 验收通过数量 7</div><div class="cost-bars"><div class="cost-row"><span>模型 + 工具</span><div class="cost-track"><div id="barRun"></div></div><span id="labelRun">60</span></div><div class="cost-row"><span>人工复核</span><div class="cost-track"><div id="barReview"></div></div><span id="labelReview">40</span></div><div class="cost-row"><span>建设 + 维护</span><div class="cost-track"><div id="barSetup"></div></div><span id="labelSetup">40</span></div></div><p id="acceptRate">验收通过比例 70%。</p><p>即使通过比例相同，任务价值、人工处理成本和错误损失不同，收益也会不同。不能用一个通用的通过比例判断所有闭环是否划算。</p></div></div>
+  <div class="callout">可按以下顺序控制成本：<strong>限定任务范围 → 补全验收检查 → 减少无关输入 → 设置轮数和资源上限 → 评估并行与定时执行。</strong>同时比较自动执行和人工完成同类任务的成本，不只统计 token（模型处理文本的计量单位）。</div>
+</section>
+
+<section id="failure">
+  <div class="section-head"><span class="section-no">10</span><h2>常见问题与处理方法</h2></div>
+  <div class="table-wrap"><table><thead><tr><th>失败模式</th><th>可观察信号</th><th>工程处理</th></tr></thead><tbody>
+  <tr><td>自我评分替代验收</td><td>模型评分上升，但实际测试失败数量没有减少。</td><td>必须通过事先确定的外部检查；模型自评只辅助定位。</td></tr>
+  <tr><td>执行过程修改原定验收标准</td><td>删除或跳过失败用例、降低阈值后，检查才显示通过。</td><td>保护验收配置；独立审查测试变化。</td></tr>
+  <tr><td>旧报告套用新代码</td><td>代码变了，仍引用上轮通过结果。</td><td>报告记录代码、规格、测试和环境版本；任一变化后重新检查。</td></tr>
+  <tr><td>反复修改但失败数量不变</td><td>失败集合不变，反复提交同类补丁。</td><td>记录已试方案；达到无进展上限后停止并报告。</td></tr>
+  <tr><td>环境故障被当产品缺陷</td><td>设备不在线、工具链缺失，却不断改代码。</td><td>区分 FAIL 与 UNKNOWN；环境故障只重试规定次数，仍失败则转交人工。</td></tr>
+  <tr><td>超时只是停止等待</td><td>控制器退出，后台任务仍修改文件。</td><td>取消并确认终止；无法确认则隔离工作区。</td></tr>
+  <tr><td>重启后重复执行写入操作</td><td>重复发布、重复工单或同一设备被并发占用。</td><td>幂等键、运行锁、持久状态与可恢复步骤。</td></tr>
+  <tr><td>上下文无限增长</td><td>每轮输入增加、成本上升，关键日志和失败记录不易定位。</td><td>保存摘要和日志路径，只读取相关内容，同时保留完整日志。</td></tr>
+  </tbody></table></div>
+  <div class="callout warning"><strong>任务未完成时也需要输出报告。</strong>列出修改内容、检查结果、未完成项、停止原因和负责后续处理的人，使下一位工程师可以继续处理。</div>
+</section>
+
+<section id="adoption">
+  <div class="section-head"><span class="section-no">11</span><h2>适用条件与实施步骤</h2></div>
+  <p class="section-lead">先检查下面四项条件，再决定是否建设闭环。任务频率会影响建设成本能否被节省的人时抵消，不能统一规定为“每周至少一次”。</p>
+  <div class="grid two"><div class="card"><div class="label">01 / REPEATABILITY</div><h3>任务会重复出现吗？</h3><p>同类任务可以重复使用已经配置的流程，减少每次人工操作。一次性任务也可以根据检查结果进行几轮修改，但未必需要长期自动运行。</p></div><div class="card"><div class="label">02 / REJECTABILITY</div><h3>系统能自动识别不合格结果吗？</h3><p>需要能够执行的检查标准。若最终质量依赖审美或业务判断，可由系统生成初稿，再由人工验收。</p></div><div class="card"><div class="label">03 / EXECUTABILITY</div><h3>Agent 能执行任务需要的全部操作吗？</h3><p>Agent 需要能访问代码、运行构建和测试，并已获得必要操作权限。硬件插拔或缺少访问凭据时，应明确交给人工处理。</p></div><div class="card"><div class="label">04 / DEFINABLE DONE</div><h3>“完成”是否能被客观判定？</h3><p>写明需要提交的代码或文件、必需检查和检查范围。例如明确要求“宿主机协议测试全部通过”，避免只写“驱动足够稳定”。</p></div></div>
+  <div class="roadmap"><div class="card"><div class="label">STEP 1</div><h3>先由人工完整执行</h3><p>使用真实输入完成操作、检查和失败处理，记录正确步骤和人工耗时。</p></div><div class="card"><div class="label">STEP 2</div><h3>将步骤写入 Skill</h3><p>保存可重复使用的步骤、限制条件和模板，删除只适用于一次任务的信息。</p></div><div class="card"><div class="label">STEP 3</div><h3>实现执行与检查循环</h3><p>增加验收检查、状态保存、预算限制、停止和恢复逻辑，验证失败处理。</p></div><div class="card"><div class="label">STEP 4</div><h3>最后加入调度</h3><p>设置触发规则，防止并发冲突和重复执行，记录运行状态及每个通过结果的成本。</p></div></div>
+  <div class="callout">首个试点可限定为：<strong>一个仓库、一个纯软件模块、一套固定测试和少量轮次，最终提交修改后的代码与检查报告。</strong>确认运行可靠后，再增加跨系统操作和设备验证。</div>
+</section>
+
+<section id="checklist">
+  <div class="section-head"><span class="section-no">12</span><h2>启动前检查清单</h2></div>
+  <p class="section-lead">按项目实际情况确认以下要求。勾选状态仅保存在当前页面内存，刷新后清空；勾选完成不会自动执行测试，也不代表系统已通过验证。</p>
+  <ul class="checklist" id="readinessList">
+    <li><input type="checkbox" id="check1"><label for="check1">目标、需要提交的代码或文件、验收范围已写明。</label></li>
+    <li><input type="checkbox" id="check2"><label for="check2">必需检查可自动执行，PASS / FAIL / UNKNOWN 已区分。</label></li>
+    <li><input type="checkbox" id="check3"><label for="check3">规格和测试要求已确定，执行时不能自行降低标准。</label></li>
+    <li><input type="checkbox" id="check4"><label for="check4">检查报告记录代码、规格、测试集和环境版本。</label></li>
+    <li><input type="checkbox" id="check5"><label for="check5">每次调用前检查预算，失败与子代理消耗也计入。</label></li>
+    <li><input type="checkbox" id="check6"><label for="check6">总时限、单次超时、取消与轮数上限已定义。</label></li>
+    <li><input type="checkbox" id="check7"><label for="check7">已定义如何判断失败减少，连续无改善时会停止。</label></li>
+    <li><input type="checkbox" id="check8"><label for="check8">状态文件能完整替换；失败停止和恢复功能已检查。</label></li>
+    <li><input type="checkbox" id="check9"><label for="check9">允许操作、并发限制、重复请求处理及人工负责人已明确。</label></li>
+    <li><input type="checkbox" id="check10"><label for="check10">硬件验证未执行时，不会被自动标成通过。</label></li>
+  </ul>
+  <div class="check-progress"><span id="checkCount" role="status" aria-live="polite">已确认 0 / 10 项</span><button id="resetChecks">清空勾选</button></div>
+</section>
+<div class="closing">系统根据检查结果，决定<strong class="accent">继续修改、结束任务，</strong><br>或<strong class="accent">转交人工处理。</strong></div>
+<footer class="footer"><span>LOOP ENGINEERING · 工程教学版 · 2026.09<br>原生 HTML / CSS / JavaScript · 无外部依赖 · 不执行真实工程操作</span><button class="print-button" onclick="window.print()">打印 / 存为 PDF</button></footer>
+</main>
+<script>
+'use strict';
+// 五步讲解使用本地静态内容；按钮与方向键共享同一选择逻辑。
+const phases=[
+  {name:'DISCOVER / 收集信息',title:'确认问题、复现条件与任务范围',description:'收集规格、代码版本、失败用例、日志与环境状态。确认故障来自产品代码、测试代码还是工具。缺少关键协议约定时，标记为待确认并停止相关修改。',example:'输入：固定帧规格、解析器代码与跨两次接收的失败样例。<br>发现的问题：第二次输入到来前，解析器错误丢弃了尚未接收完整的帧；该问题可以复现。',signal:'下一步需要：复现方法、失败记录和验收范围'},
+  {name:'PLAN / 确定本轮修改',title:'每轮只处理一个具体问题',description:'根据失败用例选择本轮要处理的问题，并说明如何验证修改是否有效。列出允许修改的文件、必须保持不变的验收要求，以及需要人工完成的操作。',example:'输入：分片用例失败，完整帧用例通过。<br>计划：保留未收齐帧的数据；仅修改解析器状态转换；不调整协议与测试阈值。',signal:'下一步需要：修改文件清单、预期结果和验证方法'},
+  {name:'EXECUTE / 执行修改',title:'修改代码后，先等待检查结果',description:'使用已获授权的工具修改指定文件。每次调用前检查预算并设置超时，随后保存修改内容、代码版本和运行日志。',example:'动作：修改半帧保留逻辑，保存代码版本 src-v1。<br>记录：修改文件、差异、实际消耗和错误；该版本仍需运行验收检查。',signal:'下一步需要：禁止继续修改的代码版本和操作日志'},
+  {name:'VERIFY / 运行检查',title:'检查未通过时，任务不能标记完成',description:'对本次代码运行原定检查，并在报告中记录代码、规格、测试和环境版本。检查失败时安排修改；无法完成检查时标记 UNKNOWN。模型自评分只辅助定位。',example:'检查：分片、粘包、长度边界、CRC 错误与回归用例。<br>输出：通过 / 失败 / 未知；失败样例和日志都指向 src-v1。',signal:'下一步需要：对应当前代码的检查报告和失败用例'},
+  {name:'ITERATE / 决定继续或停止',title:'根据检查结果决定是否执行下一轮',description:'比较相同测试集的新旧结果，保存已试方法和下一步。必需检查全通过时完成任务；资源用尽、连续无改善或遇到无法处理的问题时停止并输出报告。',example:'若分片测试通过但长度测试仍失败：保存结果，下一轮修改长度检查。<br>若设备不可用：保存 UNKNOWN 和未完成项，交给人工恢复设备。',signal:'需要保存：下轮要处理的问题，或包含停止原因的最终报告'}
+];
+const phaseButtons=[...document.querySelectorAll('.phase-tab')];
+function selectPhase(index,focus=false){phaseButtons.forEach((button,i)=>{button.setAttribute('aria-selected',String(i===index));button.tabIndex=i===index?0:-1});const item=phases[index];document.getElementById('phaseEyebrow').textContent=item.name;document.getElementById('phaseTitle').textContent=item.title;document.getElementById('phaseDescription').textContent=item.description;document.getElementById('phaseExample').innerHTML=item.example;document.getElementById('phaseSignal').textContent=item.signal;document.getElementById('phasePanel').setAttribute('aria-labelledby','phaseTab'+index);if(focus)phaseButtons[index].focus()}
+phaseButtons.forEach((button,i)=>{button.addEventListener('click',()=>selectPhase(i));button.addEventListener('keydown',event=>{let index=i;if(event.key==='ArrowRight')index=(i+1)%5;else if(event.key==='ArrowLeft')index=(i+4)%5;else if(event.key==='Home')index=0;else if(event.key==='End')index=4;else return;event.preventDefault();selectPhase(index,true)})});
+
+// 模拟器为确定性有限状态机；所有数值均为教学预设，没有外部请求。
+const scenarioConfigs={success:{budget:18,passes:[6,9,10],label:'宿主机协议单元测试；不包含实板、电气或性能验收。'},stalled:{budget:18,passes:[6,6,6],label:'宿主机协议单元测试；连续 2 轮没有新增通过用例即停止。'},budget:{budget:7,passes:[6,9,10],label:'宿主机协议单元测试；总预算缩小为 7 单位，调用前必须预留。'},device:{budget:18,passes:[10],label:'宿主机测试 + 实板检查；当前模拟设备不可用，缺少必需的实板检查结果。'}};
+let simulation;
+const phaseNames=['DISCOVER','PLAN','EXECUTE','VERIFY','ITERATE'];
+function logSim(stage,message){const li=document.createElement('li');const tag=document.createElement('span');tag.className='log-stage';tag.textContent=stage;li.append(tag,document.createTextNode(message));const log=document.getElementById('simLog');log.append(li);log.scrollTop=log.scrollHeight}
+function checkpoint(final=false){simulation.saved++;document.getElementById('simCheckpoint').textContent='状态：已保存 #'+simulation.saved+(final?' · 含退出原因':'');}
+function renderSim(){document.getElementById('simRound').textContent=simulation.round+' / 4';document.getElementById('simPass').textContent=simulation.passed===null?'—':simulation.passed+' / 10';document.getElementById('simBudget').textContent=simulation.used+' / '+simulation.config.budget;document.getElementById('budgetFill').style.width=(simulation.used/simulation.config.budget*100)+'%';const progress=document.getElementById('budgetProgress');progress.setAttribute('aria-valuemax',simulation.config.budget);progress.setAttribute('aria-valuenow',simulation.used);document.querySelectorAll('.sim-stage span').forEach((element,index)=>element.classList.toggle('current',index===simulation.lastPhase));document.getElementById('stepSim').disabled=simulation.done;document.getElementById('runSim').disabled=simulation.done;document.getElementById('simOutcome').classList.toggle('stop',simulation.done&&!simulation.status.startsWith('ACCEPTED'))}
+function setSimMessage(status,message){simulation.status=status;const box=document.getElementById('simOutcome');box.replaceChildren();const title=document.createElement('b');title.textContent=status;box.append(title,document.createTextNode(message))}
+function finishSim(status,message){simulation.done=true;setSimMessage(status,message);logSim('STOP / '+status,message);checkpoint(true);renderSim()}
+function chargeSim(amount,operation){if(simulation.used+amount>simulation.config.budget){finishSim('LIMIT_REACHED · 预算不足','剩余 '+(simulation.config.budget-simulation.used)+' 单位，小于本次'+operation+'需要的 '+amount+' 单位；调用未发起，失败与下一步已保存。');return false}simulation.used+=amount;return true}
+function resetSimulation(){const type=document.getElementById('scenario').value;simulation={type,config:scenarioConfigs[type],round:0,phase:0,lastPhase:-1,used:0,passed:null,previous:0,stalled:0,saved:0,done:false,status:'READY'};document.getElementById('simLog').replaceChildren();logSim('INITIALIZED','已确定规格 spec-v1 和测试 tests-v1，执行期间不得修改。等待启动；数值均为模拟。');document.getElementById('simEvidence').textContent='验收范围：'+simulation.config.label;document.getElementById('simCheckpoint').textContent='状态：尚未保存';setSimMessage('READY · 尚未启动','先读取规格和已有失败用例，再修改一个具体问题。');renderSim()}
+function stepSimulation(){if(simulation.done)return;const phase=simulation.phase;simulation.lastPhase=phase;
+  if(phase===0){if(simulation.round>=4){finishSim('LIMIT_REACHED · 轮数上限','达到 4 轮，保存状态并退出。');return}simulation.round++;logSim('R'+simulation.round+' / DISCOVER','读取原定验收要求和已试方法；本轮代码尚未检查。');setSimMessage('RUNNING · 发现','第 '+simulation.round+' 轮：核对规格、环境与失败记录。')}
+  else if(phase===1){const actions=['保留半帧状态','检查长度边界','修复错误后的重新同步'];const action=simulation.type==='stalled'?'重复尝试同类缓存修复':actions[Math.min(simulation.round-1,2)];logSim('R'+simulation.round+' / PLAN',action+'；不得修改原定验收要求。');setSimMessage('RUNNING · 计划',action+'，随后检查修改是否有效。')}
+  else if(phase===2){if(!chargeSim(3,'执行'))return;logSim('R'+simulation.round+' / EXECUTE','调用前余额充足，消耗 3 单位；保存代码版本 src-v'+simulation.round+'。');setSimMessage('RUNNING · 执行','代码版本 src-v'+simulation.round+' 已保存，尚未执行验收检查。')}
+  else if(phase===3){if(!chargeSim(2,'验证'))return;simulation.passed=simulation.config.passes[Math.min(simulation.round-1,simulation.config.passes.length-1)];logSim('R'+simulation.round+' / VERIFY','消耗 2 单位；src-v'+simulation.round+' 使用规格 spec-v1 和测试 tests-v1：宿主机通过用例 '+simulation.passed+'/10。');
+    if(simulation.type==='device'){logSim('EVIDENCE / UNKNOWN','宿主机模拟通过；必需实板检查未执行，设备不可用。');finishSim('NEEDS_HUMAN · 设备不可用','实板检查为 UNKNOWN。保存代码和未完成项，交给人工恢复设备后继续；整项任务未完成。');return}
+    if(simulation.passed===10){finishSim('ACCEPTED · 宿主机范围通过','第 '+simulation.round+' 轮模拟用例 10/10 通过，被检查代码为 src-v'+simulation.round+'；只表示约定的宿主机检查完成。');return}
+    setSimMessage('RUNNING · 验证失败','固定用例 '+simulation.passed+'/10；记录失败原因，下一轮针对这些用例修改。')}
+  else{const progressed=simulation.passed>simulation.previous;simulation.stalled=progressed?0:simulation.stalled+1;simulation.previous=simulation.passed;logSim('R'+simulation.round+' / ITERATE',progressed?'通过用例增加，保存已试方法和仍失败的用例。':'通过用例没有增加，连续无改善 '+simulation.stalled+' 轮。');checkpoint();if(simulation.stalled>=2){finishSim('NO_PROGRESS · 无进展退出','连续 2 轮通过用例没有增加；停止修改，保存失败用例和已尝试方法。');return}setSimMessage('RUNNING · 反馈','状态已保存；'+(progressed?'通过用例增加，继续处理剩余失败。':'允许再执行一轮；连续 2 轮无改善时停止。'))}
+  simulation.phase=(phase+1)%5;renderSim()
+}
+document.getElementById('scenario').addEventListener('change',resetSimulation);document.getElementById('stepSim').addEventListener('click',stepSimulation);document.getElementById('resetSim').addEventListener('click',resetSimulation);document.getElementById('runSim').addEventListener('click',()=>{for(let guard=0;guard<30&&!simulation.done;guard++)stepSimulation()});resetSimulation();
+
+// 计算器仅展示假设成本；验收通过数量为零时不执行除法。
+const costIds=['calcAttempts','calcAccepted','calcRunCost','calcReviewCost','calcSetup'];
+function updateCost(){const val=(id)=>Math.max(0,Number(document.getElementById(id).value)||0);const attempts=Math.max(1,Math.floor(val('calcAttempts')));const accepted=Math.min(attempts,Math.floor(val('calcAccepted')));document.getElementById('calcAccepted').max=attempts;if(val('calcAccepted')>attempts)document.getElementById('calcAccepted').value=attempts;const run=attempts*val('calcRunCost'),review=attempts*val('calcReviewCost'),setup=val('calcSetup'),total=run+review+setup;document.getElementById('costPerAccepted').textContent=accepted>0?(total/accepted).toFixed(2):'—';document.getElementById('costSummary').textContent=accepted>0?'总成本 '+total.toLocaleString()+' / 验收通过数量 '+accepted:'尚无验收通过结果，无法计算每个通过结果的成本';document.getElementById('acceptRate').textContent='验收通过比例 '+(accepted/attempts*100).toFixed(0)+'%。'+(accepted===0?'应先检查验收方法、任务是否适合自动执行以及失败原因。':'');const max=Math.max(run,review,setup,1);[['Run',run],['Review',review],['Setup',setup]].forEach(([key,value])=>{document.getElementById('bar'+key).style.width=(value/max*100)+'%';document.getElementById('label'+key).textContent=value.toLocaleString()})}
+costIds.forEach(id=>document.getElementById(id).addEventListener('input',updateCost));updateCost();
+
+// 自检勾选不写入磁盘或远端，刷新即重置。
+const checks=[...document.querySelectorAll('#readinessList input')];function updateChecks(){const checked=checks.filter(item=>item.checked).length;document.getElementById('checkCount').textContent='已确认 '+checked+' / 10 项'+(checked===10?' · 请按项目实际执行验证':'')};checks.forEach(item=>item.addEventListener('change',updateChecks));document.getElementById('resetChecks').addEventListener('click',()=>{checks.forEach(item=>item.checked=false);updateChecks()});
+
+// 优先使用剪贴板 API，离线权限不允许时回退到选区复制。
+document.getElementById('copyCode').addEventListener('click',async()=>{const text=document.getElementById('mainCode').textContent;const status=document.getElementById('copyStatus');try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}else{const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();if(!ok)throw new Error('copy unavailable')}status.textContent='已复制'}catch{status.textContent='请选中代码手动复制'}});
+
+// 以视口位置更新目录与阅读进度，不改变用户当前位置。
+const sections=[...document.querySelectorAll('main section')];const navLinks=[...document.querySelectorAll('#sectionNav a')];let scheduled=false;
+function updateReading(){const denominator=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('readingProgress').style.width=(denominator>0?window.scrollY/denominator*100:0)+'%';let current='';for(const section of sections){if(section.getBoundingClientRect().top<150)current=section.id}navLinks.forEach(link=>{const active=link.hash==='#'+current;link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')});scheduled=false}
+window.addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(updateReading)}},{passive:true});window.addEventListener('resize',updateReading);updateReading();
+</script>
+</body>
+</html>

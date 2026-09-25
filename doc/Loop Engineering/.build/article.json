@@ -1,0 +1,2146 @@
+{
+  "code": 200,
+  "message": "OK",
+  "tweet": {
+    "url": "https://x.com/AnatoliKopadze/status/2068328135611822149",
+    "id": "2068328135611822149",
+    "text": "",
+    "raw_text": {
+      "text": "https://t.co/eq0oL4fIaR",
+      "display_text_range": [
+        0,
+        23
+      ],
+      "facets": []
+    },
+    "author": {
+      "screen_name": "AnatoliKopadze",
+      "url": "https://x.com/AnatoliKopadze",
+      "id": "839423932184870914",
+      "followers": 152660,
+      "following": 1803,
+      "likes": 43446,
+      "media_count": 3844,
+      "name": "Anatoli Kopadze",
+      "description": "Adapt or die",
+      "raw_description": {
+        "text": "Adapt or die",
+        "facets": []
+      },
+      "location": "",
+      "banner_url": "https://pbs.twimg.com/profile_banners/839423932184870914/1678485740",
+      "avatar_url": "https://pbs.twimg.com/profile_images/1634313760444751873/QfwY91Hp_200x200.jpg",
+      "joined": "Wed Mar 08 10:33:55 +0000 2017",
+      "protected": false,
+      "website": {
+        "url": "https://t.me/kopadzemp",
+        "display_url": "t.me/kopadzemp"
+      },
+      "verification": {
+        "verified": true,
+        "verified_at": null,
+        "type": "individual"
+      },
+      "avatar_color": null
+    },
+    "replies": 213,
+    "retweets": 1329,
+    "likes": 8708,
+    "bookmarks": 34577,
+    "quotes": 264,
+    "created_at": "Sat Jun 20 13:40:29 +0000 2026",
+    "created_timestamp": 1781962829,
+    "possibly_sensitive": false,
+    "views": 24042401,
+    "is_note_tweet": false,
+    "community_note": null,
+    "lang": null,
+    "replying_to": null,
+    "replying_to_status": null,
+    "source": "Twitter Web App",
+    "article": {
+      "created_at": "2026-06-20T13:40:29Z",
+      "modified_at": "2026-06-20T13:40:29Z",
+      "id": "2068024770029932544",
+      "title": "Loops explained: Claude, GPT, Mira and what actually works",
+      "preview_text": "AI has been in everyone's hands for years. Most people who use it every day still use it the slowest way there is: type a request, wait, fix it, ask again, all by hand.\nNot because the faster way is",
+      "cover_media": {
+        "id": "QXBpTWVkaWE6DAAFCgABHLQR6x3WgAAKAAILpjuebddAAgAA",
+        "media_id": "2068297830385483776",
+        "media_info": {
+          "__typename": "ApiImage",
+          "color_info": {
+            "palette": [
+              {
+                "percentage": 97.3,
+                "rgb": {
+                  "blue": 243,
+                  "green": 245,
+                  "red": 246
+                }
+              },
+              {
+                "percentage": 2.08,
+                "rgb": {
+                  "blue": 137,
+                  "green": 138,
+                  "red": 138
+                }
+              },
+              {
+                "percentage": 0.37,
+                "rgb": {
+                  "blue": 160,
+                  "green": 193,
+                  "red": 242
+                }
+              },
+              {
+                "percentage": 0.15,
+                "rgb": {
+                  "blue": 248,
+                  "green": 224,
+                  "red": 172
+                }
+              }
+            ]
+          },
+          "original_img_height": 760,
+          "original_img_url": "https://pbs.twimg.com/media/HLQR6x3WgAAoX0v.jpg",
+          "original_img_width": 1900
+        },
+        "media_key": "3_2068297830385483776"
+      },
+      "content": {
+        "blocks": [
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 0,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "2lqj5",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "fhe1q",
+            "text": "AI has been in everyone's hands for years. Most people who use it every day still use it the slowest way there is: type a request, wait, fix it, ask again, all by hand.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "9ac2q",
+            "text": "Not because the faster way is complicated, because nobody showed them what it looks like.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "8s89k",
+            "text": "The faster way is a loop, and right now it is the one thing the best AI engineers in the world care about. This article fixes the part nobody explained. \n\nBy the end you will understand loops better than almost anyone on your timeline: what they are, how they actually work under the hood, when they are worth it and when they are a trap, how to build a basic one yourself in Claude or ChatGPT, the simple ones worth running in your own life.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 1,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "4qcnm",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "frul",
+            "text": "Before we get into it, follow me on X and join my Telegram channel I just created where I post more AI content every day. Both are free.",
+            "type": "unstyled"
+          },
+          {
+            "data": {
+              "urls": [
+                {
+                  "fromIndex": 4,
+                  "text": "https://x.com/AnatoliKopadze",
+                  "toIndex": 32
+                }
+              ]
+            },
+            "entityRanges": [
+              {
+                "key": 2,
+                "length": 28,
+                "offset": 4
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "39c8i",
+            "text": "X - https://x.com/AnatoliKopadze",
+            "type": "unstyled"
+          },
+          {
+            "data": {
+              "urls": [
+                {
+                  "fromIndex": 11,
+                  "text": "https://t.me/kopadzemp",
+                  "toIndex": 33
+                }
+              ]
+            },
+            "entityRanges": [
+              {
+                "key": 3,
+                "length": 22,
+                "offset": 11
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "dqa6i",
+            "text": "Telegram - https://t.me/kopadzemp",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 4,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "1lnv6",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "166s7",
+            "text": "How most people use AI?",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "abjf",
+            "text": "Look closely at the one-request-at-a-time habit, because it is the whole problem. Every step runs through you. You decide what to ask, you judge the answer, you decide what comes next. The AI never moves unless you push it, and the moment you stop, it stops.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "b6kkq",
+            "text": "This is fine, but it has a ceiling. You are the engine. The AI is only the tool in your hand, and a tool does nothing on its own.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "der0q",
+            "text": "There is another way to work, and it is the reason the best engineers in the world are changing how they build. Instead of walking the AI through every step, you give it the goal once and let it run the steps itself. It plans, does the work, checks its own result, fixes what is weak, and repeats until the goal is met. You step out. The work keeps going.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 5,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "2ko2o",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 6,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "9j6rf",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 7,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "co8am",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 8,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "1sis1",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 9,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "apaf6",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "4717l",
+            "text": "Two of the most respected engineers, saying the same thing in different words. Most people read lines like these and quietly had no idea what they meant in practice. So let's break it down properly.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 10,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "ce8sm",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "7c2sr",
+            "text": "What a loop is?",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "77fn7",
+            "text": "A prompt is a single instruction. A loop is a goal the AI keeps working toward until it gets there. Think of it as a recursive goal: you define a purpose, and the AI iterates until it is complete.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "bkc88",
+            "text": "A prompt gives you one answer and then waits for you to decide what is next. A loop runs the full cycle on its own:",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 11,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "7qqfm",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "f1g61",
+            "text": "Three of these five do all the real work, and they are where people get loops wrong.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 12,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "287o",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 32,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "9dpjb",
+            "text": "Verify is the heart of the loop. Without a real check on the result, you do not have a loop, you have the agent agreeing with itself on repeat. The check is what turns repetition into progress. It can be a hard test (\"does the code pass\"), a measurable condition (\"is the number above X\"), or a rubric the model scores against. No gate means the agent grades its own homework, and the model that did the work is far too generous a grader.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 35,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "8ncpv",
+            "text": "State is what makes the loop learn. Each pass, the AI has to remember what it already tried, or it repeats the same mistake forever. A real loop keeps a small record on the side: what is done, what failed, what is next. Tomorrow's run resumes instead of starting from zero. This is also exactly where it starts getting expensive, which we will get to.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 39,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "dt42v",
+            "text": "A stop condition is what keeps it sane. A loop with no exit runs until it succeeds, breaks, or drains your account. Every serious loop has two ways to stop: success, and a hard limit (\"after 8 tries, stop and report\"). Skip this and you have built a machine that can run all night for nothing.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "7s3fk",
+            "text": "A prompt hands the AI an instruction. A loop hands the AI a job, a way to know when the job is done, and a rule for when to give up.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 13,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "csu6v",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "4u3er",
+            "text": "Do you even need one?",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "8vbuq",
+            "text": "Most articles sell you the loop before they tell you when it is a mistake. Here is the test the serious people actually use. A loop is worth building only when all four of these are true:",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 34,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "cufup",
+            "text": "The task repeats, at least weekly. Less than that and the setup cost never pays itself back. A one-off is still better served by one good prompt.",
+            "type": "unordered-list-item"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 46,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "k75p",
+            "text": "Something can automatically reject bad output. A test, a type check, a build, a linter, a hard rule. If nothing can fail the work for you, the loop just spins.",
+            "type": "unordered-list-item"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 42,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "ddiss",
+            "text": "The agent can actually do the work itself, end to end, not hand half of it back to you.",
+            "type": "unordered-list-item"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 41,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "1vftd",
+            "text": "\"Done\" is objective, not a judgment call. If quality is a matter of taste, a human still wins.",
+            "type": "unordered-list-item"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 66,
+                "offset": 159,
+                "style": "Bold"
+              }
+            ],
+            "key": "2skfn",
+            "text": "Miss one box, keep it as a manual prompt. The honest version of this whole topic: loop engineering is real, and most people do not need the heavy version yet. What everyone can use is the light version, which we will get to. But you should know where the line is.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 14,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "fvjpu",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "ckpeb",
+            "text": "The version built for code",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "3eoqm",
+            "text": "Loops took off in software first, because code is the easiest thing in the world to verify. A test passes or it fails. There is no arguing with it, so the AI always knows whether it is finished.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "bduii",
+            "text": "A coding loop is given a goal and a strict way to check it:",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 15,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "cmu2h",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "g0uf",
+            "text": "Under the hood, a real loop is assembled from five building blocks. Claude Code and Codex now ship all five.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 16,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [
+              {
+                "length": 1,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "a27j7",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 33,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "6424e",
+            "text": "1. The automation (the heartbeat)",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 5,
+                "offset": 182,
+                "style": "Italic"
+              },
+              {
+                "length": 5,
+                "offset": 221,
+                "style": "Italic"
+              }
+            ],
+            "key": "7du7g",
+            "text": "This is the trigger that makes it a loop and not a one-off you ran once. You define a prompt, a cadence, and a goal, and it runs on schedule without you starting it. In Claude Code, /loop re-runs a prompt on an interval, /goal keeps a session going until a condition you wrote is actually true, hooks fire commands at points in the agent's lifecycle, and pushing it to a cron job or GitHub Actions keeps it running after you close the laptop. Findings come to you. You are not the one going around checking.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 17,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "at8r0",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 36,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "alr4d",
+            "text": "2. The skill (reusable instructions)",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "7icci",
+            "text": "Instead of pasting a wall of instructions into every run, you save them once as a file the loop reads every time: the rules, the patterns to follow, and a hard list of what it must never touch. Now the automation just calls the skill by name, and the recurring job stays maintainable instead of rotting inside a schedule nobody updates.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 18,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "2iqfc",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 52,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "af62t",
+            "text": "3. Sub-agents (keep the maker away from the checker)",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "effpt",
+            "text": "The single most useful structural trick in a loop is splitting the agent that does the work from the agent that checks it. The model that wrote the code is too nice grading its own homework. A second agent, with different instructions and sometimes a stronger model on higher effort, catches the things the first one talked itself into. Your writer can be fast and cheap, your reviewer slow and strict. That separation is most of the quality.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 19,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "1gq8c",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 40,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "7tlkn",
+            "text": "4. Connectors (so it acts, not suggests)",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "5gcta",
+            "text": "This is the difference between an agent that says \"here is the fix\" and a loop that opens the pull request, links the ticket, and pings the channel once the build is green, by itself. Connectors are what let the loop act inside your real environment instead of just describing what it would do if it could.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 20,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "dv1k1",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 26,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "2468e",
+            "text": "5. The verifier (the gate)",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "b62ks",
+            "text": "The test, type check, or build that automatically rejects bad work. This is the one block that decides whether the loop helps you or just spends your money. Everything else is plumbing. This is the part that makes it real.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "fig34",
+            "text": "Stack those together and you get what big teams now run at scale: fleets of agents looping on the same job, dozens or thousands at once. One engineer used a loop like this to rewrite an entire codebase from one programming language to another in about six days, work that would have taken close to a year by hand. It is a genuine change in how serious software gets built. And it comes with a catch the demos never show.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 21,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "ak3d9",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "6v1ij",
+            "text": "The cost nobody mentions",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "50eho",
+            "text": "Loops run on tokens, and tokens are money. The problem is not that each step costs something. The problem is how the cost compounds.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "flqge",
+            "text": "Every time the loop goes around, the agent re-reads its context: the goal, the code, the last result, what failed. That whole pile is sent through the model again on every iteration, and it grows each pass. A loop that runs ten times does not cost ten prompts. It costs ten prompts that each keep getting bigger. The maker-and-checker trick that lifts quality also doubles the bill, because now two models read the work instead of one.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 22,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "onqo",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 23,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "f6cfu",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 24,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "8528h",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "1qr1m",
+            "text": "The metric that actually matters, and almost nobody tracks, is cost per accepted change. Not tokens spent or loops run. If the loop gives you ten results and you toss six, you are doing the review work it was meant to save. Below a 50% accept rate, it costs more than it gives back.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "54s5i",
+            "text": "Loops also fail quietly. Engineer Geoffrey Huntley calls it the \"Ralph Wiggum loop\": the agent decides it is done too early, exits on a half-finished job, and the loop keeps running and spending while producing nothing. Without a hard gate that can fail the work, loops do not crash, they bill you in silence.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "flvrc",
+            "text": "That is why the heavy version belongs to teams with the budget and guardrails to run it: iteration caps, token budgets, cheap models on the boring steps, monitoring. If that is not you, you are not missing out, the core idea works at a fraction of the cost and none of the setup.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 25,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "3qlbk",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "ft8ad",
+            "text": "The order that actually works",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "8rj2l",
+            "text": "If you do build one, the order matters more than the tools. The people who ship loops that survive in production all do it the same way:",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 26,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "cglv4",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "eek45",
+            "text": "Skipping ahead, scheduling something you have not made reliable by hand, is exactly how loops blow up while you sleep. Prove it once, harden it, then automate it.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 27,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "8b70d",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "2v620",
+            "text": "Build a basic loop yourself (any LLM)",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "2n2n1",
+            "text": "You do not need a coding agent to feel how this works. You can run a simple loop by hand inside any LLM right now, with nothing but a prompt. The trick is to give the model all three loop parts at once: a goal, strict success criteria, and a protocol that forces it to check itself before it is allowed to stop.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 28,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "acspf",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "el06o",
+            "text": "Watch what happens. The model drafts, grades its own work against your criteria, finds the weak spot, and rewrites, over and over, until it actually clears the bar instead of handing you the first thing that looked close. That is a loop. You just built one with a paragraph.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "4t9go",
+            "text": "But notice what is still missing, because it is the whole point of what comes next. You are the trigger. You opened the chat, you pasted the prompt, you are sitting there watching it iterate. Close the tab and it is gone. There is no schedule. There is no \"do this every morning,\" no \"wake up when an email arrives.\" It cannot reach out to you, because it only exists while you are looking at it.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "fre1s",
+            "text": "To get a loop that runs on its own, on a schedule, triggered by real events, without you babysitting it, you normally have to step into the heavy world from earlier: tools, hosting, code, gates, and a bill. ",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "7es9n",
+            "text": "That makes sense when you are tackling genuinely heavy tasks. But for 99% of everyday ones, there is already a ready, dead-simple solution.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 29,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "ffoce",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "742nd",
+            "text": "The same idea, for your actual life",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "8m3mf",
+            "text": "Strip away the code and the cost, and what is left is one simple, genuinely useful concept: a task that runs itself, on a schedule or the moment something happens, with no need for you to remember it or be there. You do not need to be an engineer for that. You just need loops built for life instead of for codebases.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "ffh6j",
+            "text": "There is a free option where you create one by describing it in plain words. No code, no hosting, no keys, no tab to keep open, no build order to get wrong.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "323ui",
+            "text": "It is called Mira, and it lives inside Telegram, the app you probably already have open. You message it like a friend, and the loops it runs are called Skills. Every Skill quietly has the same parts a real loop needs, a trigger, an action, a way to run by itself, except you never wire any of them together. You just say what you want.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 30,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "1rhjb",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 31,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "atohf",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 32,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "4lllv",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "fbdm8",
+            "text": "That is a real loop. A time trigger, a multi-step action across two connected apps, running on its own and coming to you. You wrote it as one message.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 33,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "fbei5",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "4d1le",
+            "text": "What Mira can actually do",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "1bb7g",
+            "text": "Here is the part that makes it click. Mira is not a smarter chatbot. The difference from ChatGPT is simple: ChatGPT answers, Mira acts. You do not ask it to write the email, you tell it to send the email. You do not get a draft ticket, you get a real one in Linear with the owner assigned. It does the thing, in the background, and it remembers you between every conversation.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "9p6ph",
+            "text": "It connects to 500+ apps through Composio (Notion, Gmail, Google Calendar, GitHub, Figma, Stripe and hundreds more), it has long-term memory that holds across sessions and group chats, and it is model-agnostic, running GPT, Claude, Gemini depending on the task. Here is what that turns into.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 34,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "feii8",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 9,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "1vnhq",
+            "text": "For work\nThis is where the loops idea pays off without a single line of code.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 35,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "69hqv",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "c0ml6",
+            "text": "It catches you up on a 200-message thread in seconds, files the ticket while you keep talking, and walks into meetings already briefed. In group chats it remembers the team's decisions and tasks, not just yours.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 36,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "nf1q",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 13,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "1m2je",
+            "text": "For creators\nThis is the part most people underrate. Mira makes content end to end, inside the chat.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 37,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "cg31l",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "g33i",
+            "text": "Voice note in, finished post out in about thirty seconds. One brief becomes six platform-native versions. It generates images and video right in the chat, edits photos, swaps backgrounds, builds mascots and avatars, even lip-syncs and animates them. The whole content pipeline lives in one window.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 38,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "as6aa",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 10,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "2hocb",
+            "text": "For voice\nMira treats voice as a first-class input, which matters more than it sounds.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 39,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "a1ibm",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "brrqu",
+            "text": "It transcribes your voice messages, reads text back to you, understands voice notes inside group chats and summarizes the discussion, and works as a hands-free voice assistant when you cannot type.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 40,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "f2s1c",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [
+              {
+                "length": 14,
+                "offset": 0,
+                "style": "Bold"
+              }
+            ],
+            "key": "co92i",
+            "text": "For your life\nThe same engine, pointed at everything else.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 41,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "clns7",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "3s4d3",
+            "text": "A coach that holds you to a streak. A journal that actually remembers you and becomes a check-in companion over time. Calorie tracking from a photo, no separate app. Language practice built from your own mistakes. A flight watcher that buys when the price is right. A daily digest with the clickbait stripped out.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 42,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "cja45",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "a61p2",
+            "text": "How to start in two minutes",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 43,
+                "length": 4,
+                "offset": 21
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "bdcsh",
+            "text": "Open Telegram. Go to Mira. Send it a message. Free access works immediately. Try one of these first:",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 44,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "esnf2",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "41v9i",
+            "text": "Any example in this article becomes a running loop the moment you type it.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 45,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "7imla",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "2fc92",
+            "text": "What this actually means for you",
+            "type": "header-two"
+          },
+          {
+            "data": {},
+            "entityRanges": [],
+            "inlineStyleRanges": [],
+            "key": "71v7o",
+            "text": "Loops are not a trend. They are a shift in who does the work. The AI stops waiting for you to push it through every step and starts running the whole job on its own.\n\nThat said, this isn't something to chase or force into places it doesn't belong. More often than not, you will just burn money for nothing. \n\nMy take: start by using what's already there for free, and only once you actually feel that it isn't enough should you start thinking about what you truly need.",
+            "type": "unstyled"
+          },
+          {
+            "data": {},
+            "entityRanges": [
+              {
+                "key": 46,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "cau6p",
+            "text": " ",
+            "type": "atomic"
+          },
+          {
+            "data": {
+              "urls": [
+                {
+                  "fromIndex": 98,
+                  "text": "https://x.com/AnatoliKopadze",
+                  "toIndex": 126
+                },
+                {
+                  "fromIndex": 139,
+                  "text": "https://t.me/kopadzemp",
+                  "toIndex": 161
+                }
+              ]
+            },
+            "entityRanges": [
+              {
+                "key": 47,
+                "length": 28,
+                "offset": 98
+              },
+              {
+                "key": 48,
+                "length": 22,
+                "offset": 139
+              }
+            ],
+            "inlineStyleRanges": [],
+            "key": "55ndm",
+            "text": "If you want to stay up to date with everything happening in AI, follow me on X and Telegram:\n\nX - https://x.com/AnatoliKopadze\n\nTelegram - https://t.me/kopadzemp",
+            "type": "unstyled"
+          }
+        ],
+        "entityMap": [
+          {
+            "key": "45",
+            "value": {
+              "data": {
+                "entityKey": "17c4ee24-844d-49fd-b0a9-304e3a4d4e36"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "34",
+            "value": {
+              "data": {
+                "entityKey": "ee936b85-73f6-4622-8489-05d9de242ced"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "12",
+            "value": {
+              "data": {
+                "entityKey": "42a7dc7a-acb1-4020-a773-ffef1dc051f9"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "8",
+            "value": {
+              "data": {
+                "entityKey": "db5b61f5-be7b-425f-9c0a-063eae188ad4",
+                "mediaItems": [
+                  {
+                    "localMediaId": "1",
+                    "mediaCategory": "AmplifyVideo",
+                    "mediaId": "2068028099128643584"
+                  }
+                ]
+              },
+              "mutability": "Immutable",
+              "type": "MEDIA"
+            }
+          },
+          {
+            "key": "19",
+            "value": {
+              "data": {
+                "entityKey": "fbdf1669-4faa-481c-a946-37b03eb8a6e6"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "23",
+            "value": {
+              "data": {
+                "entityKey": "976c0d63-af6e-4cab-8dc6-cbe8e4e47e4f",
+                "markdown": "```\n▸ ROUGH COST OF ONE LOOP\nsingle agent, one medium task:      ~50,000 – 200,000 tokens\ncontext re-sent every iteration:    grows each pass\na fleet of agents in parallel:      multiply all of the above\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "4",
+            "value": {
+              "data": {
+                "entityKey": "9114f9ee-9188-47ab-af81-4d3aabe53347"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "40",
+            "value": {
+              "data": {
+                "entityKey": "51e418ed-17b0-48db-927d-d8cac564d8f0"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "15",
+            "value": {
+              "data": {
+                "entityKey": "98fbcc9f-7a66-4002-9321-ea72cf500c5c",
+                "markdown": "```\n▸ LOOP SPEC\nGOAL: every test in /tests/auth passes, lint is clean, no type errors.\n\nEACH ITERATION:\n  1. run the test suite and read every failure\n  2. pick the single highest-impact failure\n  3. write the smallest change that fixes it\n  4. re-run the tests, lint, and type checker\n\nVERIFY: green tests + zero lint warnings + zero type errors\nSTOP WHEN: verify passes, OR 8 iterations reached\nON STOP: summarize what changed and what still fails\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "11",
+            "value": {
+              "data": {
+                "entityKey": "ac617c33-a66b-4e4a-9e05-977c226d2a32",
+                "markdown": "```\nDISCOVER  →  work out what needs doing\nPLAN      →  decide how to do it\nEXECUTE   →  do the work\nVERIFY    →  check it against the goal\nITERATE   →  not there yet? feed the result back in and repeat\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "9",
+            "value": {
+              "data": {
+                "entityKey": "e937cc38-e300-4742-9319-7f993cc4bcd4"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "44",
+            "value": {
+              "data": {
+                "entityKey": "83b5b12f-edf3-4558-9077-1504f68a1609",
+                "markdown": "```\n@mira, plan my week\n@mira, summarize this chat\n@mira, remind me to review PRs every Monday at 9am\n@mira, write a post about [topic] for X and Instagram\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "33",
+            "value": {
+              "data": {
+                "entityKey": "25bab8c7-71c8-4639-9496-b7d466825832"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "22",
+            "value": {
+              "data": {
+                "entityKey": "2d2a5208-2b2b-43bc-bc4c-d9aea627e56c"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "26",
+            "value": {
+              "data": {
+                "entityKey": "efa656ec-9534-409b-b90f-bf38fc86462e",
+                "markdown": "```\n1. Get ONE manual run reliable first.\n2. Turn that into a skill (save the instructions).\n3. Wrap the skill in a loop (add the gate + stop condition).\n4. THEN put it on a schedule.\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "37",
+            "value": {
+              "data": {
+                "entityKey": "6aa27d9b-fdcb-4943-a288-81d52a7305a8",
+                "markdown": "```\n▸ SKILLS\n\"I'll send a voice note with a raw idea. Turn it into a finished\npost with a caption and hashtags.\"\n\n\"Take this one idea and write versions for X, Instagram, LinkedIn,\nEmail, and a newsletter, each in the right format.\"\n\n\"Generate 3 image options for this post.\"\n\n\"Turn this image into a short video for my Telegram channel.\"\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "13",
+            "value": {
+              "data": {
+                "entityKey": "3de89842-7a67-413d-9392-c30adfa79c77"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "46",
+            "value": {
+              "data": {
+                "entityKey": "c9a640f2-af3a-4f7e-973e-922d62e550e5"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "24",
+            "value": {
+              "data": {
+                "entityKey": "61afea3d-1ca6-4304-8f6b-af101a63f37d"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "35",
+            "value": {
+              "data": {
+                "entityKey": "b5bf863d-9660-4152-a439-3e81e9c5d2fe",
+                "markdown": "```\n▸ SKILLS\n\"An hour before each meeting, remind me with the context and\ndecisions from our last conversation with that person.\"\n\n\"When I forward a message here, turn it into a Linear ticket\nwith the right priority and assign the owner.\"\n\n\"Every Friday at 4pm, collect the team's task status and metrics\nand post a clean weekly digest in our chat.\"\n\n\"Summarize everything I missed in this group chat while I was\naway, in 5 bullets.\"\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "16",
+            "value": {
+              "data": {
+                "entityKey": "4e4c9575-8676-4697-96fd-6949c3e25a57"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "5",
+            "value": {
+              "data": {
+                "entityKey": "db5a3d14-f5bf-4438-8814-8cb886b433b3"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "10",
+            "value": {
+              "data": {
+                "entityKey": "65b2a9fd-d311-4633-b1f4-5334cfcd8051"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "48",
+            "value": {
+              "data": {
+                "entityKey": "0ea8bea5-9a45-432d-b6f8-90d93466ad8c",
+                "url": "https://t.me/kopadzemp"
+              },
+              "mutability": "Mutable",
+              "type": "LINK"
+            }
+          },
+          {
+            "key": "21",
+            "value": {
+              "data": {
+                "entityKey": "197731c4-8e36-47d8-ac42-74f0c4c9ae97"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "43",
+            "value": {
+              "data": {
+                "url": "https://t.me/mira?start=social_x_200626_howtostart"
+              },
+              "mutability": "Mutable",
+              "type": "LINK"
+            }
+          },
+          {
+            "key": "32",
+            "value": {
+              "data": {
+                "entityKey": "c1ca85ef-4748-4ece-9115-f64e9944d0a2"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "6",
+            "value": {
+              "data": {
+                "entityKey": "f6751d57-554f-4e59-bd1f-cf751ba0259c",
+                "tweetId": "2063697162748260627"
+              },
+              "mutability": "Immutable",
+              "type": "TWEET"
+            }
+          },
+          {
+            "key": "36",
+            "value": {
+              "data": {
+                "entityKey": "10f6c463-55df-4f3e-9d26-050a4a419038"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "1",
+            "value": {
+              "data": {
+                "entityKey": "a2eb154c-0db4-4628-8600-a122b7d557b0"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "39",
+            "value": {
+              "data": {
+                "entityKey": "146fbbd8-230c-4739-93ec-f794e12044b4",
+                "markdown": "```\n▸ SKILLS\n\"Transcribe my voice messages into clean text.\"\n\"Read this article back to me as audio.\"\n\"Summarize the voice notes in this group chat into key points.\"\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "17",
+            "value": {
+              "data": {
+                "entityKey": "38024abf-e262-4973-b603-3111141bff88"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "25",
+            "value": {
+              "data": {
+                "entityKey": "f43e33fd-7384-461d-8e93-e6ec902f9a2f"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "14",
+            "value": {
+              "data": {
+                "entityKey": "52cfde8c-f002-4fa4-9fef-9b14727810fb"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "47",
+            "value": {
+              "data": {
+                "entityKey": "71fe8328-fd8b-4d5e-adf2-d1f02cdd6541",
+                "url": "https://x.com/AnatoliKopadze"
+              },
+              "mutability": "Mutable",
+              "type": "LINK"
+            }
+          },
+          {
+            "key": "31",
+            "value": {
+              "data": {
+                "entityKey": "f2db832c-90dc-4513-abb4-54276678798c",
+                "markdown": "```\n▸ SKILL\n\"Every weekday at 7am, check my Gmail and Google Calendar.\nSend me a short brief: my 3 most important meetings, anything\nurgent in the inbox, and one thing I said I'd follow up on but\nhaven't. Keep it under 120 words.\"\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "42",
+            "value": {
+              "data": {
+                "entityKey": "ee972732-6cc3-405d-aac0-cbf482eca8a9"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "0",
+            "value": {
+              "data": {
+                "entityKey": "61ecba65-26e1-4010-8c0c-e4928b5066b9"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "20",
+            "value": {
+              "data": {
+                "entityKey": "641ff241-4e4a-4433-883d-7f56a728a577"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "27",
+            "value": {
+              "data": {
+                "entityKey": "5f504acb-b941-4638-bd64-76347b686d71"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "2",
+            "value": {
+              "data": {
+                "entityKey": "a1faf713-998e-41ae-90ae-a05f1b56667e",
+                "url": "https://x.com/AnatoliKopadze"
+              },
+              "mutability": "Mutable",
+              "type": "LINK"
+            }
+          },
+          {
+            "key": "38",
+            "value": {
+              "data": {
+                "entityKey": "dbcb945e-1ed3-471b-98c5-11280b62f5a6"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "18",
+            "value": {
+              "data": {
+                "entityKey": "10900713-faa9-48bd-b4a9-9ebd020d7c85"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "30",
+            "value": {
+              "data": {
+                "entityKey": "575a1ead-e057-450a-8d22-d38db893c15c"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "7",
+            "value": {
+              "data": {
+                "entityKey": "5e97d06d-ec7f-499a-9c41-0a8599edb1e9"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "29",
+            "value": {
+              "data": {
+                "entityKey": "993bc8c8-346c-4178-9e18-c69bde8dd845"
+              },
+              "mutability": "Immutable",
+              "type": "DIVIDER"
+            }
+          },
+          {
+            "key": "41",
+            "value": {
+              "data": {
+                "entityKey": "efe980d5-819d-45ea-9b74-bad710150e3e",
+                "markdown": "```\n▸ SKILLS\n\"Every evening at 7, ask if I trained today. Keep a streak and\ndon't let me quietly skip more than one day.\"\n\n\"Every night, ask me 3 questions about my day, remember the\nanswers, and once a week tell me what changed.\"\n\n\"Track my calories from a photo of my plate.\"\n\n\"Watch this flight route and buy when the price drops to my number.\"\n\n\"Every morning, give me a no-clickbait news digest on my topics.\"\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          },
+          {
+            "key": "3",
+            "value": {
+              "data": {
+                "entityKey": "f0fc5850-fa6d-43e1-9109-77b712e677d7",
+                "url": "https://t.me/kopadzemp"
+              },
+              "mutability": "Mutable",
+              "type": "LINK"
+            }
+          },
+          {
+            "key": "28",
+            "value": {
+              "data": {
+                "entityKey": "295dd93b-141f-4998-ae6a-85a49d46b7b4",
+                "markdown": "```\n▸ SELF-CHECKING LOOP  (paste into Claude or ChatGPT)\nYou will work in a loop until the task meets the bar.\n\nTASK:\n[describe exactly what you want produced]\n\nSUCCESS CRITERIA (be strict, no soft passes):\n- [criterion 1]\n- [criterion 2]\n- [criterion 3]\n\nLOOP PROTOCOL, repeat every turn:\n1. PLAN   - state the single next step.\n2. DO     - produce or improve the work.\n3. VERIFY - score the result 1-10 on each criterion.\n            Be brutally honest. List exactly what is still weak.\n4. DECIDE - if every criterion is 8+, print \"FINAL\" and stop.\n            Otherwise print \"ITERATING\" and go again, fixing\n            the weakest point first.\n\nRULES:\n- Never call it done until every criterion is 8 or higher.\n- Each pass must fix the weakest score from the last VERIFY.\n- Do not ask me questions. Make a sensible assumption, note it,\n  and keep going.\n\nBegin. Run the loop until FINAL.\n```"
+              },
+              "mutability": "Mutable",
+              "type": "MARKDOWN"
+            }
+          }
+        ]
+      },
+      "media_entities": [
+        {
+          "id": "QXBpTWVkaWE6DAAECgABHLMcmWoW0AAKAAIAAAAAAAAAAAAA",
+          "media_id": "2068028099128643584",
+          "media_info": {
+            "__typename": "ApiVideo",
+            "aspect_ratio": {
+              "denominator": 9,
+              "numerator": 16
+            },
+            "duration_millis": 7800,
+            "preview_image": {
+              "color_info": {
+                "palette": [
+                  {
+                    "percentage": 34.26,
+                    "rgb": {
+                      "blue": 157,
+                      "green": 104,
+                      "red": 74
+                    }
+                  },
+                  {
+                    "percentage": 24.18,
+                    "rgb": {
+                      "blue": 27,
+                      "green": 34,
+                      "red": 36
+                    }
+                  },
+                  {
+                    "percentage": 18.03,
+                    "rgb": {
+                      "blue": 137,
+                      "green": 108,
+                      "red": 47
+                    }
+                  },
+                  {
+                    "percentage": 5.2,
+                    "rgb": {
+                      "blue": 30,
+                      "green": 62,
+                      "red": 85
+                    }
+                  },
+                  {
+                    "percentage": 2.93,
+                    "rgb": {
+                      "blue": 77,
+                      "green": 126,
+                      "red": 183
+                    }
+                  }
+                ]
+              },
+              "original_img_height": 1080,
+              "original_img_url": "https://pbs.twimg.com/amplify_video_thumb/2068028099128643584/img/WqoEwyrbdk15hRD7.jpg",
+              "original_img_width": 1920
+            },
+            "variants": [
+              {
+                "bit_rate": 832000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/amplify_video/2068028099128643584/vid/avc1/640x360/dE2kemnXZjEyjnYm.mp4?tag=28"
+              },
+              {
+                "bit_rate": 2176000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/amplify_video/2068028099128643584/vid/avc1/1280x720/345qCv226Ez39QVE.mp4?tag=28"
+              },
+              {
+                "content_type": "application/x-mpegURL",
+                "url": "https://video.twimg.com/amplify_video/2068028099128643584/pl/4o8RPC9pLZkIAcRr.m3u8?tag=28"
+              },
+              {
+                "bit_rate": 10368000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/amplify_video/2068028099128643584/vid/avc1/1920x1080/-u4J_SkkHCrN4cVt.mp4?tag=28"
+              },
+              {
+                "bit_rate": 256000,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/amplify_video/2068028099128643584/vid/avc1/480x270/CfqX6EhQ9UDGzIjN.mp4?tag=28"
+              }
+            ]
+          },
+          "media_key": "13_2068028099128643584"
+        }
+      ]
+    },
+    "twitter_card": "tweet",
+    "color": null,
+    "provider": "twitter",
+    "reposted_by": null
+  }
+}

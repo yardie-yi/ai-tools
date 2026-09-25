@@ -1,0 +1,4 @@
+interface:
+  display_name: "头文件接口补录到飞书"
+  short_description: "从 C/C++ 头文件提取接口，按现有字段规范去重补录并回读核验"
+  default_prompt: "使用 $vehicle-interface-api 将指定头文件中缺失的公开接口补录到飞书多维表格的目标视图和功能域，沿用现有业务字段并核验结果。"

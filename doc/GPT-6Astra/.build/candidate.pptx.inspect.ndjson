@@ -1,0 +1,78 @@
+{"kind":"deck","id":"pr/oklrsl","name":"Deck"}
+{"kind":"layout","layoutId":"9954b823-9d6c-4ad0-b0be-332a1a079409","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"132ef048-9c81-4777-aff8-60349ba29b28","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/kb69oi","slide":1,"title":"GPT-6 Astra","textShapes":3}
+{"kind":"textbox","id":"sh/6143yp8v","slide":1,"text":"GPT-6 Astra\nPrompt 与 Skill 编写","textPreview":"GPT-6 Astra | Prompt 与 Skill 编写","textChars":29,"textLines":2,"bbox":[70,130,1140,200]}
+{"kind":"textbox","id":"sh/t4vm9kr6","slide":1,"text":"面向嵌入式开发的技术分享\n2026.09.09","textPreview":"面向嵌入式开发的技术分享 | 2026.09.09","textChars":23,"textLines":2,"bbox":[74,390,1125,460]}
+{"kind":"textbox","id":"sh/s3ml0fql","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/kb69oi","slide":1,"text":"把任务目标、授权范围和验收证据写清楚。约 20 分钟。"}
+{"kind":"slide","id":"sl/6c81mp","slide":2,"title":"Astra 的提示词调整重点","textShapes":3}
+{"kind":"textbox","id":"sh/1obahwrm","slide":2,"text":"Astra 的提示词调整重点","textPreview":"Astra 的提示词调整重点","textChars":14,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/elkr6h8v","slide":2,"text":"更容易澄清：说明哪些缺口可以合理假设\n更敏感地遵循文件：审计 Skill 与 AGENTS.md\n输出较详细：指定长度、结构和读者\n委派与验证：明确何时使用、何时结束","textPreview":"更容易澄清：说明哪些缺口可以合理假设 | 更敏感地遵循文件：审计 Skill 与 AGENTS.md | 输出较详细：指定长度、结构和读者 | 委派与验证：明确何时使用、何时结束","textChars":83,"textLines":4,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/fmtsfm9g","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/6c81mp","slide":2,"text":"官方指南描述以上行为趋势，具体效果需在自己的任务集上验证。来源：https://developers.openai.com/api/docs/guides/latest-model"}
+{"kind":"slide","id":"sl/n4s2px","slide":3,"title":"Prompt、项目规则与 Skill","textShapes":3}
+{"kind":"textbox","id":"sh/fepsz6x4","slide":3,"text":"Prompt、项目规则与 Skill","textPreview":"Prompt、项目规则与 Skill","textChars":18,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/gfy98bep","slide":3,"text":"Prompt：本次目标、输入、交付物与验收\nAGENTS.md：项目长期约定与构建入口\nSkill：某类任务可复用的操作流程\n工具：实际读取、修改、构建和验证能力","textPreview":"Prompt：本次目标、输入、交付物与验收 | AGENTS.md：项目长期约定与构建入口 | Skill：某类任务可复用的操作流程 | 工具：实际读取、修改、构建和验证能力","textChars":81,"textLines":4,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/1g7a1wfa","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/n4s2px","slide":3,"text":"工程实践建议。Skill 是宿主加载的工作流资料，不会因为切换模型自动安装，也不能创造不存在的工具权限。"}
+{"kind":"slide","id":"sl/6tcml3","slide":4,"title":"一个 Prompt 的六个要素","textShapes":3}
+{"kind":"textbox","id":"sh/7ydk3e9o","slide":4,"text":"一个 Prompt 的六个要素","textPreview":"一个 Prompt 的六个要素","textChars":15,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/szmlcjq9","slide":4,"text":"目标：要完成什么\n证据：日志、代码路径、环境与复现条件\n边界：允许改动的位置和操作\n自主性：哪些情况继续，哪些需要询问\n验收：成功条件、验证方法与停止条件\n输出：交付物、语言、长度和格式","textPreview":"目标：要完成什么 | 证据：日志、代码路径、环境与复现条件 | 边界：允许改动的位置和操作 | 自主性：哪些情况继续，哪些需要询问 | 验收：成功条件、验证方法与停止条件 | 输出：交付物、语言、长度和格式","textChars":93,"textLines":6,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/t0vm54ru","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/6tcml3","slide":4,"text":"六要素是本分享的工程整理，不是官方固定语法。普通中文、小标题或标签均可。"}
+{"kind":"slide","id":"sl/bkwvlg","slide":5,"title":"示例：串口丢包排查","textShapes":3}
+{"kind":"textbox","id":"sh/v61kjm1s","slide":5,"text":"示例：串口丢包排查","textPreview":"示例：串口丢包排查","textChars":9,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/g7alc7ix","slide":5,"text":"弱描述：帮我看看串口为什么丢包\n\n改写：依据给定日志和接收路径定位偶发丢包。\n先标出事实与假设，为每个假设给出验证动作。\n可读取代码并准备最小补丁，修改范围限接收模块。\n缺少硬件条件时提交验证步骤，不宣称板端通过。","textPreview":"弱描述：帮我看看串口为什么丢包 |  | 改写：依据给定日志和接收路径定位偶发丢包。 | 先标出事实与假设，为每个假设给出验证动作。 | 可读取代码并准备最小补丁，修改范围限接收模块。 | 缺少硬件条件时提交验证步骤，不宣称板端通过。","textChars":107,"textLines":6,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/h832lcji","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/bkwvlg","slide":5,"text":"教学场景，不代表已经观察到实际丢包或执行硬件测试。完整可复制版本见配套指南。"}
+{"kind":"slide","id":"sl/mti1mh","slide":6,"title":"授权范围与提问条件","textShapes":3}
+{"kind":"textbox","id":"sh/0z2xgzqh","slide":6,"text":"授权范围与提问条件","textPreview":"授权范围与提问条件","textChars":9,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/fytw7upw","slide":6,"text":"可自行决定：命名、局部实现、只读检索\n需要询问：目标有歧义，且不同答案改变结果\n先完成：已授权、可独立推进的准备工作\n到边界暂停：未经授权的发布、刷机或删除\n最终报告：完成项、证据、尚缺的验证","textPreview":"可自行决定：命名、局部实现、只读检索 | 需要询问：目标有歧义，且不同答案改变结果 | 先完成：已授权、可独立推进的准备工作 | 到边界暂停：未经授权的发布、刷机或删除 | 最终报告：完成项、证据、尚缺的验证","textChars":96,"textLines":5,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/exkfep8b","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/mti1mh","slide":6,"text":"工程建议：权限要按项目写实。Prompt 不会绕过系统、开发者指令或工具权限。"}
+{"kind":"slide","id":"sl/uhk2u0","slide":7,"title":"Skill 的职责边界","textShapes":3}
+{"kind":"textbox","id":"sh/xsjipwz2","slide":7,"text":"Skill 的职责边界","textPreview":"Skill 的职责边界","textChars":11,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/ap8zuhgr","slide":7,"text":"description：说明什么任务会触发\n输入：需要什么资料，缺失如何处理\n步骤：可执行动作与判断分支\n产出：固定交付格式与证据要求\n退出：完成条件、阻塞条件与交接内容","textPreview":"description：说明什么任务会触发 | 输入：需要什么资料，缺失如何处理 | 步骤：可执行动作与判断分支 | 产出：固定交付格式与证据要求 | 退出：完成条件、阻塞条件与交接内容","textChars":85,"textLines":5,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/vqh0nmhc","slide":7,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/uhk2u0","slide":7,"text":"工程设计建议。保持主文件聚焦，长参考资料与脚本分开存放，并仅在需要时读取。"}
+{"kind":"slide","id":"sl/77wi3g","slide":8,"title":"SKILL.md 教学骨架","textShapes":3}
+{"kind":"textbox","id":"sh/qxkzq9wz","slide":8,"text":"SKILL.md 教学骨架","textPreview":"SKILL.md 教学骨架","textChars":13,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/d0byl4fa","slide":8,"text":"---\nname: embedded-triage\ndescription: 用于嵌入式日志与代码排障。\n---\n读取现象、版本、复现条件和相关代码。\n把事实与假设分开，为假设安排验证动作。\n输出根因证据、最小修复建议和回归清单。","textPreview":"--- | name: embedded-triage | description: 用于嵌入式日志与代码排障。 | --- | 读取现象、版本、复现条件和相关代码。 | 把事实与假设分开，为假设安排验证动作。 | 输出根因证据、最小修复建议和回归清单。","textChars":115,"textLines":7,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/cz2hsze5","slide":8,"text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/77wi3g","slide":8,"text":"这是教学模板节选。需补充项目实际命令、权限边界和停止条件再投入使用。文件样式说明参见 https://developers.openai.com/codex/skills"}
+{"kind":"slide","id":"sl/11dm3v","slide":9,"title":"容易让任务停住的规则","textShapes":3}
+{"kind":"textbox","id":"sh/qdkbytoj","slide":9,"text":"容易让任务停住的规则","textPreview":"容易让任务停住的规则","textChars":10,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/dgbu9o7a","slide":9,"text":"“所有操作都先确认”\n改为：明确需要确认的具体操作与边界。\n\n“每次修改都跑全部测试”\n改为：按影响范围选测试，通过后按条件结束。\n\n“始终使用某工具”\n改为：工具存在且适用时使用，失败时报告替代路径。","textPreview":"“所有操作都先确认” | 改为：明确需要确认的具体操作与边界。 |  | “每次修改都跑全部测试” | 改为：按影响范围选测试，通过后按条件结束。 |  | “始终使用某工具” | 改为：工具存在且适用时使用，失败时报告替代路径。","textChars":101,"textLines":8,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/cf2t0j6p","slide":9,"text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/11dm3v","slide":9,"text":"基于工程经验构造的反例。Astra 对上下文指令敏感，因此值得检查旧模板中的绝对化规定。"}
+{"kind":"slide","id":"sl/p5dm3s","slide":10,"title":"带注释的排障伪代码","textShapes":3}
+{"kind":"textbox","id":"sh/wnqpkbqt","slide":10,"text":"带注释的排障伪代码","textPreview":"带注释的排障伪代码","textChars":9,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/vmxor698","slide":10,"text":"收集(现象, 版本, 日志)   // 固定复现边界\n核对(代码与日志对应关系) // 避免分析错误版本\n若缺少关键证据:          // 不用猜测补齐事实\n    输出(缺口, 最小采集步骤)\n否则:\n    排序(候选假设)        // 按证据与验证成本排序\n    验证(优先假设)        // 结果必须可以反驳假设\n    汇报(结论, 证据, 未验证项)","textPreview":"收集(现象, 版本, 日志)   // 固定复现边界 | 核对(代码与日志对应关系) // 避免分析错误版本 | 若缺少关键证据:          // 不用猜测补齐事实 |     输出(缺口, 最小采集步骤) | 否则: |     排序(候选假设)        /...","textChars":194,"textLines":8,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/ulo7i18n","slide":10,"text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/p5dm3s","slide":10,"text":"概念伪代码，不能直接编译或操作硬件。每个动作均说明目的。"}
+{"kind":"slide","id":"sl/ylbm11","slide":11,"title":"按风险安排验证","textShapes":3}
+{"kind":"textbox","id":"sh/0vqlkjel","slide":11,"text":"按风险安排验证","textPreview":"按风险安排验证","textChars":7,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/fuh4bed0","slide":11,"text":"文档调整：检查内容、链接和排版\n局部逻辑：相关单测与构建\n驱动或协议：异常路径与相关集成回归\n时序或中断：需要对应板卡与测量证据\n停止条件：必需检查通过，且无未处理风险","textPreview":"文档调整：检查内容、链接和排版 | 局部逻辑：相关单测与构建 | 驱动或协议：异常路径与相关集成回归 | 时序或中断：需要对应板卡与测量证据 | 停止条件：必需检查通过，且无未处理风险","textChars":84,"textLines":5,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/et83i9wf","slide":11,"text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/ylbm11","slide":11,"text":"工程建议，不是一套通用的固定测试命令。没有板卡时标注未执行板端验证，保留可复现操作步骤。"}
+{"kind":"slide","id":"sl/fcixdj","slide":12,"title":"多任务与中途补充要求","textShapes":3}
+{"kind":"textbox","id":"sh/mhor618r","slide":12,"text":"多任务与中途补充要求","textPreview":"多任务与中途补充要求","textChars":10,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/94fa1wr2","slide":12,"text":"并行条件：任务独立、工具可用、合并有收益\n分工信息：职责、输入、产出、禁止覆盖的文件\n中途纠正：说明新增条件及其影响范围\n保留状态：已完成工作、当前证据、剩余事项","textPreview":"并行条件：任务独立、工具可用、合并有收益 | 分工信息：职责、输入、产出、禁止覆盖的文件 | 中途纠正：说明新增条件及其影响范围 | 保留状态：已完成工作、当前证据、剩余事项","textChars":81,"textLines":4,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/oj698rqh","slide":12,"text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/fcixdj","slide":12,"text":"前两项是工程建议。官方介绍 Astra 的异步工具调用和中途 steering，但应用仍负责工具执行和状态管理。不能仅靠提示词实现。来源：https://developers.openai.com/api/docs/guides/latest-model"}
+{"kind":"slide","id":"sl/ztj4nj","slide":13,"title":"接入 API 时的核对项","textShapes":3}
+{"kind":"textbox","id":"sh/mp4f6h0b","slide":13,"text":"接入 API 时的核对项","textPreview":"接入 API 时的核对项","textChars":12,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/9svehcj2","slide":13,"text":"模型标识：gpt-6-astra\n工具调用：使用 Responses API\n推理强度：不支持 none，迁移时按指南核对\n移除不支持的 temperature、top_p、top_logprobs\n模型参数与提示词分别管理、分别验证","textPreview":"模型标识：gpt-6-astra | 工具调用：使用 Responses API | 推理强度：不支持 none，迁移时按指南核对 | 移除不支持的 temperature、top_p、top_logprobs | 模型参数与提示词分别管理、分别验证","textChars":117,"textLines":5,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/8rmx87ih","slide":13,"text":"13","textPreview":"13","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/ztj4nj","slide":13,"text":"官方 API 信息截至 2026-09-09。Chat Completions 还需移除 logprobs；Responses 的 include 不应请求 message.output_text.logprobs。来源：https://developers.openai.com/api/docs/guides/latest-model"}
+{"kind":"slide","id":"sl/s7v55n","slide":14,"title":"用小型任务集验证写法","textShapes":3}
+{"kind":"textbox","id":"sh/mhczehoj","slide":14,"text":"用小型任务集验证写法","textPreview":"用小型任务集验证写法","textChars":10,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/94nypw7a","slide":14,"text":"正常输入：能否完成指定交付物\n缺失日志：能否准确指出缺口\n冲突规则：能否说明冲突来源\n工具失败：能否保留成果并报告阻塞\n越界要求：能否识别授权边界\n记录：完成率、误报、耗时、人工介入次数","textPreview":"正常输入：能否完成指定交付物 | 缺失日志：能否准确指出缺口 | 冲突规则：能否说明冲突来源 | 工具失败：能否保留成果并报告阻塞 | 越界要求：能否识别授权边界 | 记录：完成率、误报、耗时、人工介入次数","textChars":93,"textLines":6,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/83uhgr6p","slide":14,"text":"14","textPreview":"14","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/s7v55n","slide":14,"text":"建议使用同一批任务对照旧版与新版，固定工具与环境。没有实测数据时，不承诺减少多少 token 或提升多少效率。"}
+{"kind":"slide","id":"sl/2rx5us","slide":15,"title":"参考资料与使用方式","textShapes":3}
+{"kind":"textbox","id":"sh/7ylcju18","slide":15,"text":"参考资料与使用方式","textPreview":"参考资料与使用方式","textChars":9,"textLines":1,"bbox":[70,55,1140,80]}
+{"kind":"textbox","id":"sh/8zutsz2t","slide":15,"text":"官方模型指南：本分享的模型行为依据\nCodex Skills：文件结构的参考入口\nX 帖子：当前读取失败，未引用其观点\n\n先复制 Prompt 完成一次任务，再把稳定步骤沉淀为 Skill。","textPreview":"官方模型指南：本分享的模型行为依据 | Codex Skills：文件结构的参考入口 | X 帖子：当前读取失败，未引用其观点 |  | 先复制 Prompt 完成一次任务，再把稳定步骤沉淀为 Skill。","textChars":95,"textLines":5,"bbox":[74,165,1125,460]}
+{"kind":"textbox","id":"sh/903ul4je","slide":15,"text":"15","textPreview":"15","textChars":2,"textLines":1,"bbox":[1160,660,70,30]}
+{"kind":"notes","id":"nt/2rx5us","slide":15,"text":"来源：https://developers.openai.com/api/docs/guides/latest-model\nhttps://developers.openai.com/codex/skills\n用户参考链接（未核实正文）：https://x.com/LanLance24/status/2095144419393683791\n配套 HTML 可离线浏览。指南含完整模板。"}

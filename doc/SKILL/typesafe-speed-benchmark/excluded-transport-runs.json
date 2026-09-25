@@ -1,0 +1,112 @@
+[
+  {
+    "elapsed_s": 100.59572209999897,
+    "model": "gpt-6-astra",
+    "usage": {
+      "input_tokens": 18699,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 378,
+      "reasoning_output_tokens": 18
+    },
+    "stop_reason": "completed",
+    "text": "1. **了解用途与前提**\n\n   Ponytail 是约束编码助手实现方式的技能／插件：先理解需求，再优先复用现有代码、标准库和平台能力。它不是业务程序的运行时 SDK。安装前需准备可用的 Codex CLI 和 Node.js，可用 `codex --version`、`node --version` 检查，并确保 hook 的 PATH 能找到 node。\n\n2. **在终端安装**\n\n   在 Windows 终端依次执行以下两条命令，等待并检查安装结果；不要把它们当成聊天中的 slash 指令。\n\n   ```powershell\n   codex plugin marketplace add DietrichGebert/ponytail\n   codex plugin add ponytail@ponytail\n   ```\n\n3. **激活并新开任务**\n\n   安装后在终端运行 `codex`，进入交互界面，通过 `/hooks` 查看实际脚本，按界面流程信任。随后重启 Codex 桌面版，在目标项目中新开任务，让新会话加载插件。\n\n4. **第一次调用与验证**\n\n   在输入框通过 `@` 查找并选择 Ponytail 技能，首次建议单独发送 `@ponytail lite`；插件缺省为 full。随后提出一个小任务：先读 AGENTS.md、相关代码和调用处，优先复用，不新增不必要依赖，并运行项目要求的验证。确认技能可找到、模式符合预期、助手确实读取代码且改动围绕明确需求。安装成功不代表所有 hook 已生效，应检查实际输出，并在实际项目中验证。",
+    "characters": 697,
+    "han_characters": 311,
+    "tools_used": [],
+    "backend": "codex-cli",
+    "reasoning_effort": "medium",
+    "item_errors": [
+      "Skill descriptions were shortened to fit the skills context budget. Codex can still see every skill, but some descriptions are shorter. Disable unused skills or plugins to leave more room for the rest.",
+      "Falling back from WebSockets to HTTPS transport. request timed out"
+    ],
+    "pair": 1,
+    "arm": "A",
+    "total_s": 100.59778399999777,
+    "typesafe": null,
+    "input_characters": 2407,
+    "passage_count": 16,
+    "checks": {
+      "marketplace_command": true,
+      "install_command": true,
+      "hooks": true,
+      "mode": true,
+      "restart": true,
+      "new_task": true,
+      "verification": true,
+      "not_truncated": true
+    }
+  },
+  {
+    "elapsed_s": 133.85392429999774,
+    "model": "gpt-6-astra",
+    "usage": {
+      "input_tokens": 18050,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 362,
+      "reasoning_output_tokens": 0
+    },
+    "stop_reason": "completed",
+    "text": "1. **了解用途与准备环境**  \n   Ponytail 是约束编码助手实现方式的技能／插件：先理解需求，再优先复用现有代码、标准库和平台能力。它不是业务程序调用的运行时 SDK。安装需有可用的 Codex CLI 和 Node.js，并确保 hook 的 PATH 中能找到 node。\n\n2. **在终端安装**  \n   在 Windows 终端依次执行以下两条命令；它们不是聊天中的 slash 指令。\n   ```powershell\n   codex plugin marketplace add DietrichGebert/ponytail\n   codex plugin add ponytail@ponytail\n   ```\n\n3. **检查 hook 并激活新任务**  \n   安装后在终端运行 `codex`，进入交互界面，用 `/hooks` 查看实际脚本，按界面流程信任。随后重启 Codex 桌面版，在目标项目新开任务。当前 hook 包含 SessionStart、SubagentStart、UserPromptSubmit 三类事件，需结合实际输出确认生效。\n\n4. **首次调用与验证**  \n   在新任务中通过 `@` 查找并选择 Ponytail，初次可单独发送 `@ponytail lite`。lite 是试用建议，插件缺省为 full。随后提出小任务：先读 AGENTS.md、相关代码和调用处，优先复用，不新增不必要依赖，并运行项目要求的验证。确认技能可找到、模式符合预期、助手确实读取实际代码，改动围绕明确需求。务必在实际项目验证；安装成功不代表所有 hook 已生效。",
+    "characters": 716,
+    "han_characters": 302,
+    "tools_used": [],
+    "backend": "codex-cli",
+    "reasoning_effort": "medium",
+    "item_errors": [
+      "Skill descriptions were shortened to fit the skills context budget. Codex can still see every skill, but some descriptions are shorter. Disable unused skills or plugins to leave more room for the rest.",
+      "Falling back from WebSockets to HTTPS transport. request timed out"
+    ],
+    "pair": 1,
+    "arm": "B",
+    "total_s": 134.95486209999945,
+    "typesafe": {
+      "api_s": 1.1000415999878896,
+      "phase_s": 1.1006982999970205,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3009,
+        "output_tokens": 268
+      },
+      "scores": {
+        "purpose": 0.92,
+        "prerequisites": 0.94,
+        "install": 0.97,
+        "activate": 0.94,
+        "first_task": 0.95,
+        "verification": 0.92,
+        "levels": 0.48,
+        "review": 0.09,
+        "audit": 0.08,
+        "debt": 0.07,
+        "gain": 0.07,
+        "claude": 0.09,
+        "cursor": 0.09,
+        "project_rules": 0.09,
+        "hardware": 0.08,
+        "typesafe": 0.07
+      },
+      "retained_ids": [
+        "purpose",
+        "prerequisites",
+        "install",
+        "activate",
+        "first_task",
+        "verification"
+      ]
+    },
+    "input_characters": 1053,
+    "passage_count": 6,
+    "checks": {
+      "marketplace_command": true,
+      "install_command": true,
+      "hooks": true,
+      "mode": true,
+      "restart": true,
+      "new_task": true,
+      "verification": true,
+      "not_truncated": true
+    }
+  }
+]

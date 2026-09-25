@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Coding SOP · 从需求对齐到人工 CR</title>
+<style>
+:root{--paper:#f8f7f3;--white:#fffefa;--ink:#182c34;--muted:#5d6f75;--line:#d8e1df;--accent:#087c83;--blue:#285cbe;--soft:#e7f3f0;--warm:#fff0d7;--code:#172b35;--shadow:0 12px 40px #102e3510}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:26px}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.85 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}button,input{font:inherit}button,a,input{ -webkit-tap-highlight-color:transparent}a{color:var(--accent);text-underline-offset:4px}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #3caeb4;outline-offset:4px}button:disabled{cursor:default;opacity:.5}h1,h2,h3,h4,p,ul,ol{margin-top:0}h1,h2,h3,h4{line-height:1.4;letter-spacing:-.025em}h1{font-size:clamp(32px,4vw,54px);margin-bottom:22px}h2{font-size:28px;margin-bottom:16px}h3{font-size:19px;margin-bottom:10px}h4{font-size:16px;margin-bottom:8px}p{margin-bottom:14px}ul,ol{padding-left:22px;margin-bottom:12px}li+li{margin-top:7px}strong{font-weight:650}code{font-family:Consolas,"SFMono-Regular",monospace;font-size:.94em;background:#e9eeeb;border-radius:4px;padding:2px 5px}pre{overflow:auto;white-space:pre;tab-size:2;margin:0;color:#e6f0ee;line-height:1.8;font-size:13px;padding:24px;background:var(--code);border-radius:0 0 12px 12px}pre code{font:inherit;color:inherit;padding:0;background:none}::selection{background:#c6e7e0}.topline{height:5px;background:linear-gradient(90deg,#087c83 0 65%,#becfc1 65% 100%)}.shell{max-width:1400px;margin:auto;display:grid;grid-template-columns:238px minmax(0,1fr);gap:44px;padding:42px 40px 70px}.sidebar{position:sticky;top:30px;align-self:start}.brand{font-size:14px;font-weight:750;letter-spacing:.14em;color:var(--accent);margin-bottom:5px}.brand-sub{font-size:12px;color:var(--muted);margin-bottom:26px}.nav{display:flex;flex-direction:column;gap:3px}.nav a{display:block;text-decoration:none;color:var(--muted);padding:8px 12px;border-left:2px solid transparent;font-size:13px;line-height:1.55}.nav a:hover,.nav a.active{border-left-color:var(--accent);background:#eaf0ea;color:var(--ink)}.nav small{font-size:11px;color:#7d918f;margin-right:9px;font-variant-numeric:tabular-nums}.sidebar-note{font-size:12px;line-height:1.75;color:var(--muted);border-top:1px solid var(--line);margin-top:24px;padding-top:16px}.print{border:1px solid var(--line);background:transparent;color:var(--ink);padding:7px 13px;border-radius:6px;font-size:12px;margin-top:8px}.main{min-width:0}.eyebrow{color:var(--accent);font-size:12px;font-weight:750;letter-spacing:.14em;margin-bottom:16px}.hero{padding:10px 0 42px;border-bottom:1px solid var(--line)}.hero .lead{font-size:19px;max-width:740px;line-height:1.8;color:#334d54;margin-bottom:24px}.tags{display:flex;gap:8px;flex-wrap:wrap}.tag{font-size:11px;line-height:1.5;padding:5px 9px;border:1px solid #cddad6;border-radius:99px;background:#fcfcf8;color:var(--muted)}.conclusion{margin-top:25px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.conclusion div{padding:18px;border-radius:10px;background:var(--white);border:1px solid var(--line)}.conclusion b{display:block;margin-bottom:5px}.conclusion span{display:block;font-size:13px;color:var(--muted);line-height:1.7}.section{padding:47px 0;border-bottom:1px solid var(--line)}.section:last-child{border-bottom:0}.section-number{display:block;color:var(--accent);letter-spacing:.12em;font-size:11px;font-weight:750;margin-bottom:8px}.intro{max-width:800px;color:var(--muted);font-size:16px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:20px 0}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0}.card{border:1px solid var(--line);border-radius:12px;padding:22px;background:var(--white);min-width:0}.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}.card .micro{margin-bottom:9px;color:var(--accent);font-size:11px;letter-spacing:.06em;font-weight:700}.muted{color:var(--muted)}.small{font-size:13px}.callout{border-left:3px solid var(--accent);background:var(--soft);padding:17px 20px;margin:22px 0;border-radius:0 8px 8px 0}.callout p:last-child{margin-bottom:0}.callout.warm{background:var(--warm);border-color:#ad7222}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;margin:20px 0}table{width:100%;border-collapse:collapse;font-size:13px;text-align:left;background:var(--white)}th{background:#eaf0eb;color:#274a50;font-weight:650}th,td{padding:13px 15px;vertical-align:top;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}th:first-child{min-width:105px}.pills{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.pill{background:var(--white);border:1px solid #bdceca;border-radius:7px;padding:9px 17px;color:var(--muted);font-size:13px}.pill[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}.route-panel{border:1px solid var(--line);background:var(--white);border-radius:12px;padding:25px}.flow{display:flex;align-items:stretch;gap:9px}.flow .node{flex:1;min-width:0;background:#edf3ef;padding:16px 12px;border-radius:8px;text-align:center;font-size:13px;line-height:1.6}.flow .node b{display:block;margin-bottom:3px}.flow .node span{font-size:11px;color:var(--muted);display:block}.flow .node.gate{background:#fff0d9;border:1px solid #e6c78f}.flow .arrow{align-self:center;color:var(--accent);font-weight:bold}.flow-caption{font-size:12px;color:var(--muted);margin-top:14px;margin-bottom:0}.route-more{margin:20px 0 0;padding-top:18px;border-top:1px solid var(--line);font-size:13px}.route-more p:last-child{margin:0}.codebox{margin:22px 0;border-radius:12px;overflow:hidden}.codehead{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#253e47;color:#b5d7d4;padding:10px 16px;font-size:12px}.copy{border:1px solid #68888c;background:transparent;border-radius:5px;color:#e4f0ed;padding:3px 10px;font-size:11px;flex-shrink:0}.code-note{font-size:12px;color:var(--muted);margin:8px 0 0}.spec{border:1px solid #bcd2ca;border-radius:12px;background:#fffefa;padding:25px;margin:22px 0}.spec-title{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px}.spec-title h3{margin:0}.spec-title span{font-size:11px;color:var(--accent);border:1px solid #bed9d3;padding:3px 9px;border-radius:5px}.spec-grid{display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px 18px;font-size:13px}.spec-grid dt{font-weight:700;color:var(--accent)}.spec-grid dd{margin:0}.svg-box{border:1px solid var(--line);padding:16px;border-radius:12px;background:#fffefa;overflow:auto;margin:22px 0}.svg-box svg{width:100%;min-width:580px;height:auto;display:block}.svg-box figcaption{font-size:12px;color:var(--muted);padding:10px 3px 0}.sim{border:1px solid #a9c8c0;background:#f0f5ef;border-radius:12px;padding:24px;margin:22px 0}.sim-head{display:flex;align-items:start;justify-content:space-between;gap:16px;margin-bottom:15px}.sim-head h3{margin-bottom:5px}.sim-head p{margin-bottom:0}.button{border:0;border-radius:6px;background:var(--accent);color:#fff;padding:8px 14px;font-size:12px}.button.secondary{background:#fffefa;color:var(--ink);border:1px solid #c1d2ca}.tickets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.ticket{background:#fffefa;border:1px solid var(--line);border-radius:9px;padding:16px}.ticket-top{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-bottom:8px}.ticket-top b{font-size:13px}.status{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;background:#edf0ed;color:#66766c}.status.ready{color:#086c73;background:#def0ec}.status.running{color:#2850a2;background:#e5ebfc}.status.review{color:#946215;background:#fff0d0}.status.done{color:#3b6741;background:#e1eddf}.ticket p{font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.7}.ticket .button{font-size:11px;padding:5px 10px}.sim-log{min-height:42px;margin-top:15px;font-size:12px;color:#375d59}.iteration{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0}.iteration div{border-top:3px solid var(--accent);padding:14px 12px;background:var(--white);border-radius:0 0 8px 8px}.iteration b{display:block;font-size:13px;margin-bottom:5px}.iteration span{font-size:12px;color:var(--muted);line-height:1.65;display:block}.iteration .red{border-color:#b85c50}.iteration .green{border-color:#65996b}.iteration .blue{border-color:#3d73b7}.iteration .amber{border-color:#bb8b36}.bandwidth{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;background:#fffefa;border:1px solid var(--line);border-radius:12px;padding:24px;margin:20px 0}.range-line{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:8px}.range-line output{font-size:18px;font-weight:750;color:var(--accent)}input[type=range]{width:100%;accent-color:var(--accent);margin:5px 0 20px}.meter{height:12px;background:#e6ede8;border-radius:99px;overflow:hidden;margin:8px 0 13px}.meter div{height:100%;background:var(--accent);width:50%;transition:width .2s}.stats{font-size:30px;font-weight:750;color:var(--accent);line-height:1.3}.checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.checklist label{display:flex;gap:11px;align-items:flex-start;background:#fffefa;border:1px solid var(--line);border-radius:8px;padding:14px;font-size:13px;cursor:pointer}.checklist input{accent-color:var(--accent);margin-top:6px;width:16px;height:16px;flex-shrink:0}.checklist label:has(input:checked){background:#eaf4ec;border-color:#b5ceb8}.footer{font-size:12px;color:var(--muted);padding-top:20px;display:flex;justify-content:space-between;gap:20px}.print-only{display:none}details{border:1px solid var(--line);border-radius:9px;background:var(--white);margin:12px 0;padding:16px 19px}summary{cursor:pointer;font-size:14px;font-weight:650}details[open] summary{margin-bottom:12px}details p{font-size:13px;color:var(--muted)}details p:last-child{margin-bottom:0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}[hidden]{display:none!important}@media(max-width:1100px){.shell{grid-template-columns:190px minmax(0,1fr);gap:28px;padding:30px 24px 50px}.flow{flex-wrap:wrap}.flow .node{flex-basis:24%}.flow .arrow{display:none}.grid3{grid-template-columns:1fr}.conclusion{grid-template-columns:1fr}.conclusion div{padding:14px 18px}.conclusion b{display:inline;margin-right:12px}.conclusion span{display:inline}.iteration{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){body{font-size:14px}.shell{display:block;padding:23px 18px 40px}.sidebar{position:static;margin-bottom:26px}.brand-sub,.sidebar-note,.sidebar .print{display:none}.nav{margin-top:14px;display:flex;flex-direction:row;flex-wrap:nowrap;overflow:auto;gap:6px;padding-bottom:8px}.nav a{padding:7px 10px;border:1px solid var(--line);border-radius:6px;flex-shrink:0;font-size:11px}.nav small{display:none}.hero{padding-top:8px}.hero .lead{font-size:17px}.section{padding:34px 0}h2{font-size:24px}.grid2,.tickets,.bandwidth,.checklist{grid-template-columns:1fr}.flow .node{flex-basis:40%}.card,.route-panel,.spec,.sim{padding:18px}.spec-grid{grid-template-columns:1fr;gap:5px}.spec-grid dd{margin-bottom:10px}.conclusion b{display:block}.conclusion span{display:block}.table-wrap{font-size:12px}th,td{padding:11px 12px}.sim-head{flex-direction:column}.bandwidth{gap:14px;padding:19px}pre{font-size:11px;padding:18px}.footer{display:block}.svg-box{padding:10px}.grid3{gap:10px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}@media print{@page{size:A4;margin:16mm}body{background:#fff;font-size:10pt;line-height:1.65;color:#182c34}.topline,.sidebar,.pills,.copy,.button,.print,.no-print{display:none!important}.shell{display:block;max-width:none;padding:0}.hero{padding:0 0 22px}.hero h1{font-size:29pt}.hero .lead{font-size:13pt}.section{padding:25px 0;break-before:auto}.section h2{font-size:19pt;break-after:avoid}.section h3{break-after:avoid}.card,.spec,.codebox,.svg-box,.ticket,.callout,.bandwidth{break-inside:avoid;box-shadow:none}.grid2,.conclusion{gap:10px}.svg-box svg{min-width:0}.section-number{font-size:8pt}pre{font-size:8pt;white-space:pre-wrap;overflow:visible;background:#edf2ef;color:#182c34}.codehead{background:#e0e9e4;color:#182c34}.route-panel[hidden]{display:block!important;margin-top:12px}.route-panel::before{display:block;font-size:12pt;font-weight:700;margin-bottom:10px}.route-panel[data-route=full]::before{content:"完整流程"}.route-panel[data-route=lite]::before{content:"轻流程"}.flow{flex-wrap:wrap}.flow .node{flex-basis:25%}.flow .arrow{display:none}.grid3{grid-template-columns:repeat(3,1fr)}.print-only{display:block}.footer{font-size:8pt}a{text-decoration:none;color:inherit}.table-wrap{overflow:visible}th,td{padding:8px 10px}input[type=range]{display:none}.stats{font-size:21pt}details{break-inside:avoid}details>p{display:block!important}.checklist{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="topline"></div>
+<div class="shell">
+<aside class="sidebar" aria-label="页面导航">
+<div class="brand">CODING SOP</div><div class="brand-sub">工程实践 · 可视化详解</div>
+<nav class="nav">
+<a href="#overview"><small>00</small>一页理解全流程</a>
+<a href="#align"><small>01</small>对齐问题与约束</a>
+<a href="#spec"><small>02</small>Spec 与人工门控</a>
+<a href="#tickets"><small>03</small>垂直切片与依赖</a>
+<a href="#implement"><small>04</small>隔离实现与 TDD</a>
+<a href="#minimal"><small>05</small>缩短值得审的 Diff</a>
+<a href="#review"><small>06</small>分层审查与证据</a>
+<a href="#capacity"><small>07</small>管理 Review 带宽</a>
+<a href="#delivery"><small>08</small>落地模板与清单</a>
+</nav>
+<div class="sidebar-note">围绕同一个 UART 接收案例展开。图、参数和状态模拟均为教学示例，不代表目标硬件的实测结果。</div>
+<button type="button" class="print" onclick="window.print()">打印 / 另存为 PDF</button>
+</aside>
+<main class="main">
+<header class="hero">
+<div class="eyebrow">AI CODING · ENGINEERING FIRST</div>
+<h1>让 AI 更快地写，<br>让人更清楚地判断。</h1>
+<p class="lead">Coding SOP 的核心是把需求、实现与审查连成可验收的链路。先确定做什么，再让 Agent 并行实现，最后由人对关键取舍和交付结果负责。</p>
+<div class="tags"><span class="tag">双人工门控</span><span class="tag">垂直切片</span><span class="tag">每 Ticket 一个 Agent</span><span class="tag">TDD + Review</span><span class="tag">嵌入式教学案例</span></div>
+<div class="conclusion"><div><b>先固定方向</b><span>Spec 通过人工 Review，才进入完整流程的实现阶段。</span></div><div><b>再并行交付</b><span>按 Ticket 分工；依赖决定先后，Worktree 隔离改动。</span></div><div><b>最后交给人判断</b><span>自动审查整理风险与证据，人工 CR 作最终决定。</span></div></div>
+</header>
+
+<section id="overview" class="section">
+<span class="section-number">00 / MAP</span><h2>一条主链路，两种执行强度</h2>
+<p class="intro">工具承担局部职责，工程纪律把它们串起来。完整流程适合边界多、跨模块或需要多人并行的任务；边界清楚、验证成本低的小改可以走轻流程。</p>
+<div class="pills" role="group" aria-label="流程强度"><button class="pill" type="button" aria-pressed="true" data-route-button="full">完整流程 · 复杂 / 并行任务</button><button class="pill" type="button" aria-pressed="false" data-route-button="lite">轻流程 · 单文件局部小改</button></div>
+<div class="route-panel" data-route="full">
+<div class="flow"><div class="node"><b>对齐</b><span>grill-me<br>grill-with-docs</span></div><div class="arrow" aria-hidden="true">→</div><div class="node gate"><b>Spec + 人审</b><span>to-spec<br>第一道门控</span></div><div class="arrow" aria-hidden="true">→</div><div class="node"><b>拆 Ticket</b><span>to-tickets<br>垂直切片 + DAG</span></div><div class="arrow" aria-hidden="true">→</div><div class="node"><b>隔离实现</b><span>subagent + worktree<br>TDD + code-review</span></div><div class="arrow" aria-hidden="true">→</div><div class="node"><b>PR Review</b><span>集成检查<br>交叉审查</span></div><div class="arrow" aria-hidden="true">→</div><div class="node gate"><b>人工 CR</b><span>判断风险与证据<br>最终把关</span></div></div>
+<p class="flow-caption">橙色节点表示人工判断。图中名称表达工作职责，具体命令与参数取决于实际安装的工具。</p>
+<div class="route-more"><p><strong>输出逐级收敛：</strong>问题清单 → 审核通过的 Spec → 带依赖的 Ticket → 小范围实现与验证记录 → PR 证据包 → 人工结论。</p><p><strong>不满足退出条件就回到相应阶段：</strong>验收不清回到对齐，接口约定改变回到 Spec，集成失败回到相关 Ticket。</p></div>
+</div>
+<div class="route-panel" data-route="lite" hidden>
+<div class="flow"><div class="node"><b>确认边界</b><span>局部、小范围<br>容易验证</span></div><div class="arrow" aria-hidden="true">→</div><div class="node gate"><b>简单方案 + 授权</b><span>说清改哪里、怎么验<br>实施前由人确认</span></div><div class="arrow" aria-hidden="true">→</div><div class="node"><b>Main Agent 修改</b><span>保持最小改动<br>及时检查 Diff</span></div><div class="arrow" aria-hidden="true">→</div><div class="node"><b>测试与交付</b><span>跑适当测试<br>汇报结果与限制</span></div></div>
+<div class="route-more"><p><strong>适用例：</strong>已有测试覆盖的错误码映射修正，输入输出明确，影响集中在一个文件。若已有明确授权，按已授权方案继续执行，无需重复确认。</p><p><strong>升级条件：</strong>发现 ISR 与任务间共享状态、公共接口变更、协议兼容性影响或难以复现的时序问题时，扩大调查并重新评估流程强度。</p></div>
+</div>
+<div class="callout"><strong>流程可以分级，纪律不能分级。</strong> 小改也要先有简短方案与人的授权，改后运行适当测试。减少的是组织开销，不是对边界和结果的判断。</div>
+<div class="grid2"><article class="card"><div class="micro">WHAT TO KEEP</div><h3>把注意力留给真实约束</h3><p class="small">复用现有约定；仅给当前任务需要的上下文；保留可检验的验收条件。规则的价值在于帮助决策，而不是让每个任务携带更厚的指令。</p></article><article class="card"><div class="micro">WHAT HUMANS OWN</div><h3>工具负责执行，人负责取舍</h3><p class="small">延迟、可用性、一致性、资源成本与可扩展性之间没有通用最优解。Agent 可以整理选项，人需要根据系统目标选择，并留下理由。</p></article></div>
+</section>
+
+<section id="align" class="section">
+<span class="section-number">01 / ALIGN</span><h2>先把“看起来懂了”变成可检验的共识</h2>
+<p class="intro"><code>grill-me</code> 用连续追问暴露盲区；已有设计、协议或故障资料时，<code>grill-with-docs</code> 结合文档核对。此时的成果是问题边界与决策记录，还不是代码。</p>
+<div class="callout warm"><strong>贯穿案例 · 教学假设</strong><p>某 FreeRTOS 设备在 UART 连续突发输入时出现接收队列溢出和处理任务积压。当前目标是明确并实现可观测的丢弃策略，保护接收路径响应性；这不等价于承诺“永不丢包”。若真实产品要求无损，需重新评估背压、重传与吞吐预算，不能直接采用本例策略。队列容量、时序预算和负载阈值都必须由目标项目确认。</p></div>
+<div class="table-wrap"><table><thead><tr><th>追问维度</th><th>需要弄清的事实</th><th>形成的约束 / 决策</th></tr></thead><tbody>
+<tr><td>现象与复现</td><td>队列真的满了，还是 DMA 覆盖、解析慢或日志阻塞？什么输入模式触发？</td><td>记录触发负载、持续时间、观测点；把推测根因与已有证据分开。</td></tr>
+<tr><td>生产与消费</td><td>入队来自 ISR 还是任务？谁消费？队列中放字节、帧还是描述符？</td><td>明确执行上下文、数据所有权和对象生命周期，避免错误地套用线程 API。</td></tr>
+<tr><td>满队列行为</td><td>丢新数据、丢旧数据、背压还是上报故障？协议能否重传？</td><td>教学方案选“丢新项并计数”；丢弃后是否破坏帧同步需要单独确认。</td></tr>
+<tr><td>资源与时序</td><td>RAM 预算、ISR 时间预算、任务优先级和处理耗时分别是什么？</td><td>不能仅靠扩大队列掩盖持续输入速率高于消费速率的问题。</td></tr>
+<tr><td>验证与非目标</td><td>如何观察溢出？怎样证明恢复？本次是否改调度或协议？</td><td>明确测试层级、必需硬件证据和不做事项，防止修复范围不断扩张。</td></tr>
+</tbody></table></div>
+<div class="grid2"><article class="card"><h3>对齐阶段的退出条件</h3><ul class="small"><li>业务目标、输入输出与影响范围能被复述。</li><li>关键边界已有决策；未决项标明影响、负责人和处理方式。</li><li>验收可观察，必要信息足以写出 Spec。</li></ul></article><article class="card"><h3>遇到资料冲突怎么办</h3><p class="small">文档、代码和日志可以互相矛盾。把冲突写成待验证项：例如“文档称单生产者，但代码存在第二条入队路径”。在确认前，不把单生产者当作实现前提。</p></article></div>
+</section>
+
+<section id="spec" class="section">
+<span class="section-number">02 / SPEC</span><h2>第一道人工门控：批准问题定义与实现边界</h2>
+<p class="intro"><code>to-spec</code> 把对齐结果整理成设计约定。人工 Review 关注“这是不是值得实现的正确方案”，而不只是检查文档是否完整。</p>
+<article class="spec">
+<div class="spec-title"><h3>Spec 示例 · UART 满队列可观测处理</h3><span>教学草案 · 待项目确认</span></div>
+<dl class="spec-grid"><dt>目标</dt><dd>队列满时快速返回，保留已接收的数据顺序，并提供可解释的丢弃计数。消费恢复后，接收路径可继续工作。</dd><dt>行为契约</dt><dd>成功入队的项按约定顺序交给消费任务；满队列时丢弃新项并计数。帧失步恢复由协议层既有机制处理；若该机制缺失，必须补充设计。</dd><dt>不变量</dt><dd>ISR 不阻塞、不动态分配、不做格式化日志；队列操作符合执行上下文；跨上下文统计读取不得产生撕裂或未定义竞争。</dd><dt>非目标</dt><dd>本轮不改变 UART 协议、不重排全部任务优先级、不引入通用异步框架。若验收需要这些改动，先更新范围再实施。</dd><dt>验收 A1</dt><dd>在容量为 N 的测试队列中，先填入 N 个不同标识的项，再入队 1 个；新项被拒绝，计数增加 1，已有项内容与顺序不变。</dd><dt>验收 A2</dt><dd>消费一个项后再提交新项，入队成功；排空后的结果与预期序列一致，证明溢出后路径可恢复。</dd><dt>验收 A3</dt><dd>目标板突发负载测试记录 ISR 时间、丢弃计数、队列占用和消费进度；阈值由项目预算填写，未测量前不得标记通过。</dd><dt>验证边界</dt><dd>Host 测试验证策略；目标构建检查平台适配；板级测量验证真实时序与中断行为。测试替身不能替代目标硬件证据。</dd><dt>风险与回退</dt><dd>丢新项可能丢失重要协议内容，先确认上层容错；计数溢出策略和复位时机写入约定。回退须恢复旧行为并保留变更记录。</dd></dl>
+</article>
+<div class="grid2"><article class="card"><h3>人要看清三个问题</h3><ol class="small"><li><strong>对不对：</strong>是否解决已确认的问题，是否误把假设当事实？</li><li><strong>值不值：</strong>丢弃策略与资源代价是否符合设备目标？</li><li><strong>验不验得出：</strong>如何得到失败与成功的证据，谁完成板级验证？</li></ol></article><article class="card"><h3>批准之后仍可修订</h3><p class="small">Spec 是当前共识，不是冻结一切。实现时若发现第二个生产者、队列项生命周期不符或预算无法满足，应先说明影响并更新相关决定，再恢复依赖任务。</p></article></div>
+<div class="callout"><strong>门控结果应可追踪：</strong>批准、需修改或暂缓，并附理由。仍影响核心行为的未决问题，应在进入实现前解决；已经明确批准的范围无需重复走形式化授权。</div>
+</section>
+
+<section id="tickets" class="section">
+<span class="section-number">03 / SLICE</span><h2>按可验收行为切片，用依赖图决定并行</h2>
+<p class="intro"><code>to-tickets</code> 把 Spec 拆成足够小、可以单独执行与验收的 Ticket。垂直切片围绕完整行为贯穿必要模块，避免只拆成“写驱动 / 写测试 / 写文档”后全部等待最后联调。</p>
+<div class="table-wrap"><table><thead><tr><th>Ticket</th><th>独立交付的行为与证据</th><th>依赖</th><th>责任边界</th></tr></thead><tbody>
+<tr><td><strong>T1 接收基线</strong></td><td>建立正常接收行为的可复现测试，锁定现有队列适配接口与输入序列。</td><td>无</td><td>基线测试与队列适配契约</td></tr>
+<tr><td><strong>T2 满队列策略</strong></td><td>完成丢新项行为、计数与恢复测试，覆盖 A1 / A2。</td><td>T1</td><td>策略逻辑与对应测试</td></tr>
+<tr><td><strong>T3 占用观测</strong></td><td>通过独立诊断入口安全读取队列占用 / 高水位，并有正常负载下的观测测试。</td><td>T1</td><td>诊断入口与统计快照测试</td></tr>
+<tr><td><strong>T4 集成压力验证</strong></td><td>合并策略与观测，在目标负载下验证恢复、时序和统计一致性，形成 A3 记录。</td><td>T2、T3</td><td>压力场景与集成证据</td></tr>
+</tbody></table></div>
+<figure class="svg-box">
+<svg viewBox="0 0 900 245" role="img" aria-labelledby="dagTitle dagDesc"><title id="dagTitle">Ticket 依赖 DAG</title><desc id="dagDesc">T1 完成后 T2 与 T3 可以并行；T2 和 T3 都完成后才能开始 T4。</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#087c83"/></marker></defs><g fill="none" stroke="#087c83" stroke-width="2" marker-end="url(#arrow)"><path d="M236 121 H284 V66 H330"/><path d="M284 121 V182 H330"/><path d="M565 66 H610 V121 H660"/><path d="M565 182 H610 V121"/></g><rect x="15" y="84" width="220" height="76" rx="10" fill="#e7f3ef" stroke="#a8c8bf"/><rect x="330" y="28" width="235" height="76" rx="10" fill="#edf2fb" stroke="#bccde8"/><rect x="330" y="144" width="235" height="76" rx="10" fill="#edf2fb" stroke="#bccde8"/><rect x="660" y="84" width="225" height="76" rx="10" fill="#fff0d7" stroke="#e4c797"/><g fill="#182c34" font-family="Microsoft YaHei, sans-serif" text-anchor="middle"><text x="125" y="114" font-size="17" font-weight="600">T1 · 接收基线</text><text x="125" y="140" font-size="12">固定接口与可复现行为</text><text x="448" y="59" font-size="17" font-weight="600">T2 · 满队列策略</text><text x="448" y="85" font-size="12">行为 + 单元验证</text><text x="448" y="175" font-size="17" font-weight="600">T3 · 占用观测</text><text x="448" y="201" font-size="12">诊断入口 + 快照验证</text><text x="773" y="114" font-size="17" font-weight="600">T4 · 集成压力验证</text><text x="773" y="140" font-size="12">目标板证据与恢复检查</text><text x="448" y="129" font-size="11" fill="#285cbe">接口稳定、改动边界明确时并行</text></g></svg>
+<figcaption>DAG 是有向无环依赖图。它解决先后顺序；文件所有权与接口约定解决并行协作。T3 若需要修改 T2 的公共状态，应先拆出共享约定或改为串行。</figcaption>
+</figure>
+<div class="sim" id="ticket-simulator"><div class="sim-head"><div><h3>试一遍：依赖满足才允许开工</h3><p class="small muted">每张卡依次经历“执行 → 待审 → 完成”。这是流程演示，按钮不会运行真实代码或测试。</p></div><button class="button secondary" id="reset-tickets" type="button">重置演示</button></div><div class="tickets" id="tickets-board"></div><div class="sim-log" id="sim-log" role="status" aria-live="polite">先完成 T1。T2 与 T3 会同时解锁，T4 仍受依赖约束。</div></div>
+<div class="grid2"><article class="card"><h3>一个可执行 Ticket 要带什么</h3><ul class="small"><li>目标行为与对应的 Spec 验收编号。</li><li>依赖、输入、修改范围和禁止越界事项。</li><li>测试方法、交付物与完成条件。</li><li>发现接口冲突、需求变化或验证阻塞时的上报路径。</li></ul></article><article class="card"><h3>依赖完成，不等于“代码写完”</h3><p class="small">下游需要的是可用的接口与被接受的产物。上游验证未过或审查尚有阻塞意见时，不把任务标成完成。需要消费上游代码的 Worktree，还必须显式同步已确认的提交。</p></article></div>
+</section>
+
+<section id="implement" class="section">
+<span class="section-number">04 / IMPLEMENT</span><h2>一个 Ticket，一个 Agent，一份隔离工作区</h2>
+<p class="intro"><code>implement</code> 负责把小任务落成代码。Subagent 获得该 Ticket 所需的干净上下文，Worktree 隔离分支和文件改动；任务内部执行 TDD 与 code-review。</p>
+<div class="grid2"><article class="card"><h3>分派给 Agent 的最小上下文</h3><p class="small">相关 Spec、当前 Ticket、项目规则、现有接口、必要文件与测试入口。明确文件责任，禁止回滚其他人的改动；公共接口变化必须协调。</p><p class="small muted">“上下文干净”指减少与任务无关的会话历史，不是省略必要的设计约束。</p></article><article class="card"><h3>Worktree 能隔离什么</h3><p class="small">它把各 Ticket 的工作目录与分支分开，减少互相覆盖。它不会自动消除逻辑冲突，也不会隔离共享数据库、测试设备、串口或外部构建缓存。</p><p class="small muted">教学实践：板卡与串口按资源锁串行使用；共享接口先约定，集成后再次验证。</p></article></div>
+<div class="iteration"><div class="red"><b>RED · 先看正确失败</b><span>围绕验收写最小失败测试，确认失败源于目标行为缺失。</span></div><div class="green"><b>GREEN · 最小实现</b><span>实现恰好满足约定的行为，运行相关测试并保存结果。</span></div><div class="blue"><b>REFACTOR · 保持通过</b><span>必要时整理结构、复用现有逻辑，再运行受影响测试。</span></div><div class="amber"><b>REVIEW · 回到证据</b><span>检查边界与并发；有问题则补测试、修复，再审查。</span></div></div>
+<div class="codebox"><div class="codehead"><span>伪代码 A · 让失败约束满队列行为</span><button class="copy" type="button" data-copy="test-code">复制</button></div><pre><code id="test-code"># 教学伪代码：队列容量与 API 为示意，需替换为项目测试设施。
+# 通过可区分的项检验“丢新项且保留旧顺序”，避免只检查返回值。
+test overflow_preserves_accepted_items():
+  queue = queue_with_capacity(2)       # 容量 2 只用于构造最小边界。
+  stats = fresh_stats()                # 每次测试使用独立统计，避免其他用例影响断言。
+  receiver = receiver_using(queue, stats)
+  receiver.accept(A)
+  receiver.accept(B)
+  result = receiver.accept(C)          # 第三项必须触发既定的丢弃策略。
+
+  assert result == DROPPED
+  assert stats.dropped_delta() == 1    # 统计变化必须与一次拒绝一致。
+  assert queue.consume() == A
+  assert receiver.accept(D) == OK     # 释放空间后应恢复，不能永久拒收。
+  assert queue.drain() == [B, D]       # 旧数据顺序与恢复后的新数据都要保留。
+
+# RED 阶段应因策略缺失而失败；编译错误或测试设施损坏先单独修复。
+# 用失败定位目标行为，再写最小实现；通过后增加项目需要的其他边界。</code></pre></div>
+<div class="codebox"><div class="codehead"><span>伪代码 B · ISR 路径里的非阻塞满队列处理</span><button class="copy" type="button" data-copy="isr-code">复制</button></div><pre><code id="isr-code"># 教学伪代码：不对应可直接调用的 RTOS API。
+# 前提：队列项所有权已约定，队列操作支持 ISR，统计原语在目标平台安全。
+on_uart_item_from_isr(item):
+  outcome = queue.try_send_from_isr(item)  # 使用一次原子尝试，避免先查满再写的竞态。
+
+  if outcome == FULL:
+    stats.increment_drop_from_isr()       # 使用经确认的并发与溢出策略；不能阻塞。
+    return DROPPED                       # 丢新项，保持已经接收项的顺序与所有权。
+
+  if outcome != OK:
+    fault.record_from_isr(outcome)        # 满队列以外的错误单独记录，不能伪装成普通丢弃。
+    return ERROR                         # 故障处理同样必须满足中断上下文限制。
+
+  scheduler.request_yield_if_needed()     # 是否切换由 RTOS 约定与唤醒结果决定。
+  return OK
+
+# 任务侧只通过安全快照读取统计，禁止无保护读取可能撕裂的宽计数器。
+# 真实 ISR 时间、统计读写和调度行为必须在目标平台验证。</code></pre></div>
+<div class="callout warm"><strong>TDD 的证据边界：</strong>Host 测试可以证明策略与序列，无法单独证明真实中断延迟、DMA 一致性或任务调度。无法在本轮获得板级数据时，应记录“待验证”及责任人，不把构建通过写成硬件验证通过。</div>
+</section>
+
+<section id="minimal" class="section">
+<span class="section-number">05 / KEEP IT SMALL</span><h2>短 Diff 的价值，是降低理解与审查成本</h2>
+<p class="intro"><code>ponytail</code> 对新增内容提出必要性检查：这段逻辑是否需要存在？项目是否已有能力？现有库能否完成？是否能用更直接的表达解决？</p>
+<div class="grid2"><article class="card"><h3>删掉没有贡献的结构</h3><ul class="small"><li>为一个不会扩展的实现预先建立多层接口。</li><li>把已有常量再包装成语义相同的新常量。</li><li>复制项目已经具备的适配和错误处理能力。</li><li>只复述语句动作的过程性注释。</li></ul></article><article class="card"><h3>保留真正承担约束的内容</h3><ul class="small"><li>输入来自不可信边界时必要的参数检查。</li><li>中断与任务之间的同步、生命周期约定。</li><li>解释丢弃策略、溢出规则和故障路径的注释。</li><li>证明行为与边界的测试和诊断证据。</li></ul></article></div>
+<div class="callout"><strong>代码更短不是独立验收目标。</strong> 嵌入式中的屏障、临界区、硬件异常保护可能看起来“啰嗦”，却承担必要职责。删减前要回答它保护了什么，并用证据确认仍然成立。</div>
+<div class="codebox"><div class="codehead"><span>浅层目录示意 · 用文件责任帮助人审查</span><button class="copy" type="button" data-copy="tree-code">复制</button></div><pre><code id="tree-code">project/
+├── docs/
+│   ├── uart-rx-spec.md         # 保存范围、行为约定、验收与人工决策。
+│   └── uart-rx-tickets.md      # 保存切片、依赖、责任人与状态。
+├── src/
+│   ├── uart_rx_policy.c       # 仅处理已约定的接收与满队列策略。
+│   └── uart_rx_diagnostics.c  # 提供符合并发约束的统计与诊断入口。
+└── tests/
+    ├── uart_rx_policy_test.c  # 覆盖拒绝、顺序保持和恢复边界。
+    └── uart_rx_stress.md      # 记录板级输入、测量方式、结果与限制。
+
+# 教学目录：优先适配项目现有结构，不要求为了流程新建这些文件。</code></pre></div>
+</section>
+
+<section id="review" class="section">
+<span class="section-number">06 / REVIEW</span><h2>从 Ticket 自洽，走到 PR 整体正确</h2>
+<p class="intro">Ticket 内 review 解决局部实现问题；PR 级 review 检查合并后的整体行为。多模型在干净上下文中交叉审查，可以补充不同视角，但最终结论仍由人判断。</p>
+<div class="table-wrap"><table><thead><tr><th>层级</th><th>重点问题</th><th>应交给下一层的证据</th></tr></thead><tbody>
+<tr><td>Ticket 内部</td><td>行为是否满足验收？错误路径、共享状态与测试覆盖是否合理？</td><td>小范围 Diff、测试结果、已修复问题与剩余限制。</td></tr>
+<tr><td>PR 整体</td><td>多个切片组合后接口一致吗？统计是否重复？构建配置、资源预算与集成场景是否遗漏？</td><td>需求到代码 / 测试的映射、集成结果、去重后的风险清单。</td></tr>
+<tr><td>人工 CR</td><td>关键取舍能否接受？证据是否足够？模型意见是否有依据？还需补哪些验证？</td><td>批准、退回修改或等待证据的明确结论，以及剩余风险的责任安排。</td></tr>
+</tbody></table></div>
+<figure class="svg-box"><svg viewBox="0 0 900 254" role="img" aria-labelledby="reviewTitle reviewDesc"><title id="reviewTitle">交叉审查与人工决策</title><desc id="reviewDesc">相同 Spec、Diff 与验证证据交给多个独立模型审查，意见去重核实后交由人判断，不以票数决定正确性。</desc><defs><marker id="r-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#087c83"/></marker></defs><g stroke="#087c83" fill="none" stroke-width="2" marker-end="url(#r-arrow)"><path d="M215 122 H256 V50 H301"/><path d="M256 122 H301"/><path d="M256 122 V198 H301"/><path d="M462 50 H501 V122 H544"/><path d="M462 122 H544"/><path d="M462 198 H501 V122"/><path d="M704 122 H742"/></g><rect x="10" y="81" width="205" height="83" rx="10" fill="#e7f3ef" stroke="#b5cec7"/><rect x="301" y="20" width="161" height="61" rx="8" fill="#edf2fb" stroke="#bccde8"/><rect x="301" y="92" width="161" height="61" rx="8" fill="#edf2fb" stroke="#bccde8"/><rect x="301" y="168" width="161" height="61" rx="8" fill="#edf2fb" stroke="#bccde8"/><rect x="544" y="81" width="160" height="83" rx="10" fill="#e7f3ef" stroke="#b5cec7"/><rect x="742" y="81" width="148" height="83" rx="10" fill="#fff0d7" stroke="#dfc38f"/><g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#182c34"><text x="112" y="114" font-size="17" font-weight="600">同一份审查输入</text><text x="112" y="141" font-size="12">Spec · Diff · 验证证据</text><text x="382" y="46" font-size="14">Reviewer A</text><text x="382" y="67" font-size="11">独立模型 / 干净上下文</text><text x="382" y="118" font-size="14">Reviewer B</text><text x="382" y="139" font-size="11">独立模型 / 干净上下文</text><text x="382" y="194" font-size="14">Reviewer C</text><text x="382" y="215" font-size="11">独立模型 / 干净上下文</text><text x="624" y="114" font-size="17" font-weight="600">去重与核实</text><text x="624" y="141" font-size="12">位置 · 触发条件 · 证据</text><text x="816" y="114" font-size="17" font-weight="600">人工 CR</text><text x="816" y="141" font-size="12">风险判断与最终决定</text></g></svg><figcaption>图中 3 路仅为结构示意，实际数量按任务和审查能力选择。同一套审查要求有助于比较结论；多票一致也不能替代可复现证据。</figcaption></figure>
+<div class="grid2"><article class="card"><h3>把模型意见变成可判断的信息</h3><p class="small">每条意见至少包含位置、触发条件、影响、证据与建议。重复意见合并，互相矛盾的意见保留争议点。无法确认的猜测标成待验证，不能包装为确定缺陷。</p></article><article class="card"><h3>UART 案例中的高价值审查点</h3><p class="small">满队列失败后是否误释放已有缓冲区？任务侧读取计数是否安全？诊断日志是否拖慢接收？T2 与 T3 是否各自维护一份不一致的状态？板级测量是否覆盖峰值负载？</p></article></div>
+<details open><summary>PR 证据包：让人快速建立全局判断</summary><p><strong>一页说明：</strong>修改前的可复现问题、修改后的行为、主要取舍；<strong>验收映射：</strong>A1 / A2 / A3 对应哪项验证、当前状态；<strong>验证记录：</strong>环境、版本、输入、结果与日志位置；<strong>审查结论：</strong>已解决、待核实、接受的风险；<strong>回退方式：</strong>如何恢复旧行为，以及回退本身的影响。</p></details>
+</section>
+
+<section id="capacity" class="section">
+<span class="section-number">07 / CAPACITY</span><h2>并发上限，取决于人能消化多少审查</h2>
+<p class="intro">增加 Agent 和 Worktree 会提高产出速度，但人仍要理解方案、核对证据并处理争议。把任务启动速度限制在审查可承受范围内，才能避免大量“写完但无人确认”的积压。</p>
+<div class="bandwidth"><div><h3>演示：每轮产出超过审查能力会怎样</h3><p class="small muted">简化教学模型：假设每个 Agent 每轮交付 1 个同等大小 Ticket，不考虑依赖与返工。数值不代表真实团队能力。</p><label class="range-line" for="agent-count"><span>并行 Agent 数</span><output id="agent-output" for="agent-count">4</output></label><input id="agent-count" type="range" min="1" max="8" value="4"><label class="range-line" for="review-count"><span>每轮可完成审查的 Ticket 数</span><output id="review-output" for="review-count">2</output></label><input id="review-count" type="range" min="1" max="8" value="2"></div><div aria-live="polite"><div class="small muted">预计每轮新增待审积压</div><div class="stats"><span id="backlog">2</span> 个 Ticket</div><div class="meter" aria-hidden="true"><div id="backlog-meter"></div></div><p id="capacity-advice" class="small">生产速度超过审查速度。先减少并发、缩小切片或提高证据质量，再增加新任务。</p><p class="small muted">计算：max(0, 本轮产出 − 本轮审查完成量)。实际管理还要观察返工率、风险等级与任务大小。</p></div></div>
+<div class="grid3"><article class="card"><h3>减少审查输入</h3><p class="small">让 Diff 聚焦一件事，删除不必要代码，将机械检查交给工具，把人注意力留给取舍与风险。</p></article><article class="card"><h3>提高证据可读性</h3><p class="small">用验收映射、明确复现条件和去重结论帮助人快速判断，避免把多份长报告原样堆过去。</p></article><article class="card"><h3>控制在制任务</h3><p class="small">待审任务持续积压时暂停新开工，优先完成审查和返修。并发数随团队能力调整。</p></article></div>
+</section>
+
+<section id="delivery" class="section">
+<span class="section-number">08 / USE IT</span><h2>从下一次任务开始，留下可复用的交付证据</h2>
+<p class="intro">先选流程强度，再按阶段判断是否达到退出条件。下面是可直接改写的分派模板与交付自检；它们是教学实践补充，需适配项目规则。</p>
+<div class="codebox"><div class="codehead"><span>Ticket 分派模板 · 中文注释说明意图与约束</span><button class="copy" type="button" data-copy="ticket-code">复制</button></div><pre><code id="ticket-code">ticket: T2 满队列丢新项策略
+spec_acceptance: [A1, A2]      # 用已批准的验收限制任务范围。
+depends_on: [T1]              # 上游接口与测试基线被接受后才能开始。
+owner: one_subagent           # 每个 Ticket 由一个明确责任主体交付。
+workspace: isolated_worktree  # 与其他任务分离；共享外设仍需协调。
+scope:
+  - 接收策略与对应测试        # 具体文件以项目结构为准，避免无关重构。
+constraints:
+  - ISR 非阻塞、无动态分配
+  - 沿用队列适配契约          # 公共接口有变化时先协调，不能单边推进。
+  - 不回滚其他人的改动
+verification:
+  - 先见到 A1/A2 的目标失败   # 测试设施失败不能当作有效 RED 证据。
+  - 最小实现后运行相关测试
+  - code-review 并处理阻塞项
+handoff:
+  - Diff、测试结果、剩余风险  # 板级未测项目明确写待验证，禁止推断为通过。
+on_blocked:
+  - 报告事实、影响与所需决策  # 缺信息或接口冲突时停止相关实现，避免扩大偏差。</code></pre></div>
+<h3>交付前自检</h3><p class="small muted">勾选仅保存在当前页面会话中，用于自查；不会执行测试，也不会写入项目状态。</p>
+<div class="checklist"><label><input type="checkbox"><span>范围与流程强度明确；必要的方案或 Spec 已获授权。</span></label><label><input type="checkbox"><span>Ticket 有可验收行为、依赖、责任与完成条件。</span></label><label><input type="checkbox"><span>并行改动隔离；共享接口和外设资源已协调。</span></label><label><input type="checkbox"><span>相关测试已运行；结果、环境与限制有记录。</span></label><label><input type="checkbox"><span>Diff 保持聚焦；注释解释意图、约束和失败处理。</span></label><label><input type="checkbox"><span>Ticket 与 PR 两层审查完成，阻塞问题已处理。</span></label><label><input type="checkbox"><span>硬件或集成待验证项被明确标记，未冒充通过。</span></label><label><input type="checkbox"><span>人工 CR 有明确结论；剩余风险有责任安排。</span></label></div>
+<div class="callout"><strong>真正稳定的能力：</strong>理解系统，识别边界，判断风险，选择取舍。工具可以替换，流程可以精简；每一步都应让下一步拥有更可靠的信息。</div>
+<div class="footer"><span>Coding SOP · 可离线阅读与打印</span><span>教学图示与伪代码 · 请按项目环境落地</span></div>
+</section>
+</main>
+</div>
+<div id="copy-status" class="sr-only" aria-live="polite"></div>
+<script>
+// 所有交互仅用于页面内教学演示，不访问网络、不执行工程命令。
+document.querySelectorAll('[data-route-button]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const route=button.dataset.routeButton;
+    document.querySelectorAll('[data-route-button]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+    document.querySelectorAll('[data-route]').forEach(panel=>panel.hidden=panel.dataset.route!==route);
+  });
+});
+document.querySelectorAll('[data-copy]').forEach(button=>{
+  button.addEventListener('click',async()=>{
+    const text=document.getElementById(button.dataset.copy).textContent;
+    try{
+      if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}
+      else{const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();const copied=document.execCommand('copy');area.remove();if(!copied)throw new Error('copy unavailable')}
+      button.textContent='已复制';document.getElementById('copy-status').textContent='已复制到剪贴板';
+      window.setTimeout(()=>button.textContent='复制',1600);
+    }catch(error){button.textContent='请选中复制';document.getElementById('copy-status').textContent='浏览器未允许自动复制，请选中代码手动复制。'}
+  });
+});
+const ticketDefinitions=[
+  {id:'T1',name:'接收基线',deps:[],description:'固定正常接收行为与队列接口，为后续切片提供稳定输入。'},
+  {id:'T2',name:'满队列策略',deps:['T1'],description:'交付丢新项、计数与恢复测试，覆盖 A1 / A2。'},
+  {id:'T3',name:'占用观测',deps:['T1'],description:'交付安全诊断快照及相应测试，可与 T2 并行。'},
+  {id:'T4',name:'集成压力验证',deps:['T2','T3'],description:'同时消费策略与观测产物，形成目标板验证记录。'}
+];
+let ticketStates=Object.fromEntries(ticketDefinitions.map(ticket=>[ticket.id,'todo']));
+const stateNames={blocked:'等待依赖',ready:'可执行',running:'执行中',review:'待审查',done:'已完成'};
+const buttonNames={blocked:'依赖未完成',ready:'开始执行',running:'提交验证与审查',review:'审查通过并接收',done:'交付已接收'};
+function currentState(ticket){return ticketStates[ticket.id]==='todo'?(ticket.deps.every(id=>ticketStates[id]==='done')?'ready':'blocked'):ticketStates[ticket.id]}
+function renderTickets(){
+  const board=document.getElementById('tickets-board');board.replaceChildren();
+  ticketDefinitions.forEach(ticket=>{
+    const state=currentState(ticket);const card=document.createElement('article');card.className='ticket';
+    const top=document.createElement('div');top.className='ticket-top';
+    const title=document.createElement('b');title.textContent=ticket.id+' · '+ticket.name;
+    const status=document.createElement('span');status.className='status '+state;status.textContent=stateNames[state];top.append(title,status);
+    const description=document.createElement('p');description.textContent=ticket.description;
+    const dependency=document.createElement('p');dependency.textContent='依赖：'+(ticket.deps.join('、')||'无');
+    const button=document.createElement('button');button.type='button';button.className='button';button.textContent=buttonNames[state];button.disabled=state==='blocked'||state==='done';button.setAttribute('aria-label',ticket.id+' '+buttonNames[state]);
+    button.addEventListener('click',()=>{
+      ticketStates[ticket.id]=state==='ready'?'running':state==='running'?'review':'done';
+      const next=ticketStates[ticket.id];renderTickets();
+      let message=ticket.id+' 已进入“'+stateNames[next]+'”。';
+      if(next==='review')message+='演示假设已提交验证证据；真实任务需先核查结果与阻塞意见。';
+      if(next==='done')message+='依赖此任务的切片只有在全部上游完成后才会解锁。';
+      if(ticketDefinitions.every(item=>ticketStates[item.id]==='done'))message='全部 Ticket 已接收。下一步仍需 PR 级整体 Review 与人工 CR；本演示未运行任何真实验证。';
+      document.getElementById('sim-log').textContent=message;
+    });
+    card.append(top,description,dependency,button);board.appendChild(card);
+  });
+}
+document.getElementById('reset-tickets').addEventListener('click',()=>{ticketStates=Object.fromEntries(ticketDefinitions.map(ticket=>[ticket.id,'todo']));renderTickets();document.getElementById('sim-log').textContent='已重置。先完成 T1，T2 与 T3 才可并行。'});
+renderTickets();
+function updateCapacity(){
+  const agents=Number(document.getElementById('agent-count').value);const capacity=Number(document.getElementById('review-count').value);const backlog=Math.max(0,agents-capacity);
+  document.getElementById('agent-output').value=agents;document.getElementById('review-output').value=capacity;document.getElementById('backlog').textContent=backlog;
+  document.getElementById('backlog-meter').style.width=(backlog/7*100)+'%';
+  document.getElementById('backlog-meter').style.background=backlog>0?'#b47f32':'#087c83';
+  document.getElementById('capacity-advice').textContent=backlog>0?'生产速度超过审查速度。先减少并发、缩小切片或提高证据质量，再增加新任务。':'在这个简化假设下，没有新增审查积压。仍需检查任务依赖、返工与共享资源是否限制并行。';
+}
+document.getElementById('agent-count').addEventListener('input',updateCapacity);document.getElementById('review-count').addEventListener('input',updateCapacity);updateCapacity();
+if('IntersectionObserver' in window){
+  const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){document.querySelectorAll('.nav a').forEach(link=>link.classList.toggle('active',link.getAttribute('href')==='#'+entry.target.id))}})},{rootMargin:'-8% 0px -72% 0px',threshold:0});
+  document.querySelectorAll('main section').forEach(section=>observer.observe(section));
+}
+// 打印时展开说明，确保屏幕折叠状态不会使纸面丢失内容。
+let openDetails=[];
+window.addEventListener('beforeprint',()=>{openDetails=[...document.querySelectorAll('details')].filter(detail=>!detail.open);openDetails.forEach(detail=>detail.open=true)});
+window.addEventListener('afterprint',()=>{openDetails.forEach(detail=>detail.open=false);openDetails=[]});
+</script>
+</body>
+</html>

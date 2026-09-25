@@ -1,0 +1,121 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TypeSafe 实际调用速度对比</title><style>
+:root{--bg:#f4f3ed;--ink:#243831;--muted:#62736b;--green:#22634d;--orange:#bd653c;--line:#d8ddd4}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.8 'Segoe UI','Microsoft YaHei',sans-serif}main{max-width:1150px;margin:auto;padding:42px 30px}h1{font-size:42px;line-height:1.3;margin:14px 0}h2{font-size:24px;margin:0 0 16px}h3{margin:0;font-size:18px}p{margin:8px 0 18px}a{color:var(--green)}.eyebrow{font:12px Consolas,monospace;letter-spacing:2px;color:var(--green)}.small{font-size:13px;color:var(--muted);overflow-wrap:anywhere}.lead{font-size:19px;max-width:900px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0}.metric,.panel{border:1px solid var(--line);background:#fffef9;border-radius:12px;padding:24px}.metric b{font-size:36px;display:block;line-height:1.6}.metric span{font-size:13px;color:var(--muted)}.notice{border-left:4px solid var(--orange);padding:14px 20px;background:#ece9df;border-radius:0 9px 9px 0}section{margin:36px 0}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.flow{text-align:center;padding:18px;background:#edf0e6;border-radius:8px;margin-top:15px}.flow b{display:block}.flow span{color:var(--orange)}.bar-row{display:flex;align-items:center;gap:12px;margin:12px 0;font:14px Consolas,monospace}.bar-row>span{width:25px}.bar-track{flex:1;background:#eceee5;border-radius:4px;overflow:hidden}.bar{height:22px;background:var(--green)}.bar.b{background:var(--orange)}.bar-row strong{width:85px}.scroll{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#edf0e7}th{white-space:nowrap}pre{background:#243831;color:#edf0e5;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:8px;padding:20px;font:14px/1.9 Consolas,'Microsoft YaHei',monospace}details{border-bottom:1px solid var(--line);padding:17px 0}summary{cursor:pointer;font-size:14px;font-weight:600}li{margin:8px 0}footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:22px}@media(max-width:700px){main{padding:25px 18px}h1{font-size:31px}.metrics,.two{grid-template-columns:1fr}.metric b{font-size:30px}.panel{padding:18px}}
+</style></head><body><main><div class="eyebrow">MEASURED · 3 PAIRED RUNS · NO FABRICATED DATA</div><h1>调用 TypeSafe，生成文档会更快吗？</h1><p class="lead">本次小样本中，加入 Jev 筛选后的总耗时中位数比直接生成<strong>慢 1.4%</strong>。这是一条具体流程的实测结果，不能推广为所有模型、所有文档的固定收益。</p><p class="small">测试时间：2026-09-21T12:16:30.263088+08:00 · 写作模型：gpt-6-astra / medium · Jev 实际返回：jev-1.13.0</p>
+<div class="metrics"><div class="metric"><span>A / 不调用 TypeSafe</span><b>25.61s</b><span>总耗时中位数 · 3 次</span></div><div class="metric"><span>B / Jev 筛选 + 同一写作模型</span><b>25.98s</b><span>总耗时中位数 · 3 次</span></div><div class="metric"><span>Jev 筛选阶段</span><b>1.32s</b><span>API 请求耗时中位数 · 已计入 B</span></div></div>
+<div class="notice"><strong>确实调用了 API：</strong>Key 来自本机 Windows 用户环境，未写入代码或报告。Jev 输出的是资料相关性判断；最终介绍文字由相同的 Codex 模型生成。它不是一个能通过加 Key 直接加速长文输出的开关。<a href="https://docs.typesafe.ai/api">API 文档</a> · <a href="https://docs.typesafe.ai/concepts/system-one">模型能力说明</a></div>
+<section><h2>比较的两条流程</h2><div class="two"><div class="panel"><h3>A · 直接生成</h3><div class="flow"><b>16 段固定 Ponytail 材料</b><span>↓</span><b>Codex 生成简短上手说明</b></div><p class="small">没有 TypeSafe 调用；由写作模型自行忽略无关资料。</p></div><div class="panel"><h3>B · 增加 TypeSafe 筛选</h3><div class="flow"><b>相同 16 段材料</b><span>↓</span><b>Jev 一次判断 16 段相关性</b><span>↓</span><b>同一 Codex 生成上手说明</b></div><p class="small">筛选阈值为演示参数 0.7；6 段必需信息由代码强制保留，避免筛掉明确要求。</p></div></div></section>
+<section class="panel"><h2>逐轮总耗时</h2><p class="small">绿色 A：直接生成；橙色 B：含 Jev 筛选。顺序为 A1 → B1 → B2 → A2 → A3 → B3。</p><div class="bar-row"><span>A1</span><div class="bar-track"><div class="bar " style="width:85.10%"></div></div><strong>25.61s</strong></div><div class="bar-row"><span>B1</span><div class="bar-track"><div class="bar b" style="width:100.00%"></div></div><strong>30.10s</strong></div><div class="bar-row"><span>A2</span><div class="bar-track"><div class="bar " style="width:87.59%"></div></div><strong>26.36s</strong></div><div class="bar-row"><span>B2</span><div class="bar-track"><div class="bar b" style="width:86.31%"></div></div><strong>25.98s</strong></div><div class="bar-row"><span>A3</span><div class="bar-track"><div class="bar " style="width:76.63%"></div></div><strong>23.06s</strong></div><div class="bar-row"><span>B3</span><div class="bar-track"><div class="bar b" style="width:81.46%"></div></div><strong>24.52s</strong></div></section>
+<section><h2>原始测量值</h2><div class="panel scroll"><table><thead><tr><th>轮次</th><th>流程</th><th>Jev / 秒</th><th>写作调用 / 秒</th><th>总耗时 / 秒</th><th>输入字符</th><th>输出字符 / 汉字</th><th>要点检查</th></tr></thead><tbody><tr><td>1</td><td>A · 直接生成</td><td>0.00</td><td>25.61</td><td><b>25.61</b></td><td>2407</td><td>708 / 316</td><td>8/8</td></tr><tr><td>1</td><td>B · Jev 筛选后生成</td><td>1.32</td><td>28.78</td><td><b>30.10</b></td><td>1053</td><td>686 / 311</td><td>8/8</td></tr><tr><td>2</td><td>B · Jev 筛选后生成</td><td>2.09</td><td>23.89</td><td><b>25.98</b></td><td>1053</td><td>739 / 298</td><td>8/8</td></tr><tr><td>2</td><td>A · 直接生成</td><td>0.00</td><td>26.36</td><td><b>26.36</b></td><td>2407</td><td>713 / 325</td><td>8/8</td></tr><tr><td>3</td><td>A · 直接生成</td><td>0.00</td><td>23.06</td><td><b>23.06</b></td><td>2407</td><td>687 / 304</td><td>8/8</td></tr><tr><td>3</td><td>B · Jev 筛选后生成</td><td>0.98</td><td>23.54</td><td><b>24.52</b></td><td>1053</td><td>723 / 313</td><td>8/8</td></tr></tbody></table></div><p class="small">总耗时包括网络、筛选、Codex CLI 进程与请求的等待；不是纯模型解码时间。输出字符含 Markdown 和命令。“要点检查”是预定义字符串检查，不代表全文语义质量已被自动证明。</p></section>
+<section class="panel"><h2>对比条件与局限</h2><ul><li>两组使用同一任务、固定材料、同一写作模型与 medium 推理档位。要求恰好四步、约 300–450 个汉字，准确保留安装与激活要点。</li><li>每次独立执行，交替顺序减少固定先后偏差。本次 CLI 禁用插件、关闭用户配置加载和联网搜索，并通过临时 provider 参数固定 HTTPS；不改变用户配置文件。</li><li>两端先做了单独连通性测试，不计入三轮成绩。没有主动启用客户端响应缓存；服务端缓存、排队、网络和后台负载无法完全控制，返回的 token 信息保留在原始 JSON。</li><li>B 改变的是输入资料的筛选流程，不能据此声称“TypeSafe 提升了同一模型的逐 token 生成速度”。最终输出长度与内容差异也会影响结果。</li><li>样本仅三对、主题仅 Ponytail 简短指南；没有完整重跑此前含搜索、设计、HTML 编写与浏览器验证的任务。</li><li>正式运行未记录额外工具调用或网络回退错误；两组均出现技能描述缩短的元数据提示。CLI 固定上下文仍占较多输入 token，详见每次 usage。</li><li>未估算费用：返回 token 用量已保留，但不同服务的实际账户费率与 Codex 订阅计量不能直接相加比较。</li></ul></section>
+<section><h2>Jev 实际保留了哪些资料？</h2><div class="panel scroll"><table><thead><tr><th>运行</th><th>保留段数</th><th>资料标识</th></tr></thead><tbody><tr><td>B1</td><td>6 / 16</td><td>purpose, prerequisites, install, activate, first_task, verification</td></tr><tr><td>B2</td><td>6 / 16</td><td>purpose, prerequisites, install, activate, first_task, verification</td></tr><tr><td>B3</td><td>6 / 16</td><td>purpose, prerequisites, install, activate, first_task, verification</td></tr></tbody></table></div><p class="small">每段的 noul 值与用量保存在 results.json；这些值是模型的相关性判断，不是内容正确率。</p></section>
+<section class="panel"><h2>展开查看真正生成的六份文字</h2><details><summary>A1 · 25.61 秒 · 708 字符 · 展开实际生成内容</summary><pre>1. **了解用途与前提**
+
+   Ponytail 是约束编码助手实现方式的技能／插件：先理解需求，优先复用现有代码、标准库和平台能力，不是业务程序的运行时 SDK。安装前需有可用的 Codex CLI 和 Node.js，可用 `codex --version`、`node --version` 检查，并确保 hook 的 PATH 能找到 `node`。
+
+2. **在终端安装**
+
+   在 Windows 终端依次执行以下两条命令；它们不是聊天框中的 slash 指令。遇到错误应先处理，再继续激活。
+
+   ```powershell
+   codex plugin marketplace add DietrichGebert/ponytail
+   codex plugin add ponytail@ponytail
+   ```
+
+3. **激活并新开任务**
+
+   安装后在终端运行 `codex`，进入交互界面，通过 `/hooks` 查看实际脚本，按界面流程信任。随后重启 Codex 桌面版，在目标项目新开任务，让新会话加载插件。
+
+4. **第一次调用与验证**
+
+   在任务中通过 `@` 查找并选择 Ponytail 技能，首次可单独发送 `@ponytail lite`。这是试用建议，插件缺省为 full。接着提出一个小任务：“先读 AGENTS.md、相关代码和调用处，优先复用，不新增不必要依赖，并运行项目要求的验证。”确认技能可找到、模式符合预期、助手读取实际代码且改动围绕明确需求。安装成功不等于所有 hook 已生效，应检查实际输出，并在实际项目中完成验证。</pre><p class="small">返回用量：{&quot;input_tokens&quot;: 18295, &quot;cached_input_tokens&quot;: 0, &quot;cache_write_input_tokens&quot;: 0, &quot;output_tokens&quot;: 369, &quot;reasoning_output_tokens&quot;: 0}</p></details><details><summary>B1 · 30.10 秒 · 686 字符 · 展开实际生成内容</summary><pre>1. **了解用途与准备环境**
+
+   Ponytail 是编码助手的技能／插件，让助手先理解需求，再优先复用现有代码、标准库和平台能力；它不是业务程序需要调用的运行时 SDK。安装前，确保 Windows 已有可用的 Codex CLI 和 Node.js，并确保 hook 的 PATH 能找到 node。
+
+2. **在终端安装**
+
+   打开终端，依次执行以下两条命令，不要把它们当作聊天中的 slash 指令：
+
+   ```powershell
+   codex plugin marketplace add DietrichGebert/ponytail
+   codex plugin add ponytail@ponytail
+   ```
+
+3. **信任 hook 并激活新任务**
+
+   安装后在终端运行 `codex`，进入交互界面，通过 `/hooks` 查看实际脚本，并按界面流程信任。随后重启 Codex 桌面版，在目标项目中新开任务，让新会话加载插件。
+
+4. **第一次调用与验证**
+
+   在 Codex 中输入 `@`，查找并选择 Ponytail 技能。初次建议单独发送 `@ponytail lite`；lite 适合试用，插件缺省为 full。随后提出一个小任务：先读 AGENTS.md、相关代码和调用处，优先复用，不新增不必要依赖，并运行项目要求的验证。
+
+   确认技能可找到、模式符合预期、助手确实读取实际代码，且改动围绕明确需求。安装成功不等于所有 hook 已生效，应检查实际输出，并在实际项目中完成验证。</pre><p class="small">返回用量：{&quot;input_tokens&quot;: 17646, &quot;cached_input_tokens&quot;: 0, &quot;cache_write_input_tokens&quot;: 0, &quot;output_tokens&quot;: 388, &quot;reasoning_output_tokens&quot;: 28}</p></details><details><summary>B2 · 25.98 秒 · 739 字符 · 展开实际生成内容</summary><pre>1. **了解用途与前提**
+
+   Ponytail 是约束编码助手实现方式的技能／插件：先理解需求，再优先复用现有代码、标准库和平台能力。它不是业务程序调用的运行时 SDK。安装前需有可用的 Codex CLI 和 Node.js，并确保 hook 的 PATH 能找到 node；可用 `codex --version`、`node --version` 检查。
+
+2. **在终端安装**
+
+   在 Windows 终端依次执行以下两条命令；它们不是聊天中的 slash 指令：
+
+   ```powershell
+   codex plugin marketplace add DietrichGebert/ponytail
+   codex plugin add ponytail@ponytail
+   ```
+
+3. **激活并新开任务**
+
+   安装后在终端运行 `codex`，进入交互界面，用 `/hooks` 查看实际脚本，按界面流程信任。随后重启 Codex 桌面版，在目标项目新开任务。当前 hook 配置包含 SessionStart、SubagentStart、UserPromptSubmit 三类事件。
+
+4. **首次调用与验证**
+
+   在新任务中通过 `@` 查找并选择 Ponytail，首次可单独发送 `@ponytail lite`。lite 是试用建议，插件缺省为 full。随后提出一个小任务：先读 AGENTS.md、相关代码及调用处，优先复用，避免不必要依赖，运行项目要求的验证。确认技能可找到、模式符合预期、助手读取实际代码且改动紧扣需求。安装成功不代表所有 hook 已生效，应检查实际输出，并在实际项目中验证。</pre><p class="small">返回用量：{&quot;input_tokens&quot;: 17646, &quot;cached_input_tokens&quot;: 0, &quot;cache_write_input_tokens&quot;: 0, &quot;output_tokens&quot;: 367, &quot;reasoning_output_tokens&quot;: 0}</p></details><details><summary>A2 · 26.36 秒 · 713 字符 · 展开实际生成内容</summary><pre>1. **了解用途与前提**  
+   Ponytail 是约束编码助手实现方式的技能／插件：先理解需求，再优先复用现有代码、标准库和平台能力；它不是业务程序调用的运行时 SDK。Windows 安装前需准备可用的 Codex CLI 和 Node.js，确保 hook 的 PATH 中能找到 node。可在终端用 `codex --version`、`node --version` 检查。
+
+2. **在终端安装**  
+   依次执行以下两条命令，不要把它们当成聊天中的 slash 指令。检查终端结果，确认安装是否成功。
+
+   ```powershell
+   codex plugin marketplace add DietrichGebert/ponytail
+   codex plugin add ponytail@ponytail
+   ```
+
+3. **激活并新开任务**  
+   安装后在终端运行 `codex`，进入交互界面，用 `/hooks` 查看实际脚本并按界面流程信任。随后重启 Codex 桌面版，在目标项目中新开任务。安装成功不代表所有 hook 已生效，需确认实际输出。
+
+4. **第一次调用与验证**  
+   在新任务中通过 `@` 查找并选择 Ponytail，初次可单独发送 `@ponytail lite`；插件缺省为 full。随后提出一个小任务：先读 AGENTS.md、相关代码和调用处，优先复用，不新增不必要依赖，并运行项目要求的验证。确认技能可找到、模式符合预期、助手读取实际代码且改动限于明确需求。务必在实际项目中验证，涉及硬件时保留必要校准与时序要求。</pre><p class="small">返回用量：{&quot;input_tokens&quot;: 18295, &quot;cached_input_tokens&quot;: 0, &quot;cache_write_input_tokens&quot;: 0, &quot;output_tokens&quot;: 380, &quot;reasoning_output_tokens&quot;: 0}</p></details><details><summary>A3 · 23.06 秒 · 687 字符 · 展开实际生成内容</summary><pre>1. **了解用途与准备环境**  
+   Ponytail 是约束编码助手实现方式的技能／插件：先理解需求，再优先复用现有代码、标准库和平台能力，不是业务程序的运行时 SDK。安装前准备可用的 Codex CLI 和 Node.js，在终端用 `codex --version`、`node --version` 检查，并确保 hook 的 PATH 中能找到 `node`。
+
+2. **在终端安装**  
+   依次执行以下两条命令；它们是终端命令，不是聊天中的 slash 指令：
+   ```powershell
+   codex plugin marketplace add DietrichGebert/ponytail
+   codex plugin add ponytail@ponytail
+   ```
+
+3. **激活并新开任务**  
+   安装后在终端运行 `codex`，进入交互界面，通过 `/hooks` 查看实际脚本，按界面流程信任。随后重启 Codex 桌面版，在目标项目中新开任务，让新会话加载插件。
+
+4. **首次调用并验证**  
+   在任务中通过 `@` 查找并选择 Ponytail，初次建议单独发送 `@ponytail lite`；插件缺省模式为 full。再提出一个小任务：“先读 AGENTS.md、相关代码和调用处，优先复用，不新增不必要依赖，运行项目要求的验证。”确认技能可找到、模式符合预期、助手读取了实际代码且改动符合明确需求。安装成功不代表所有 hook 已生效，应检查实际输出，并在实际项目中完成验证。</pre><p class="small">返回用量：{&quot;input_tokens&quot;: 18295, &quot;cached_input_tokens&quot;: 0, &quot;cache_write_input_tokens&quot;: 0, &quot;output_tokens&quot;: 358, &quot;reasoning_output_tokens&quot;: 0}</p></details><details><summary>B3 · 24.52 秒 · 723 字符 · 展开实际生成内容</summary><pre>1. **了解用途与准备环境**
+
+   Ponytail 是约束编码助手实现方式的技能／插件：先理解需求，再优先复用现有代码、标准库和平台能力。它不是业务程序运行时需要调用的 SDK。Windows 安装前，请确认 Codex CLI 和 Node.js 可用，可在终端检查 `codex --version` 与 `node --version`，并确保 hook 的 PATH 能找到 `node`。
+
+2. **在终端安装**
+
+   依次执行以下两条命令；它们是终端命令，不是聊天中的 slash 指令：
+
+   ```powershell
+   codex plugin marketplace add DietrichGebert/ponytail
+   codex plugin add ponytail@ponytail
+   ```
+
+3. **信任 hook 并激活新任务**
+
+   安装后在终端运行 `codex`，进入交互界面，用 `/hooks` 查看实际脚本并按界面流程信任。随后按 README 要求重启 Codex 桌面版，在目标项目新开任务。安装成功不代表所有 hook 已生效，需结合实际输出确认。
+
+4. **第一次调用与验证**
+
+   在新任务中通过 `@` 查找并选择 Ponytail，首次建议单独发送 `@ponytail lite`；`lite` 是试用建议，插件缺省为 `full`。再提出一个小任务：先读 AGENTS.md、相关代码和调用处，优先复用，避免不必要依赖，并运行项目要求的验证。确认技能可找到、模式符合预期、助手读取了实际代码且改动仅覆盖明确需求。务必在实际项目中验证效果。</pre><p class="small">返回用量：{&quot;input_tokens&quot;: 17646, &quot;cached_input_tokens&quot;: 0, &quot;cache_write_input_tokens&quot;: 0, &quot;output_tokens&quot;: 372, &quot;reasoning_output_tokens&quot;: 0}</p></details></section>
+<section><h2>复现与数据</h2><p><a href="benchmark.py">测试脚本</a> · <a href="results.json">逐次结果 JSON</a> · <a href="summary.json">统计摘要</a> · <a href="report.py">报告生成脚本</a></p><pre>python benchmark.py
+python report.py</pre><p class="small">需本机 Codex 已登录且模型可用，以及配置 TYPESAFE_API_KEY。脚本优先读取进程环境，Windows 下缺省读取用户环境；不会在文件里保存 Key。再次执行会覆盖本目录的同名测量结果。</p></section>
+<footer>首次 Jev 连通性探测：1.70 秒，返回 jev-1.13.0。原有第三方写作网关返回 HTTP 503，未计入比较；最初 Codex 的 WebSocket 超时回退记录保存在 <a href="excluded-transport-runs.json">排除记录</a>，固定 HTTPS 后重新测试。官方方法参考：<a href="https://docs.typesafe.ai/cookbooks/rerank_typesafe">资料重排 cookbook</a>。</footer></main></body></html>

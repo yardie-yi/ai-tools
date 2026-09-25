@@ -1,0 +1,16 @@
+{
+  "mobile": {
+    "width": 390,
+    "scroll": 390,
+    "decoration": "none",
+    "chapters": 12
+  },
+  "desktop": {
+    "width": 1440,
+    "scroll": 1440
+  },
+  "ideal": "55 s",
+  "sequential": "105 s",
+  "failure": "阻断完整报告：虽收到 3 份结果，但 B 重复且 C 缺失。数量相等不能证明完整。",
+  "errors": []
+}
