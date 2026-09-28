@@ -1,0 +1,3 @@
+interface:
+  display_name: "bugList-assistant"
+  short_description: "分析 Buglist 缺陷、日志、视频与项目代码"
