@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI 设计与代码同步"
+  short_description: "生成新布局或同步已有 XML、控件与切图"
+  default_prompt: "使用 $ui-design-code-sync 读取 UI 设计链接；新项目生成待确认的候选布局，旧项目按现有控件同步 XML、坐标和切图。"
