@@ -1,0 +1,74 @@
+version: 2
+
+project:
+  name: REPLACE_WITH_PROJECT_NAME
+  domain: embedded-software
+  primary_language: C
+  safety_level: project-defined
+
+skill_system:
+  registry: .agent/skills/registry.yaml
+  default_skill: model-skill # 兼容旧配置；普通任务不自动触发
+  project_config: .evospec/module.config.yaml
+  rules_index: .evospec/rules/INDEX.md
+  unresolved_markers: [REQUIRED, PLACEHOLDER, TODO_CONFIG]
+
+commands:
+  build: ./scripts/build.sh
+  test: ./scripts/test.sh
+  lint: ./scripts/lint.sh
+  verify: ./scripts/verify.sh
+  validate_evospec: ./scripts/validate-evospec.py
+
+retry_budgets:
+  requirement_analysis: 3
+  implementation_tasks: 8
+  bugfix: 4
+  compile_debug: 3
+  test_debug: 3
+  review_fix: 2
+  same_error_before_refresh: 2
+  no_progress_before_refresh: 2
+
+quality_gates:
+  require_requirement_traceability: true
+  require_relevant_verification: true
+  build_when_build_or_integration_affected: true
+  test_when_behavior_affected: true
+  independent_review_for: [safety_critical, cross_module, high_impact]
+  require_skill_preflight_when_skill_used: true
+  unavailable_test_verdict: PASS_WITH_RISK
+
+high_impact_actions:
+  require_explicit_user_authorization:
+    - deploy
+    - push
+    - target_remove
+    - stop_remote_process
+    - overwrite_remote_file
+  default_mode: dry-run
+
+embedded_review_focus:
+  - initialization_order
+  - state_machine_completeness
+  - invalid_state_handling
+  - task_period_and_deadline
+  - interrupt_and_concurrency
+  - timeout_handling
+  - memory_and_stack
+  - dynamic_allocation
+  - api_compatibility
+  - diagnostic_reporting
+  - nvm_and_configuration
+  - hardware_dependency
+
+protected_paths:
+  - .git/
+  - .env
+  - credentials/
+  - secrets/
+
+notes:
+  - "`.agent/project.yaml` 管理 Agent 编排、门禁和重试预算。"
+  - "`.evospec/module.config.yaml` 管理模块、构建、部署、调试和 Git 等项目参数。"
+  - "shell wrapper 位于 scripts/；其真实行为必须与 `.evospec` 配置保持一致。"

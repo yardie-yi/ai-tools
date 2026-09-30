@@ -1,0 +1,91 @@
+version: 2
+
+default_graph: qa
+
+selection_priority:
+  - explicit_user_selection
+  - dominant_task_goal
+  - failure_evidence
+  - requested_edit_scope
+  - skill_auxiliary_intent
+  - fallback
+
+rules:
+  - graph: compile-debug
+    file: .agent/graphs/compile-debug.graph.md
+    edit_mode: controlled
+    choose_when:
+      - 输入包含编译器、链接器、CMake、Make、include、宏或 undefined reference 错误
+      - 用户主要目标是修复构建失败
+
+  - graph: test-debug
+    file: .agent/graphs/test-debug.graph.md
+    edit_mode: controlled
+    choose_when:
+      - 输入包含单元测试、集成测试或 CI 测试失败证据
+      - 构建已通过且主要目标是让测试恢复
+
+  - graph: review
+    file: .agent/graphs/review.graph.md
+    edit_mode: read-only
+    choose_when:
+      - 用户要求 review、审查、audit、风险检查或评估当前 diff
+      - 未要求同时修复
+
+  - graph: requirement
+    file: .agent/graphs/requirement.graph.md
+    edit_mode: read-only
+    choose_when:
+      - 用户要求需求分析、需求变更影响、设计输入分析或实现方案
+      - 用户未要求直接实现
+
+  - graph: development
+    file: .agent/graphs/development.graph.md
+    edit_mode: write
+    choose_when:
+      - 用户要求新增功能、实现模块、生成代码框架或按需求开发
+
+  - graph: bugfix
+    file: .agent/graphs/bugfix.graph.md
+    edit_mode: write
+    choose_when:
+      - 用户描述运行时错误、问题单、日志异常或不符合预期行为
+      - 错误不只是纯编译或纯测试失败
+
+  - graph: refactor
+    file: .agent/graphs/refactor.graph.md
+    edit_mode: write
+    choose_when:
+      - 用户明确要求保持行为不变的重构、拆分、去重或清理
+
+  - graph: docs
+    file: .agent/graphs/docs.graph.md
+    edit_mode: docs-only
+    choose_when:
+      - 用户主要要求 README、设计文档、注释或接口文档变更
+
+  - graph: skill-workflow
+    file: .agent/graphs/skill-workflow.graph.md
+    edit_mode: stage-defined
+    choose_when:
+      - 用户主要目标是普通构建而非修复构建错误
+      - 用户要求推板、部署、ADB/SSH 传输或目标端验证
+      - 用户要求 git commit、push 或提交记录
+      - 用户要求配置驱动的日志/进程/环境检查
+      - 用户要求项目资源、代码架构分析或规则管理
+      - 用户明确要求 model-skill 的辅助阶段，且没有更具体的核心 Graph
+
+  - graph: qa
+    file: .agent/graphs/qa.graph.md
+    edit_mode: read-only
+    choose_when:
+      - 简单解释、查找、比较、总结或无需执行验证的问答
+
+routing_guards:
+  - 用户显式指定 Graph 时优先使用；若与安全边界冲突，说明冲突并选择安全路线。
+  - 用户只显式指定 model-skill 时，仍根据最终目标选择核心 Graph 或 skill-workflow，不机械跳过 Graph Router。
+  - 同时包含开发和编译错误时，通常以 development 为父 Graph，并调用 compile-debug 子图。
+  - 同时包含 Bug 和测试失败时，先判断测试是否只是复现证据；若是，则使用 bugfix 父 Graph。
+  - 普通 build 使用 skill-workflow/build；已有失败证据使用 compile-debug。
+  - deploy、push、远端删除和停止进程必须经过 Skill preflight 与用户授权。
+  - 不因单个关键词机械选图；以用户最终目标和证据类型为准。

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Graph Loop Agent Run State",
+  "type": "object",
+  "required": [
+    "run_id",
+    "task",
+    "routing",
+    "skill",
+    "loop",
+    "verification",
+    "review",
+    "final"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task": {
+      "type": "object"
+    },
+    "routing": {
+      "type": "object",
+      "required": [
+        "selected_graph",
+        "current_node",
+        "status"
+      ]
+    },
+    "loop": {
+      "type": "object"
+    },
+    "verification": {
+      "type": "object"
+    },
+    "review": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "verdict": {
+          "enum": [
+            "NOT_RUN",
+            "PASS",
+            "PASS_WITH_RISK",
+            "FAIL_LOCAL",
+            "FAIL_STRUCTURAL",
+            "NEED_USER_DECISION",
+            "BLOCKED_ENVIRONMENT"
+          ]
+        }
+      }
+    },
+    "final": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "NOT_DONE",
+            "DONE",
+            "DONE_WITH_RISK",
+            "BLOCKED",
+            "CANCELLED"
+          ]
+        }
+      }
+    },
+    "skill": {
+      "type": "object",
+      "required": [
+        "selected_skill",
+        "selected_skill_route",
+        "preflight_status"
+      ],
+      "properties": {
+        "selected_skill": {
+          "type": "string"
+        },
+        "selected_skill_route": {
+          "type": "string"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "loaded_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unresolved_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "preflight_status": {
+          "enum": [
+            "NOT_RUN",
+            "EXECUTABLE",
+            "DRY_RUN_ONLY",
+            "NEED_USER_DECISION",
+            "BLOCKED_ENVIRONMENT"
+          ]
+        }
+      }
+    }
+  }
+}

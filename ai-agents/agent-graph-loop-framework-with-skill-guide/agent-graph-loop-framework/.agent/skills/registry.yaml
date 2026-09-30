@@ -1,0 +1,53 @@
+# Skill 新增与注册说明见 docs/ADDING_SKILLS.md
+# 路径约定：entry/usage/readme/grader/project_config/rules_index/references_root 相对项目根目录；
+# graph_bindings/auxiliary_routes 中的 reference 相对对应 Skill 根目录。
+
+version: 1
+
+# 注册表默认条目仅供显式选择或兼容旧状态；不得据此自动加载 Skill。
+default_skill: model-skill
+
+skills:
+  model-skill:
+    entry: .agent/skills/model-skill/SKILL.md
+    usage: .agent/skills/model-skill/USAGE.md
+    readme: .agent/skills/model-skill/README.md
+    grader: .agent/skills/model-skill/agents/grader.md
+    project_config: .evospec/module.config.yaml
+    rules_index: .evospec/rules/INDEX.md
+    references_root: .agent/skills/model-skill/references
+
+    graph_bindings:
+      requirement:
+        - references/us-requirements.md
+      development:
+        - references/us-feature-dev.md
+      bugfix:
+        - references/us-bug-fix.md
+      compile-debug:
+        - references/us-build.md
+
+    auxiliary_routes:
+      build: references/us-build.md
+      board-deploy: references/us-board-deploy.md
+      git-submit: references/us-git-submit.md
+      debug-commands: references/debug-commands.md
+      project-info: references/project-info.md
+      env-setup: references/env-setup.md
+      code-analysis: references/us-code-analysis.md
+      rules: references/us-rules.md
+
+precedence:
+  - Graph Router selects the macro task route and permissions.
+  - Graph nodes and loops control iteration, verification, review, and refresh behavior.
+  - The selected skill reference defines the stage-specific project workflow.
+  - .evospec/module.config.yaml supplies project-specific values.
+  - .evospec/rules supplies enabled project constraints.
+  - Deterministic verifier evidence overrides worker self-report.
+
+loading_policy:
+  progressive_reading: true
+  load_only_selected_references: true
+  require_config_before_execution: true
+  require_rules_index_before_mutating_actions: true
+  unresolved_markers_block_execution: true

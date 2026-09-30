@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check the active task against AGENTS.md, .agent/project.yaml, the selected graph, selected Skill route, .evospec preflight status, and the run state's definition_of_done. If required configuration, authorization, build/test/review evidence is missing, return {\"ok\": false, \"reason\": \"State exactly what verification or review remains.\"}. If no complex task is active or the conditions are satisfied, return {\"ok\": true}. If completion is impossible because of an external environment blocker, return {\"ok\": false, \"impossible\": true, \"reason\": \"State the blocker and required recovery step.\"}."
+          }
+        ]
+      }
+    ]
+  }
+}

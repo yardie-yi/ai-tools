@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '%s\\n' 'After compaction, re-read AGENTS.md, .agent/protocol.md, the selected graph, Skill registry/reference, relevant .evospec config/rules, and the active run state before continuing.'"
+          }
+        ]
+      }
+    ]
+  }
+}

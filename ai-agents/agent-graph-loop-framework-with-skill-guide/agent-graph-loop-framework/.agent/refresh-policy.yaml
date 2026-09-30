@@ -1,0 +1,45 @@
+version: 2
+
+refresh_triggers:
+  - id: retry_budget_exhausted
+    condition: current_loop_iteration >= configured_max_iterations
+    action: spawn_fresh_same_role
+
+  - id: repeated_error
+    condition: same_normalized_error_signature_count >= 2
+    action: spawn_fresh_debugger
+
+  - id: no_measurable_progress
+    condition: no_progress_iterations >= 2
+    action: stop_original_agent_and_reassess
+
+  - id: structural_review_failure
+    condition: reviewer_verdict == FAIL_STRUCTURAL
+    action: return_to_plan_and_spawn_fresh_implementer
+
+  - id: expanding_scope_without_gain
+    condition: changed_file_scope_increases AND verification_does_not_improve
+    action: freeze_changes_and_spawn_fresh_reviewer
+
+  - id: context_pollution
+    condition: agent_cannot_summarize_current_root_cause_or_repeats_discarded_hypotheses
+    action: compact_handoff_and_spawn_fresh_agent
+
+  - id: evidence_conflict
+    condition: verifier_and_reviewer_or_two_reviewers_reach_materially_conflicting_conclusions
+    action: spawn_second_reviewer_or_request_user_decision
+
+same_agent_allowed_when:
+  - verdict == FAIL_LOCAL
+  - retry_budget_remaining
+  - error_signature_changed_or_progress_measurable
+  - fix_scope_is_local
+
+never_refresh_blindly_when:
+  - requirement_has_two_valid_product_interpretations
+  - decision_changes_public_api_or_backward_compatibility
+  - safety_or_regulatory_decision_requires_owner_approval
+  - physical_hardware_or_external_service_is_required
+  - required_evospec_value_or_high_impact_authorization_is_missing
+
+handoff_template: .agent/prompts/fresh-agent-handoff.md

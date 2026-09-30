@@ -1,0 +1,98 @@
+{
+  "run_id": "",
+  "created_at": "",
+  "updated_at": "",
+  "task": {
+    "goal": "",
+    "user_request": "",
+    "constraints": [],
+    "assumptions": [],
+    "definition_of_done": []
+  },
+  "routing": {
+    "selected_graph": "",
+    "selection_reason": "",
+    "current_node": "",
+    "next_node": "",
+    "status": "ACTIVE"
+  },
+  "skill": {
+    "selected_skill": "",
+    "selected_skill_route": "",
+    "entry": "",
+    "references": [],
+    "project_config": ".evospec/module.config.yaml",
+    "rules_index": ".evospec/rules/INDEX.md",
+    "loaded_rules": [],
+    "unresolved_fields": [],
+    "preflight_status": "NOT_RUN"
+  },
+  "loop": {
+    "type": "",
+    "iteration": 0,
+    "max_iterations": 0,
+    "stop_condition": "",
+    "last_action": "",
+    "last_verification": "",
+    "last_error_signature": "",
+    "same_error_count": 0,
+    "no_progress_count": 0
+  },
+  "context": {
+    "files_inspected": [],
+    "symbols": [],
+    "requirements": [],
+    "unknowns": []
+  },
+  "plan": {
+    "status": "NOT_STARTED",
+    "tasks": [],
+    "risks": [],
+    "rollback": ""
+  },
+  "implementation": {
+    "changed_files": [],
+    "completed_tasks": [],
+    "remaining_tasks": []
+  },
+  "verification": {
+    "build": {
+      "status": "NOT_RUN",
+      "command": "",
+      "exit_code": null,
+      "evidence": ""
+    },
+    "test": {
+      "status": "NOT_RUN",
+      "command": "",
+      "exit_code": null,
+      "evidence": ""
+    },
+    "lint": {
+      "status": "NOT_RUN",
+      "command": "",
+      "exit_code": null,
+      "evidence": ""
+    },
+    "reproduction": {
+      "status": "NOT_RUN",
+      "evidence": ""
+    }
+  },
+  "review": {
+    "required": false,
+    "reviewer_id": "",
+    "attempt": 0,
+    "verdict": "NOT_RUN",
+    "blocking_findings": [],
+    "non_blocking_findings": [],
+    "risks": []
+  },
+  "refresh_history": [],
+  "final": {
+    "status": "NOT_DONE",
+    "summary": "",
+    "remaining_risks": [],
+    "blockers": []
+  }
+}

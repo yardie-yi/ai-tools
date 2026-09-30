@@ -1,0 +1,53 @@
+version: 2
+
+allowed_verdicts:
+  PASS:
+    meaning: 所有强制门禁通过，无 blocking finding。
+    route: next_or_done
+
+  PASS_WITH_RISK:
+    meaning: 核心目标达到，但有未验证环境、非阻断风险或无法运行的检查。
+    route: coordinator_accept_or_user_decision
+
+  FAIL_LOCAL:
+    meaning: 方向正确，存在局部可修复问题。
+    route: same_agent_fix_within_budget
+
+  FAIL_STRUCTURAL:
+    meaning: 需求理解、架构、状态机、接口或整体方案错误。
+    route: return_to_plan_and_refresh_implementer
+
+  NEED_USER_DECISION:
+    meaning: 存在无法从项目证据解决的产品、需求、风险或兼容性选择。
+    route: ask_one_blocking_question
+
+  BLOCKED_ENVIRONMENT:
+    meaning: 缺少工具链、硬件、权限、服务、密钥或外部依赖。
+    route: report_blocker_and_recovery_steps
+
+required_fields:
+  - verdict
+  - summary
+  - evidence
+  - blocking_findings
+  - non_blocking_findings
+  - residual_risks
+  - recommended_route
+
+finding_fields:
+  - severity
+  - file
+  - symbol
+  - issue
+  - evidence
+  - violated_requirement
+  - suggested_direction
+
+rules:
+  - build_or_required_test_failure_cannot_be_PASS
+  - worker_self_report_is_not_independent_evidence
+  - no_blocking_finding_for_PASS
+  - unavailable_required_verification_must_be_risk_or_blocked
+  - unresolved_required_config_cannot_be_PASS_for_affected_stage
+  - high_impact_action_without_explicit_authorization_cannot_execute
+

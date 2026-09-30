@@ -1,0 +1,8 @@
+.agent/runs/*.json
+!.agent/runs/.gitkeep
+.agent/logs/
+build/
+.codex-log/
+.claude/settings.local.json
+__pycache__/
+*.pyc
