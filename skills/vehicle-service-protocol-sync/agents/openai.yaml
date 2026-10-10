@@ -1,0 +1,4 @@
+interface:
+  display_name: "车辆服务协议同步"
+  short_description: "同步飞书接口表、导出生成代码并完成 sa8775 编译"
+  default_prompt: "使用 $vehicle-service-protocol-sync 同步 Vehicle Service 协议表、生成代码并完成 sa8775 编译。"
