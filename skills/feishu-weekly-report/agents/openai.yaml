@@ -1,0 +1,4 @@
+interface:
+  display_name: "飞书周报与工时填报"
+  short_description: "汇总工作记录，通过飞书CLI更新周报与工时，支持首次配置和授权引导"
+  default_prompt: "请使用 $feishu-weekly-report 整理本周工作记录，更新飞书工作周报及工时填报，并核验写入结果。"

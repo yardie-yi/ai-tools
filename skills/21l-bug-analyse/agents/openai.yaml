@@ -1,4 +1,4 @@
 interface:
   display_name: "21L Bug Analyse"
   short_description: "Analyze 21L DLT logs and verify findings with Jev"
-  default_prompt: "Analyze this 21L bug using the issue description, DLT logs, source code, and TypeSafe Jev verification."
+  default_prompt: "Use $21l-bug-analyse to investigate this 21L issue with calibrated logs, source code and TypeSafe Jev verification under the current task constraints."

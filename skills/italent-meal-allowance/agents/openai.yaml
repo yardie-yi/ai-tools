@@ -1,0 +1,4 @@
+interface:
+  display_name: "iTalent Meal Allowance"
+  short_description: "Verify iTalent attendance and append Feishu meal claims"
+  default_prompt: "Use $italent-meal-allowance to verify last month’s attendance, show eligible dates and the total allowance, and append missing records to my Feishu spreadsheet."
