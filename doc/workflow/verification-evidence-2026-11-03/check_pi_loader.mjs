@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { realpathSync } from 'node:fs';
+import { loadSkills, formatSkillsForPrompt } from '/home/yardie/.nvm/versions/node/v24.19.0/lib/node_modules/@earendil-works/pi-coding-agent/dist/core/skills.js';
+const result = loadSkills({cwd:'/home/yardie/Desktop/persional/ai-tool',agentDir:'/home/yardie/.pi/agent',skillPaths:[],includeDefaults:true});
+const matches = result.skills.filter(s => s.name === 'verification');
+assert.equal(matches.length,1);
+assert.equal(realpathSync(matches[0].filePath),'/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification/SKILL.md');
+const diagnostics = result.diagnostics.filter(d => d.path?.includes('/verification/'));
+assert.deepEqual(diagnostics,[]);
+assert.ok(formatSkillsForPrompt(matches).includes('<name>verification</name>'));
+console.log(JSON.stringify({result:'PASS',verification_skills:matches.length,skill_file:matches[0].filePath,diagnostics,scope:'Pi native discovery and prompt metadata; no model inference'},null,2));

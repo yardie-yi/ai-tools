@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verification"
+  short_description: "以可复现命令、真实运行结果和回读证据验证当前交付，明确尚未验证的边界"
+  default_prompt: "使用 $verification 验证当前任务，执行适当检查并提供证据与未验证项。"

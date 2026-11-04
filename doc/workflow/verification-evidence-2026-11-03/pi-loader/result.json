@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "argv": [
+    "node",
+    "doc/workflow/verification-evidence-2026-11-03/check_pi_loader.mjs"
+  ],
+  "cwd": "/home/yardie/Desktop/persional/ai-tool/ai-tools",
+  "started_at_utc": "2026-11-03T07:04:26.839186+00:00",
+  "inputs_before": [
+    {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification/SKILL.md",
+      "sha256": "f4e775ad0405e4df2ddcfb561492059396d39bf2a52389e1d63a504288ee85a6",
+      "size_bytes": 6599
+    }
+  ],
+  "returncode": 0,
+  "outcome": "command_succeeded",
+  "interrupted": false,
+  "ended_at_utc": "2026-11-03T07:04:27.022454+00:00",
+  "elapsed_seconds": 0.183267,
+  "inputs_after": [
+    {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification/SKILL.md",
+      "sha256": "f4e775ad0405e4df2ddcfb561492059396d39bf2a52389e1d63a504288ee85a6",
+      "size_bytes": 6599
+    }
+  ],
+  "logs": {
+    "stdout": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/pi-loader/stdout.log",
+      "sha256": "f1863de40fa41294b6fea3f525f165c59c9430d3111da7400de090d58813a01a",
+      "size_bytes": 217
+    },
+    "stderr": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/pi-loader/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    }
+  }
+}

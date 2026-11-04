@@ -1,0 +1,73 @@
+{
+  "scan_command": "python /tmp/verification-research/codex-scan.py",
+  "started_utc": "2026-11-03T06:57:20.254639+00:00",
+  "scope": "Local Codex only; complete programmatic traversal, representative semantic reading only",
+  "files_discovered": 131,
+  "session_files": 128,
+  "archived_files": 3,
+  "extra_files_from_state": 0,
+  "state_threads": 115,
+  "missing_state_rollouts": [],
+  "files_scanned": 131,
+  "lines_scanned": 42733,
+  "parse_errors": [],
+  "types": {
+    "session_meta": 156,
+    "event_msg": 19136,
+    "response_item": 16860,
+    "world_state": 355,
+    "turn_context": 638,
+    "token_usage_record": 5088,
+    "compacted": 38,
+    "inter_agent_communication_metadata": 462
+  },
+  "roles": {
+    "developer": 841,
+    "user": 778,
+    "assistant": 1495
+  },
+  "user_deduplicated": 439,
+  "user_relevant": 85,
+  "current_research_excluded_records": 58,
+  "template_excluded_records": 235,
+  "matched_records": 3067,
+  "excluded_current_research_files": [
+    "/home/yardie/.codex/sessions/2026/11/03/rollout-2026-11-03T14-52-11-01a1a02d-ffb7-7203-95f8-9eb70c7db02d.jsonl",
+    "/home/yardie/.codex/sessions/2026/11/03/rollout-2026-11-03T14-52-36-01a1a02e-5fc1-7ac2-8013-39e7046920a0.jsonl",
+    "/home/yardie/.codex/sessions/2026/11/03/rollout-2026-11-03T14-53-03-01a1a02e-ca3a-7140-9c19-987d241e7778.jsonl",
+    "/home/yardie/.codex/sessions/2026/11/03/rollout-2026-11-03T14-53-13-01a1a02e-f332-7d81-a9be-b3a125112a04.jsonl",
+    "/home/yardie/.codex/sessions/2026/11/03/rollout-2026-11-03T14-53-32-01a1a02d-ffb7-7203-95f8-9eb70c7db02d_01a1a02f-3d4b-76f3-b4b2-ac1d3a8aebbe.jsonl"
+  ],
+  "min_timestamp": "2026-08-04T08:31:28.806Z",
+  "max_timestamp": "2026-11-03T06:57:39.407Z",
+  "history.jsonl": {
+    "exists": true,
+    "records": 1,
+    "parse_errors": []
+  },
+  "session_index.jsonl": {
+    "exists": true,
+    "records": 108,
+    "parse_errors": []
+  },
+  "thread_history": {
+    "items": 11952,
+    "threads": 128,
+    "types": {
+      "agentMessage": 1445,
+      "collabAgentToolCall": 40,
+      "commandExecution": 4493,
+      "contextCompaction": 33,
+      "fileChange": 263,
+      "imageView": 238,
+      "mcpToolCall": 156,
+      "reasoning": 4091,
+      "sleep": 14,
+      "subAgentActivity": 473,
+      "userMessage": 425,
+      "webSearch": 281
+    },
+    "parse_errors": [],
+    "additional_user_matches": 0
+  }
+}

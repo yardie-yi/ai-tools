@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "argv": [
+    "python3",
+    "-B",
+    "check.py"
+  ],
+  "cwd": "/tmp/verification-eval-writeback",
+  "started_at_utc": "2026-11-03T07:06:08.274027+00:00",
+  "inputs_before": [
+    {
+      "path": "/tmp/verification-eval-writeback/source.json",
+      "sha256": "7d0e332fee6bcccd986a1249b967791d9a987b4d4dc072cb35cd082839a0f179",
+      "size_bytes": 96
+    },
+    {
+      "path": "/tmp/verification-eval-writeback/before.json",
+      "sha256": "286cafff02fcfe4b5d6807bf368d26fc1db644e761b9dfb5476219b74221c07c",
+      "size_bytes": 59
+    },
+    {
+      "path": "/tmp/verification-eval-writeback/readback.json",
+      "sha256": "e0a0d80ba12b8d8e7c486b178de1ed19a571855595f227b2d8815b69314aa597",
+      "size_bytes": 173
+    },
+    {
+      "path": "/tmp/verification-eval-writeback/write-response.json",
+      "sha256": "aac12d9c2855e76c2048bb6f0ca3f7b090cb073a3e2cdf597377208c32b77b09",
+      "size_bytes": 69
+    },
+    {
+      "path": "/tmp/verification-eval-writeback/check.py",
+      "sha256": "d0b8ed90bfb0b2b49971033cee69baef01ddbd687bfa9b2acf68609874615fbf",
+      "size_bytes": 4272
+    }
+  ],
+  "returncode": 1,
+  "outcome": "command_failed",
+  "interrupted": false,
+  "ended_at_utc": "2026-11-03T07:06:08.311285+00:00",
+  "elapsed_seconds": 0.037256,
+  "inputs_after": [
+    {
+      "path": "/tmp/verification-eval-writeback/source.json",
+      "sha256": "7d0e332fee6bcccd986a1249b967791d9a987b4d4dc072cb35cd082839a0f179",
+      "size_bytes": 96
+    },
+    {
+      "path": "/tmp/verification-eval-writeback/before.json",
+      "sha256": "286cafff02fcfe4b5d6807bf368d26fc1db644e761b9dfb5476219b74221c07c",
+      "size_bytes": 59
+    },
+    {
+      "path": "/tmp/verification-eval-writeback/readback.json",
+      "sha256": "e0a0d80ba12b8d8e7c486b178de1ed19a571855595f227b2d8815b69314aa597",
+      "size_bytes": 173
+    },
+    {
+      "path": "/tmp/verification-eval-writeback/write-response.json",
+      "sha256": "aac12d9c2855e76c2048bb6f0ca3f7b090cb073a3e2cdf597377208c32b77b09",
+      "size_bytes": 69
+    },
+    {
+      "path": "/tmp/verification-eval-writeback/check.py",
+      "sha256": "d0b8ed90bfb0b2b49971033cee69baef01ddbd687bfa9b2acf68609874615fbf",
+      "size_bytes": 4272
+    }
+  ],
+  "logs": {
+    "stdout": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/integration-writeback/stdout.log",
+      "sha256": "bdf0414d8df893c0ff5039ca5d9102083eea13499da292f138954efc787d5726",
+      "size_bytes": 3062
+    },
+    "stderr": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/integration-writeback/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    }
+  }
+}

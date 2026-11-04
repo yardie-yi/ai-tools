@@ -1,0 +1,53 @@
+PASS gardener quote read 982 characters
+To view keyboard shortcuts, press question mark
+View keyboard shortcuts
+Post
+See new posts
+Conversation
+lauren
+@poteto
+Subscribe
+every team needs a gardener. someone quietly watching the stream of PRs flowing into your codebase, noticing the smells: the third isRecord this week, the lint suppressions creeping like ivy across your carefully planned garden. a steady hand tending the weeds that would engulf it in slop if left unchecked.
+
+with careful grooming it stays a garden. every weed you pull becomes a rule, so it can't grow back. without that, it's just whatever grew.
+Quote
+lauren
+@poteto
+·
+Jul 19
+organic architecture
+good codebases have always had strong foundations and constraints. these files go here. this kind of code goes there. the codebase is held together either by catering to the lowest common denominator developer using conventional frameworks and languages, or
+5:08 AM · Aug 21, 2026
+·
+200K
+ Views
+39
+79
+842
+407
+Relevant
+View quotes
+Post your reply
+
+
+Reply
+PASS original X article contains opening, closing, date and all 14 unique body link URLs
+CAPTURE browser-article.json chars=19329 sha256=f0b281fe540bd81b01a4e22fde71bbfc7a62a9b5c64af93641039c38be9a96a5 url=https://x.com/poteto/status/2094457600259842065
+CAPTURE browser-atlas-skill.json chars=5597 sha256=6dad8081a07b41d424b7092691a75eec6c82fae358214a748b852e471016c795 url=https://github.com/poteto/verification-skill-example/blob/main/.cursor/skills/verify-atlas/SKILL.md
+CAPTURE browser-automations.json chars=17234 sha256=564daa8149e36a3c8eb1d420d5c1f35d74fe4f1e4851d725eee7b82d97e77b13 url=https://cursor.com/docs/cloud-agent/automations
+CAPTURE browser-build-lever.json chars=2668 sha256=952febe0b46d1a4e794f58c808cfc2e78431d78de7c1777997f2e6af56a16ead url=https://github.com/cursor/plugins/blob/main/pstack/skills/principle-build-the-lever/SKILL.md
+CAPTURE browser-builds.json chars=9293 sha256=3768d445906d38da4588b7cf954281c4bfabfeb394b1dbb41eff57cd347e181f url=https://cursor.com/docs/cloud-agent/builds
+CAPTURE browser-cdp.json chars=15265 sha256=27b7faede8fad8a31e906eb7c6c95007acf49178b9bfac98e9b3965a793734d3 url=https://chromedevtools.github.io/devtools-protocol/
+CAPTURE browser-cloud-agents.json chars=7970 sha256=3c5ced4e9844f1ce71dc97ded5bba14654d88faf53e9fa5f6c052fb42c4c7d53 url=https://cursor.com/docs/cloud-agent
+CAPTURE browser-create-verification.json chars=6809 sha256=a4ba3a39aa25903642dcbf63b5d65df98fc706f0cf5a9086c93e15e57b28aea6 url=https://github.com/cursor/plugins/blob/main/pstack/skills/create-verification-skill/SKILL.md
+CAPTURE browser-custom-modes.json chars=2729 sha256=b1a739a9f1fefb4a5c77111a0d2d4b46915ac9a09849e79ad6fa359930ef9ee7 url=https://cursor.com/changelog/08-19-26#custom-modes
+CAPTURE browser-dr-eggbot.json chars=1007 sha256=24924e311b8ee3c31b7b415ed18c29a79482acf81047fd3700824a2028d5c1cf url=https://x.ai/bot/93gOz3op1UQdBdbekQFLK
+CAPTURE browser-example.json chars=2700 sha256=79e66c0642f62a4172e5bc9fd23c7d50a84f0c9c12b5955f6432fd2dd6d0088b url=https://github.com/poteto/verification-skill-example
+CAPTURE browser-feature-map.json chars=5585 sha256=92f5bf824d40ba227dedf8e82b80f233db0f1e7404ff634bce758674612bfa2a url=https://github.com/poteto/verification-skill-example/blob/main/.cursor/skills/verify-atlas/references/features/README.md
+CAPTURE browser-gardener.json chars=982 sha256=1d9686c6329c68dd95461f2b046b3f57e3282fc33cc09ae84613ab53b7ab034f url=https://x.com/poteto/status/2090546476464451907
+CAPTURE browser-grok-plugin.json chars=739 sha256=d5bfac160241973a631563ea4e77496e9288a989e366f3fdbc0ee69fffcbe250 url=https://x.ai/bot/plugin/9717366
+CAPTURE browser-loops.json chars=17594 sha256=2f469d820d2b474a5bbc6014fc4ee94253f8c4413b92b7460743458b7064b45b url=https://x.com/poteto/status/2069824386283319343
+CAPTURE browser-maintain-verification.json chars=5232 sha256=d172f1b8d9dff8e0dacce0a916ee27782948fceaa734d4b695f797dde0ba1fde url=https://github.com/cursor/plugins/blob/main/pstack/skills/maintain-verification-skill/SKILL.md
+CAPTURE browser-pstack.json chars=8621 sha256=108c4118b8ffbdc5c271b0718e5e99fc2f94a9c6b950d9f5a834cd465d9ca09c url=https://github.com/cursor/plugins/tree/main/pstack
+CAPTURE browser-swarm.json chars=3061 sha256=596d73232f7cd5ee6304d887ddc7e2ba25ff0420f671cfc5dd1418523504267f url=https://github.com/cursor/plugins/blob/main/pstack/skills/swarm/SKILL.md
+PASS all 18 browser captures contain >500 characters

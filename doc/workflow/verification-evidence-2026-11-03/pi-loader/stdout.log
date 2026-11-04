@@ -1,0 +1,7 @@
+{
+  "result": "PASS",
+  "verification_skills": 1,
+  "skill_file": "/home/yardie/.pi/agent/skills/verification/SKILL.md",
+  "diagnostics": [],
+  "scope": "Pi native discovery and prompt metadata; no model inference"
+}

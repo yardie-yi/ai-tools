@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "verify_contract"
+  ],
+  "cwd": "/tmp/verification-eval-code",
+  "started_at_utc": "2026-11-03T07:06:08.126615+00:00",
+  "inputs_before": [
+    {
+      "path": "/tmp/verification-eval-code/CONTRACT.md",
+      "sha256": "0c071c615fd0c6c28356a6808cfbe882e771bf295385fba959eb0c5d0b44cf99",
+      "size_bytes": 360
+    },
+    {
+      "path": "/tmp/verification-eval-code/codec.py",
+      "sha256": "8d9f4ffd5cbed01fad9cdfaea431d32373bbd99fc43b42189f5799c17362010c",
+      "size_bytes": 202
+    },
+    {
+      "path": "/tmp/verification-eval-code/test_codec.py",
+      "sha256": "4232a3d193ffb70d5a6a46d66b1d8b031904e922fda8d732a08e11b7e9677bd4",
+      "size_bytes": 426
+    },
+    {
+      "path": "/tmp/verification-eval-code/verify_contract.py",
+      "sha256": "dd0fa02d74bc664440be201bd5331b4e7856fd603b2615c5643552b0bfbe0b42",
+      "size_bytes": 1532
+    }
+  ],
+  "returncode": 1,
+  "outcome": "command_failed",
+  "interrupted": false,
+  "ended_at_utc": "2026-11-03T07:06:08.193396+00:00",
+  "elapsed_seconds": 0.066753,
+  "inputs_after": [
+    {
+      "path": "/tmp/verification-eval-code/CONTRACT.md",
+      "sha256": "0c071c615fd0c6c28356a6808cfbe882e771bf295385fba959eb0c5d0b44cf99",
+      "size_bytes": 360
+    },
+    {
+      "path": "/tmp/verification-eval-code/codec.py",
+      "sha256": "8d9f4ffd5cbed01fad9cdfaea431d32373bbd99fc43b42189f5799c17362010c",
+      "size_bytes": 202
+    },
+    {
+      "path": "/tmp/verification-eval-code/test_codec.py",
+      "sha256": "4232a3d193ffb70d5a6a46d66b1d8b031904e922fda8d732a08e11b7e9677bd4",
+      "size_bytes": 426
+    },
+    {
+      "path": "/tmp/verification-eval-code/verify_contract.py",
+      "sha256": "dd0fa02d74bc664440be201bd5331b4e7856fd603b2615c5643552b0bfbe0b42",
+      "size_bytes": 1532
+    }
+  ],
+  "logs": {
+    "stdout": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/integration-code/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stderr": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/integration-code/stderr.log",
+      "sha256": "a77beaab4763f7e9d8e8f808c173e97c2f67e5634e626012763dfaa27d2c3a3d",
+      "size_bytes": 3306
+    }
+  }
+}

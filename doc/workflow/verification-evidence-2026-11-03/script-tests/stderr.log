@@ -1,0 +1,18 @@
+test_argv_is_literal_and_not_shell_interpreted (test_record_check.RecordCheckTests.test_argv_is_literal_and_not_shell_interpreted) ... ok
+test_evidence_directory_and_files_are_private (test_record_check.RecordCheckTests.test_evidence_directory_and_files_are_private) ... ok
+test_existing_output_is_not_overwritten_or_executed (test_record_check.RecordCheckTests.test_existing_output_is_not_overwritten_or_executed) ... ok
+test_input_changes_are_visible_in_both_fingerprints (test_record_check.RecordCheckTests.test_input_changes_are_visible_in_both_fingerprints) ... ok
+test_input_symlink_retargeting_is_visible (test_record_check.RecordCheckTests.test_input_symlink_retargeting_is_visible) ... ok
+test_interrupt_records_failure_and_stops_direct_child (test_record_check.RecordCheckTests.test_interrupt_records_failure_and_stops_direct_child) ... ok
+test_large_binary_logs_are_complete_and_hashes_detect_change (test_record_check.RecordCheckTests.test_large_binary_logs_are_complete_and_hashes_detect_change) ... ok
+test_missing_executable_records_launch_error (test_record_check.RecordCheckTests.test_missing_executable_records_launch_error) ... ok
+test_missing_input_rejects_before_command_or_output_creation (test_record_check.RecordCheckTests.test_missing_input_rejects_before_command_or_output_creation) ... ok
+test_nonzero_is_preserved_with_evidence (test_record_check.RecordCheckTests.test_nonzero_is_preserved_with_evidence) ... ok
+test_removed_input_is_recorded_without_losing_command_result (test_record_check.RecordCheckTests.test_removed_input_is_recorded_without_losing_command_result) ... ok
+test_special_file_input_is_rejected_without_opening (test_record_check.RecordCheckTests.test_special_file_input_is_rejected_without_opening) ... ok
+test_success_records_actual_outputs_and_metadata (test_record_check.RecordCheckTests.test_success_records_actual_outputs_and_metadata) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.233s
+
+OK

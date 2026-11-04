@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "argv": [
+    "python3",
+    "-B",
+    "doc/workflow/verification-evidence-2026-11-03/check_skill.py"
+  ],
+  "cwd": "/home/yardie/Desktop/persional/ai-tool/ai-tools",
+  "started_at_utc": "2026-11-03T07:04:27.191417+00:00",
+  "inputs_before": [
+    {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification/agents/openai.yaml",
+      "sha256": "575a0182330be902bc33d5d7b44b6dcf9192ba0a305184302902b4a5b4855b35",
+      "size_bytes": 282
+    }
+  ],
+  "returncode": 0,
+  "outcome": "command_succeeded",
+  "interrupted": false,
+  "ended_at_utc": "2026-11-03T07:04:27.239700+00:00",
+  "elapsed_seconds": 0.048287,
+  "inputs_after": [
+    {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification/agents/openai.yaml",
+      "sha256": "575a0182330be902bc33d5d7b44b6dcf9192ba0a305184302902b4a5b4855b35",
+      "size_bytes": 282
+    }
+  ],
+  "logs": {
+    "stdout": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/references-install/stdout.log",
+      "sha256": "68371fa0916802cbfebcea84dad16a16638e40bf778cdba4a1a4dae29bffe962",
+      "size_bytes": 99
+    },
+    "stderr": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/references-install/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    }
+  }
+}

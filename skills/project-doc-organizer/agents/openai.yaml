@@ -1,0 +1,4 @@
+interface:
+  display_name: "项目文档整理与知识库"
+  short_description: "沿指定来源递归去重，生成开发短摘要、任务路由及可追溯知识库"
+  default_prompt: "使用 $project-doc-organizer 递归整理指定文档及其引用附件，保留开发常用信息，生成短摘要、任务路由和必要缺口，在项目中维护知识库；代码核验按本次范围开展。"

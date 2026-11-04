@@ -1,0 +1,30 @@
+{
+  "started_at": "2026-11-03T15:01:40.603377+08:00",
+  "finished_at": "2026-11-03T15:01:40.606088+08:00",
+  "cwd": "/tmp/verification-eval-code",
+  "argv": [
+    "python3",
+    "--version"
+  ],
+  "command": "python3 --version",
+  "collector_python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "duration_seconds": 0.00787273800233379,
+  "input_sha256_before": {
+    "codec.py": "8d9f4ffd5cbed01fad9cdfaea431d32373bbd99fc43b42189f5799c17362010c",
+    "test_codec.py": "4232a3d193ffb70d5a6a46d66b1d8b031904e922fda8d732a08e11b7e9677bd4",
+    "CONTRACT.md": "0c071c615fd0c6c28356a6808cfbe882e771bf295385fba959eb0c5d0b44cf99",
+    "verify_contract.py": "dd0fa02d74bc664440be201bd5331b4e7856fd603b2615c5643552b0bfbe0b42",
+    "collect_evidence.py": "1172099bffa3dcd5622cf3274a2e1031f9c9c179e8c5803e41beb0d9adcd8054"
+  },
+  "input_sha256_after": {
+    "codec.py": "8d9f4ffd5cbed01fad9cdfaea431d32373bbd99fc43b42189f5799c17362010c",
+    "test_codec.py": "4232a3d193ffb70d5a6a46d66b1d8b031904e922fda8d732a08e11b7e9677bd4",
+    "CONTRACT.md": "0c071c615fd0c6c28356a6808cfbe882e771bf295385fba959eb0c5d0b44cf99",
+    "verify_contract.py": "dd0fa02d74bc664440be201bd5331b4e7856fd603b2615c5643552b0bfbe0b42",
+    "collect_evidence.py": "1172099bffa3dcd5622cf3274a2e1031f9c9c179e8c5803e41beb0d9adcd8054"
+  },
+  "exit_code": 0,
+  "stdout": "Python 3.14.4\n",
+  "stderr": ""
+}

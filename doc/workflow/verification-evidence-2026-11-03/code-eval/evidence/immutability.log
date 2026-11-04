@@ -1,0 +1,4 @@
+IMMUTABLE_INPUTS_VERIFIED: 3/3 SHA-256 unchanged across all verification commands
+codec.py 8d9f4ffd5cbed01fad9cdfaea431d32373bbd99fc43b42189f5799c17362010c
+test_codec.py 4232a3d193ffb70d5a6a46d66b1d8b031904e922fda8d732a08e11b7e9677bd4
+CONTRACT.md 0c071c615fd0c6c28356a6808cfbe882e771bf295385fba959eb0c5d0b44cf99

@@ -1,0 +1,49 @@
+{
+  "pi": {
+    "files": 50,
+    "bytes": 101383263,
+    "records": 11605,
+    "roles": {
+      "system": 98,
+      "user": 422,
+      "assistant": 4328,
+      "toolResult": 5793
+    },
+    "types": {
+      "session": 50,
+      "model_change": 95,
+      "thinking_level_change": 154,
+      "message": 10641,
+      "custom": 497,
+      "compaction": 29,
+      "context_edit": 94,
+      "custom_message": 32,
+      "session_info": 13
+    },
+    "errors": [],
+    "nested_subagent_files": 11,
+    "time_min": "2026-09-25T01:28:25.297Z",
+    "time_max": "2026-11-03T06:28:34.063Z",
+    "nested_subagent_user_role_messages": 16,
+    "top_level_user_role_messages": 406
+  },
+  "vscode": {
+    "files": 34,
+    "bytes": 19574,
+    "records": 34,
+    "errors": [],
+    "kinds": {
+      "0": 27,
+      "snapshot": 7
+    },
+    "nonempty_requests": 0,
+    "time_min": "2025-12-04T03:19:37.626000+00:00",
+    "time_max": "2026-11-02T03:25:11.975000+00:00"
+  },
+  "claude": {
+    "sessions_exists": true,
+    "sessions_files": 0,
+    "projects_exists": false
+  }
+}
+hits 3032 users 422 vsc_hits 0

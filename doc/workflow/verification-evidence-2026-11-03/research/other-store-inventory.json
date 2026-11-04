@@ -1,0 +1,451 @@
+[
+  {
+    "root": "/home/yardie/.aider-desk",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.augment",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.autohand",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.codeartsdoer",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.codebuddy",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.codeium",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.codemaker",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.codestudio",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.commandcode",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.continue",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.copilot",
+    "exists": true,
+    "metadata_files_visited": 2,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.cursor",
+    "exists": true,
+    "metadata_files_visited": 1,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.cursor-server",
+    "exists": true,
+    "metadata_files_visited": 59,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.forge",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.gemini",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.grok",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.hermes",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.iflow",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.jazz",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.junie",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.kiro",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.kode",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.lingma",
+    "exists": true,
+    "metadata_files_visited": 12,
+    "candidate_names": [
+      "index/meta/v7/index.db",
+      "index/chat/v4/ite_sdk_bb5bf5daa17fd42ff9348fd9b621baab/index_meta.json",
+      "index/chat/v4/ite_sdk_bb5bf5daa17fd42ff9348fd9b621baab/store/root.bolt",
+      "index/chat/v4/ite_sdk_bb5bf5daa17fd42ff9348fd9b621baab/store/00000000021b.zap"
+    ],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.minimax",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.moxby",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.mux",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.neovate",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.ona",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.openclaw",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.openhands",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.pochi",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.qoder",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.qoder-cn",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.qwen",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.reasonix",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.roo",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.rovodev",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.tabnine",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.terramind",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.trae",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.trae-cn",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.vibe",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.wind",
+    "exists": true,
+    "metadata_files_visited": 7,
+    "candidate_names": [
+      "profiles/default.v10/terminal/session.config",
+      "profiles/default.v10/terminal/user.sessions",
+      "profiles/default.v10/terminal/reopen.history",
+      "profiles/default.v10/global/reopen.history"
+    ],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.zcode",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.zencoder",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.config/opencode",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.config/crush",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.config/devin",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.config/goose",
+    "exists": true,
+    "metadata_files_visited": 0,
+    "candidate_names": [],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.config/Code/User",
+    "exists": true,
+    "metadata_files_visited": 106,
+    "candidate_names": [
+      "chatLanguageModels.json",
+      "workspaceStorage/649f687e6d45ff9348b00a2c6aa7ddc5/chatSessions/8f86d5f8-9361-4d9a-be5d-3960bdb9473a.jsonl",
+      "workspaceStorage/649f687e6d45ff9348b00a2c6aa7ddc5/chatSessions/0f46639c-87aa-40c7-8c53-52fdd3b18b08.jsonl",
+      "workspaceStorage/649f687e6d45ff9348b00a2c6aa7ddc5/chatEditingSessions/0f46639c-87aa-40c7-8c53-52fdd3b18b08/state.json",
+      "workspaceStorage/649f687e6d45ff9348b00a2c6aa7ddc5/chatEditingSessions/8f86d5f8-9361-4d9a-be5d-3960bdb9473a/state.json",
+      "workspaceStorage/68f7a0822c56050a529065e814212602/chatSessions/b93b522e-f46d-4425-b193-3e0ab6ddc6ff.jsonl",
+      "workspaceStorage/68f7a0822c56050a529065e814212602/chatSessions/b4ffe14d-aca2-4a90-bdf3-03a8f35d93b2.jsonl",
+      "workspaceStorage/68f7a0822c56050a529065e814212602/chatEditingSessions/b93b522e-f46d-4425-b193-3e0ab6ddc6ff/state.json",
+      "workspaceStorage/68f7a0822c56050a529065e814212602/chatEditingSessions/b4ffe14d-aca2-4a90-bdf3-03a8f35d93b2/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/523cf707-22df-4edd-8eb2-962fbbf005d2.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/9d6bd0b9-9cda-4a88-ab7c-55fc2a85b1e0.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/851f5b14-1a3a-42b0-b7e7-d0c1d0873537.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/de3d41cd-7dec-4f94-b033-296a421b895c.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/b8eff0d2-e441-476a-9dc8-eadbaf9dff84.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/7a758228-b8b8-4611-8d37-48176228bf0c.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/9cf87526-0666-48f7-b8a1-201522017018.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/a0d0763c-164c-4ddb-a054-f50429a5a67a.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/2a10f8ce-bcba-434e-9233-8d77d199307c.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/28092243-fa46-4065-a452-28cb8325b226.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/448813ee-f05c-496d-ab7d-9318ac5e31ce.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/54a6b0cb-42ee-46a2-9a3d-577f45ae3ba7.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/72a731f3-168c-4f10-868d-3b8d7fc82cd7.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatSessions/35ad1dae-fe6f-4f52-a9e3-3ae8abd79274.jsonl",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/2a10f8ce-bcba-434e-9233-8d77d199307c/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/72a731f3-168c-4f10-868d-3b8d7fc82cd7/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/851f5b14-1a3a-42b0-b7e7-d0c1d0873537/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/7a758228-b8b8-4611-8d37-48176228bf0c/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/35ad1dae-fe6f-4f52-a9e3-3ae8abd79274/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/9cf87526-0666-48f7-b8a1-201522017018/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/b8eff0d2-e441-476a-9dc8-eadbaf9dff84/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/448813ee-f05c-496d-ab7d-9318ac5e31ce/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/9d6bd0b9-9cda-4a88-ab7c-55fc2a85b1e0/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/28092243-fa46-4065-a452-28cb8325b226/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/54a6b0cb-42ee-46a2-9a3d-577f45ae3ba7/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/a0d0763c-164c-4ddb-a054-f50429a5a67a/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/523cf707-22df-4edd-8eb2-962fbbf005d2/state.json",
+      "workspaceStorage/5acce1f2fe590fe53636631bbfdc5aa0/chatEditingSessions/de3d41cd-7dec-4f94-b033-296a421b895c/state.json",
+      "workspaceStorage/4aaaebacde4625dd426187993037bba2/chatSessions/408270ea-6da1-4f39-9857-160df61e142e.jsonl",
+      "workspaceStorage/4aaaebacde4625dd426187993037bba2/chatSessions/62b7d658-3e2f-4750-b29a-a68415d7a4c8.jsonl",
+      "workspaceStorage/4aaaebacde4625dd426187993037bba2/chatSessions/010f1647-67bb-484f-b9e4-62b71a8cbcce.jsonl",
+      "workspaceStorage/4aaaebacde4625dd426187993037bba2/chatEditingSessions/010f1647-67bb-484f-b9e4-62b71a8cbcce/state.json",
+      "workspaceStorage/4aaaebacde4625dd426187993037bba2/chatEditingSessions/408270ea-6da1-4f39-9857-160df61e142e/state.json",
+      "workspaceStorage/4aaaebacde4625dd426187993037bba2/chatEditingSessions/62b7d658-3e2f-4750-b29a-a68415d7a4c8/state.json",
+      "workspaceStorage/3d7e89c5f2c5a0601c0424f5f673e63f/chatSessions/7d2de84c-cea9-4184-8088-fde822f5ec44.jsonl",
+      "workspaceStorage/3d7e89c5f2c5a0601c0424f5f673e63f/chatSessions/9dd29a4d-e340-4898-b46f-7087e2d54a17.jsonl",
+      "workspaceStorage/3d7e89c5f2c5a0601c0424f5f673e63f/chatEditingSessions/7d2de84c-cea9-4184-8088-fde822f5ec44/state.json",
+      "workspaceStorage/3d7e89c5f2c5a0601c0424f5f673e63f/chatEditingSessions/9dd29a4d-e340-4898-b46f-7087e2d54a17/state.json",
+      "workspaceStorage/1ddf8f4f5c72133bb1efc9fc5e08579a/chatSessions/1e7a7abf-ccd1-4b50-8613-c4d423d5dad1.jsonl",
+      "workspaceStorage/1ddf8f4f5c72133bb1efc9fc5e08579a/chatSessions/a0b78745-d2bc-4801-b82c-23823e221159.jsonl",
+      "workspaceStorage/1ddf8f4f5c72133bb1efc9fc5e08579a/chatSessions/98106184-9581-4366-81a6-aeb6d819d83b.jsonl",
+      "workspaceStorage/1ddf8f4f5c72133bb1efc9fc5e08579a/chatEditingSessions/1e7a7abf-ccd1-4b50-8613-c4d423d5dad1/state.json",
+      "workspaceStorage/1ddf8f4f5c72133bb1efc9fc5e08579a/chatEditingSessions/a0b78745-d2bc-4801-b82c-23823e221159/state.json",
+      "workspaceStorage/1ddf8f4f5c72133bb1efc9fc5e08579a/chatEditingSessions/98106184-9581-4366-81a6-aeb6d819d83b/state.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatSessions/c1238ce6-9d85-4c79-a002-6d4e0d377c52.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatSessions/e032ef0d-cf80-4b10-9deb-b75f988ff16e.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatSessions/791003e5-7a12-43cc-9d86-215e8dbc8fcb.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatSessions/a59c9f40-2a20-406b-89f2-65f8d966f875.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatSessions/bff277c5-1b9c-4f89-995a-a0819795ea76.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatSessions/95634a0b-6df4-4482-b2b3-7c37f87626b5.jsonl",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatSessions/3c57598e-a08b-4650-ba35-ba7edb0b97ac.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatSessions/b8b9a2ef-83e6-4cd0-a7b1-8693a4720730.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatEditingSessions/791003e5-7a12-43cc-9d86-215e8dbc8fcb/state.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatEditingSessions/bff277c5-1b9c-4f89-995a-a0819795ea76/state.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatEditingSessions/b8b9a2ef-83e6-4cd0-a7b1-8693a4720730/state.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatEditingSessions/a59c9f40-2a20-406b-89f2-65f8d966f875/state.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatEditingSessions/3c57598e-a08b-4650-ba35-ba7edb0b97ac/state.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatEditingSessions/c1238ce6-9d85-4c79-a002-6d4e0d377c52/state.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatEditingSessions/95634a0b-6df4-4482-b2b3-7c37f87626b5/state.json",
+      "workspaceStorage/8c3cb2ac131a7643b943de25e140e269/chatEditingSessions/e032ef0d-cf80-4b10-9deb-b75f988ff16e/state.json",
+      "globalStorage/agent-host.db",
+      "globalStorage/emptyWindowChatSessions/dedbeaba-2dc3-490c-a411-a2851748f2a4.json"
+    ],
+    "errors": []
+  },
+  {
+    "root": "/home/yardie/.vscode-server/data/User",
+    "exists": true,
+    "metadata_files_visited": 14,
+    "candidate_names": [
+      "globalStorage/github.copilot-chat/session-store.db",
+      "globalStorage/github.copilot-chat/explore-agent/Explore.agent.md",
+      "globalStorage/github.copilot-chat/plan-agent/Plan.agent.md",
+      "globalStorage/github.copilot-chat/copilotCli/copilotCLIShim.js",
+      "globalStorage/github.copilot-chat/copilotCli/copilot",
+      "globalStorage/github.copilot-chat/copilotCli/copilotCLIShim.ps1",
+      "globalStorage/github.copilot-chat/debugCommand/copilotDebugCommand.js",
+      "globalStorage/github.copilot-chat/debugCommand/copilot-debug",
+      "globalStorage/github.copilot-chat/ask-agent/Ask.agent.md"
+    ],
+    "errors": []
+  }
+]

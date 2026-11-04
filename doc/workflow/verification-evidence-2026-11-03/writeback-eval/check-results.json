@@ -1,0 +1,115 @@
+{
+  "executed_at": "2026-11-03T15:03:06.194998+08:00",
+  "finished_at": "2026-11-03T15:03:06.196152+08:00",
+  "cwd": "/home/yardie/Desktop/persional/ai-tool",
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/verification-eval-writeback/check.py"
+  ],
+  "python_version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "input_sha256_before": {
+    "source.json": "7d0e332fee6bcccd986a1249b967791d9a987b4d4dc072cb35cd082839a0f179",
+    "before.json": "286cafff02fcfe4b5d6807bf368d26fc1db644e761b9dfb5476219b74221c07c",
+    "write-response.json": "aac12d9c2855e76c2048bb6f0ca3f7b090cb073a3e2cdf597377208c32b77b09",
+    "readback.json": "e0a0d80ba12b8d8e7c486b178de1ed19a571855595f227b2d8815b69314aa597"
+  },
+  "input_sha256_after": {
+    "source.json": "7d0e332fee6bcccd986a1249b967791d9a987b4d4dc072cb35cd082839a0f179",
+    "before.json": "286cafff02fcfe4b5d6807bf368d26fc1db644e761b9dfb5476219b74221c07c",
+    "write-response.json": "aac12d9c2855e76c2048bb6f0ca3f7b090cb073a3e2cdf597377208c32b77b09",
+    "readback.json": "e0a0d80ba12b8d8e7c486b178de1ed19a571855595f227b2d8815b69314aa597"
+  },
+  "checker_sha256": "d0b8ed90bfb0b2b49971033cee69baef01ddbd687bfa9b2acf68609874615fbf",
+  "counts": {
+    "source_rows": 2,
+    "before_rows": 1,
+    "expected_rows": 2,
+    "readback_rows": 3,
+    "added_rows": 2
+  },
+  "hours": {
+    "source": 15,
+    "before": 8,
+    "expected": 15,
+    "readback": 24
+  },
+  "raw_write_response": {
+    "code": 0,
+    "http_status": 200,
+    "message": "success",
+    "created_records": 1
+  },
+  "checks": [
+    {
+      "name": "source_keys_unique",
+      "pass": true
+    },
+    {
+      "name": "existing_records_preserved",
+      "pass": true,
+      "changed_or_missing": []
+    },
+    {
+      "name": "required_keys_present",
+      "pass": true,
+      "missing": []
+    },
+    {
+      "name": "no_unexpected_business_keys",
+      "pass": true
+    },
+    {
+      "name": "readback_hours_match_source",
+      "pass": false,
+      "mismatches": [
+        {
+          "id": "r2",
+          "key": "A|2026-11-03",
+          "expected_hours": 7,
+          "actual_hours": 8
+        },
+        {
+          "id": "r3",
+          "key": "A|2026-11-03",
+          "expected_hours": 7,
+          "actual_hours": 8
+        }
+      ]
+    },
+    {
+      "name": "readback_business_keys_unique",
+      "pass": false,
+      "duplicates": {
+        "A|2026-11-03": 2
+      }
+    },
+    {
+      "name": "only_one_row_added_per_missing_key",
+      "pass": false,
+      "expected": {
+        "A|2026-11-03": 1
+      },
+      "actual": {
+        "A|2026-11-03": 2
+      }
+    },
+    {
+      "name": "response_count_agrees_with_snapshot_delta",
+      "pass": false,
+      "response_created_records": 1,
+      "snapshot_added_records": 2,
+      "interpretation_limit": "Count discrepancy only; snapshots lack operation/scope/timestamp correlation."
+    },
+    {
+      "name": "input_files_unchanged_during_check",
+      "pass": true
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "pass": 5,
+    "fail": 4
+  },
+  "exit_code": 1,
+  "overall": "FAIL"
+}

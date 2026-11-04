@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts",
+    "-p",
+    "test_record_check.py",
+    "-v"
+  ],
+  "cwd": "/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification",
+  "started_at_utc": "2026-11-03T07:04:25.466818+00:00",
+  "inputs_before": [
+    {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification/scripts/record_check.py",
+      "sha256": "e232f02ba38aa851155632e5d0fdf0fa74090e8411cd87c0af30ab6eefd47548",
+      "size_bytes": 4529
+    },
+    {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification/scripts/test_record_check.py",
+      "sha256": "3d67ab3b288863c811111edd51480efdc0d1bad142634a0cc0b69bfe5e40e135",
+      "size_bytes": 8692
+    }
+  ],
+  "returncode": 0,
+  "outcome": "command_succeeded",
+  "interrupted": false,
+  "ended_at_utc": "2026-11-03T07:04:26.771307+00:00",
+  "elapsed_seconds": 1.304511,
+  "inputs_after": [
+    {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification/scripts/record_check.py",
+      "sha256": "e232f02ba38aa851155632e5d0fdf0fa74090e8411cd87c0af30ab6eefd47548",
+      "size_bytes": 4529
+    },
+    {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/skills/verification/scripts/test_record_check.py",
+      "sha256": "3d67ab3b288863c811111edd51480efdc0d1bad142634a0cc0b69bfe5e40e135",
+      "size_bytes": 8692
+    }
+  ],
+  "logs": {
+    "stdout": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/script-tests/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stderr": {
+      "path": "/home/yardie/Desktop/persional/ai-tool/ai-tools/doc/workflow/verification-evidence-2026-11-03/script-tests/stderr.log",
+      "sha256": "2ff95c2f7cebd15cab1e80f3ec791aa3c494fde5372097f3cb7928f595f5d119",
+      "size_bytes": 1995
+    }
+  }
+}

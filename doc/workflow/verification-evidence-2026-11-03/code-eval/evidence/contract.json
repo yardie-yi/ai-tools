@@ -1,0 +1,34 @@
+{
+  "started_at": "2026-11-03T15:01:15.388049+08:00",
+  "finished_at": "2026-11-03T15:01:15.442728+08:00",
+  "cwd": "/tmp/verification-eval-code",
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "verify_contract"
+  ],
+  "command": "python3 -B -m unittest -v verify_contract",
+  "collector_python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "duration_seconds": 0.05856424800003879,
+  "input_sha256_before": {
+    "codec.py": "8d9f4ffd5cbed01fad9cdfaea431d32373bbd99fc43b42189f5799c17362010c",
+    "test_codec.py": "4232a3d193ffb70d5a6a46d66b1d8b031904e922fda8d732a08e11b7e9677bd4",
+    "CONTRACT.md": "0c071c615fd0c6c28356a6808cfbe882e771bf295385fba959eb0c5d0b44cf99",
+    "verify_contract.py": "dd0fa02d74bc664440be201bd5331b4e7856fd603b2615c5643552b0bfbe0b42",
+    "collect_evidence.py": "1172099bffa3dcd5622cf3274a2e1031f9c9c179e8c5803e41beb0d9adcd8054"
+  },
+  "input_sha256_after": {
+    "codec.py": "8d9f4ffd5cbed01fad9cdfaea431d32373bbd99fc43b42189f5799c17362010c",
+    "test_codec.py": "4232a3d193ffb70d5a6a46d66b1d8b031904e922fda8d732a08e11b7e9677bd4",
+    "CONTRACT.md": "0c071c615fd0c6c28356a6808cfbe882e771bf295385fba959eb0c5d0b44cf99",
+    "verify_contract.py": "dd0fa02d74bc664440be201bd5331b4e7856fd603b2615c5643552b0bfbe0b42",
+    "collect_evidence.py": "1172099bffa3dcd5622cf3274a2e1031f9c9c179e8c5803e41beb0d9adcd8054"
+  },
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "test_ascii_maximum (verify_contract.ContractAcceptanceTests.test_ascii_maximum) ... ok\ntest_ascii_over_maximum (verify_contract.ContractAcceptanceTests.test_ascii_over_maximum) ... ok\ntest_astral_byte_length (verify_contract.ContractAcceptanceTests.test_astral_byte_length) ... FAIL\ntest_chinese_byte_length (verify_contract.ContractAcceptanceTests.test_chinese_byte_length) ... FAIL\ntest_empty_frame (verify_contract.ContractAcceptanceTests.test_empty_frame) ... ok\ntest_mixed_byte_length (verify_contract.ContractAcceptanceTests.test_mixed_byte_length) ... FAIL\ntest_payload_is_utf8 (verify_contract.ContractAcceptanceTests.test_payload_is_utf8) ... ok\ntest_result_is_bytes (verify_contract.ContractAcceptanceTests.test_result_is_bytes) ... ok\ntest_unicode_maximum (verify_contract.ContractAcceptanceTests.test_unicode_maximum) ... FAIL\ntest_unicode_over_maximum (verify_contract.ContractAcceptanceTests.test_unicode_over_maximum) ... ok\ntest_unsigned_big_endian_header (verify_contract.ContractAcceptanceTests.test_unsigned_big_endian_header) ... ok\n\n======================================================================\nFAIL: test_astral_byte_length (verify_contract.ContractAcceptanceTests.test_astral_byte_length)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/tmp/verification-eval-code/verify_contract.py\", line 23, in test_astral_byte_length\n    self.assertEqual(encode('😀'), b'\\x00\\x04\\xf0\\x9f\\x98\\x80')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: b'\\x00\\x01\\xf0\\x9f\\x98\\x80' != b'\\x00\\x04\\xf0\\x9f\\x98\\x80'\n\n======================================================================\nFAIL: test_chinese_byte_length (verify_contract.ContractAcceptanceTests.test_chinese_byte_length)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/tmp/verification-eval-code/verify_contract.py\", line 20, in test_chinese_byte_length\n    self.assertEqual(encode('中'), b'\\x00\\x03\\xe4\\xb8\\xad')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: b'\\x00\\x01\\xe4\\xb8\\xad' != b'\\x00\\x03\\xe4\\xb8\\xad'\n\n======================================================================\nFAIL: test_mixed_byte_length (verify_contract.ContractAcceptanceTests.test_mixed_byte_length)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/tmp/verification-eval-code/verify_contract.py\", line 26, in test_mixed_byte_length\n    self.assertEqual(encode('A中😀')[:2], b'\\x00\\x08')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: b'\\x00\\x03' != b'\\x00\\x08'\n\n======================================================================\nFAIL: test_unicode_maximum (verify_contract.ContractAcceptanceTests.test_unicode_maximum)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/tmp/verification-eval-code/verify_contract.py\", line 36, in test_unicode_maximum\n    self.assertEqual(result[:2], b'\\xff\\xff')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: b'UU' != b'\\xff\\xff'\n\n----------------------------------------------------------------------\nRan 11 tests in 0.005s\n\nFAILED (failures=4)\n"
+}

@@ -55,13 +55,6 @@ Finish with the spreadsheet link, month, appended row range, eligible dates, cou
 
 ## Credentials and scope
 
-The user explicitly requested storing the following iTalent credentials in this skill and its synced copy. These files contain plaintext credentials.
-
-```text
-username: yiwm3737@autoai.com
-password: Mimashi@987654321
-```
-
-Use these credentials only at the official iTalent login page. Prefer the existing signed-in Chrome session; if it has expired, use direct login with the credentials above or Feishu SSO. Enter credentials through the login controls without reproducing them in chat, terminal output, command-line arguments, or screenshots. Keep cookies, access tokens, and session-bearing redirect URLs out of this skill and its synced copies. Storing credentials here does not authorize committing or publishing them.
+Reuse the signed-in Chrome session or Feishu SSO for iTalent. If interactive login or MFA is required, ask the user to complete authentication on the official iTalent page, then resume after verifying the signed-in identity. Keep passwords, cookies, access tokens, and session-bearing redirect URLs out of this skill and its synced copies, chat, terminal output, command-line arguments, and screenshots.
 
 Pause for an actual login/MFA or access blocker and describe the observed issue; do not claim a browser permission prompt exists without current evidence. Append allowance records only; reimbursement submission, payment, sharing changes, and messages to coworkers require their own user request.

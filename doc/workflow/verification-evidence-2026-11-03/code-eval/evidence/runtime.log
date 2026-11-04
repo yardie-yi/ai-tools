@@ -1,0 +1,9 @@
+Started: 2026-11-03T15:01:40.603377+08:00
+CWD: /tmp/verification-eval-code
+Command: python3 --version
+Exit code: 0
+
+STDOUT:
+Python 3.14.4
+
+STDERR:
