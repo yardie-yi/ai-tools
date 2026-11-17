@@ -1,4 +1,4 @@
 interface:
-  display_name: "iTalent Meal Allowance"
-  short_description: "Verify iTalent attendance and append Feishu meal claims"
-  default_prompt: "Use $italent-meal-allowance to verify last month’s attendance, show eligible dates and the total allowance, and append missing records to my Feishu spreadsheet."
+  display_name: "iTalent 加班餐补填报"
+  short_description: "必须用 browser-harness 核对 iTalent 考勤并填报飞书餐补"
+  default_prompt: "使用 $italent-meal-allowance：必须读取 browser-harness 技能并实际执行 browser-harness 命令操作 iTalent，不能换用其他浏览器。缺失时自动安装；环境无法执行时报告阻塞。首次收集工作簿、考勤入口和员工，按中国国家放假与调休安排核算餐补，工作日双缺卡跳过，达标但缺首卡时填09:30，未知业务字段先询问，核对后通过飞书 CLI 追加记录。"

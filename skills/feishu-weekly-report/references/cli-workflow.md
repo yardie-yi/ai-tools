@@ -26,7 +26,7 @@ lark-cli docs +fetch --doc '<本期周报URL>' --scope outline --max-depth 3 --a
 lark-cli docs +fetch --doc '<本期周报URL>' --scope keyword --keyword '<本人姓名>' --detail full --as user
 ```
 
-用返回的人员 `open_id` 验证本人；姓名关键词只是定位入口。局部结果可能是表格切片，项目名称来自合并单元格时按 table ID 读取完整所需区域，再确定归属。
+用返回的人员 `open_id` 验证本人；姓名关键词只是定位入口。局部结果可能是表格切片，项目名称来自合并单元格时按 table ID 读取完整所需区域，再确定归属。写前还须读取目标表的首行表头；若首行是数据行，向前读取同节相邻的表头表，按列名和合并关系定位，不能从本人行的最右格推定为计划栏。将默认不写的风险栏排除在写入目标清单之外，并在回读时对照其原内容。
 
 优先替换具体列表项/段落。同一直接父节点下连续范围可使用 `block_replace --start-block-id ... --end-block-id ...`，列表项范围的 XML 用 `<li>...</li>`，新增普通列表用 `<ul><li>...</li></ul>`。多行内容用 stdin 或 CLI 允许的相对 `@file`，不拼接含工作文本的 shell 命令。
 

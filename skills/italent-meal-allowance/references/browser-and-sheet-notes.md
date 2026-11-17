@@ -1,42 +1,62 @@
-# iTalent and Feishu operational notes
+# iTalent 与飞书操作说明
 
-These are observed navigation and API behaviors, not fixed selectors, row numbers, or a replacement for current tool documentation.
+以下内容是实际观察到的导航和接口行为，不是固定选择器或固定行号，也不替代当前工具文档。
 
-## iTalent in Chrome
+## Chrome 中的 iTalent
 
-Read the available `browser-harness` skill before using that tool, and respect the active browser tool's restrictions on switching control mechanisms. Tool-switch authorization from one conversation is not a standing instruction to bypass future tool constraints.
+所有 agent 发起的 iTalent 浏览器操作必须使用 `browser-harness`。读取其实际技能文件后，调用同名 CLI 执行。若更高优先级的平台限制禁止执行该工具，报告阻塞并停止，不绕过限制或静默换工具。
 
-- Inventory tabs and reuse the user's existing iTalent tab. The bare attendance URL can redirect to the home page even when login is valid.
-- From the home page, open `员工自助` → `我的假勤` → `我的出勤`. Confirm the resulting page and employee name. Avoid carrying over signed redirect query strings from earlier runs.
-- The attendance view displays a date filter such as `2026-09-01 ~ 2026-09-30` and columns `考勤日期`, `首打卡`, `末打卡`, `缺勤时长`, `考勤状态`, `出勤状态`, and `补签状态`.
-- A September view reported 30 records across two pages at 15 records/page, but its accessibility tree initially exposed only 14 date rows on each page. Scroll the table and union rows by full date before changing pages. Verify coverage against the displayed count and requested month; missing dates must be resolved rather than treated as absence.
-- Prefer accessibility nodes with role `row` and their current names for attendance extraction. Obtain fresh nodes after navigation or scrolling. The page can contain an embedded `cloud.italent.cn` frame; follow the browser tool's frame guidance if necessary.
-- A failed Codex extension connection does not establish an iTalent login failure. Diagnose the selected browser, and use another available browser mechanism only when permitted. Ask the user to act on a permission dialog only if current evidence shows one.
+首次连接先执行下面的实际命令，确认能取得浏览器标签页清单。先完成三项用户配置，只有运行填报任务时才连接浏览器：
 
-## Feishu workbook
+```bash
+# 通过 browser-harness 实际连接浏览器；仅输出数量，避免泄露标签页的会话链接。
+browser-harness <<'PY'
+# 使用该工具预先导入的接口枚举标签页，而非其他浏览器控制接口。
+tabs = list_tabs()
+print("browser-harness 已连接，标签页数量：", len(tabs))
+PY
+```
 
-Read the relevant Feishu skill references before executing commands; consult `--help` for current flags. CLI file inputs/outputs are relative to its working directory. Keep temporary snapshots in a dedicated temporary directory rather than creating artifacts in the repository.
+连接成功后，按返回的实际标签页选择或打开配置中的 iTalent 入口，继续使用 `browser-harness` 完成页面观察和操作。清单为空不代表已连接目标 iTalent 页；仍需导航并核对员工与考勤月份。记录实际命令和脱敏后的结果，不能把示例输出当成运行结果。
 
-Useful operations:
+- 先列出标签页，复用用户已打开的 iTalent 页面。即使登录有效，直接访问不带参数的考勤链接也可能跳回首页。
+- 从首页进入 `员工自助` → `我的假勤` → `我的出勤`，核对目标页面和员工姓名。不要沿用上次运行中带签名参数的跳转链接。
+- 考勤页会显示日期筛选范围，例如 `2026-09-01 ~ 2026-09-30`，以及 `考勤日期`、`首打卡`、`末打卡`、`缺勤时长`、`考勤状态`、`出勤状态`、`补签状态` 等列。
+- 日期类型按[餐补规则](../SKILL.md#餐补规则)查询并应用对应年度中国国家放假与调休安排。保留 iTalent 原始首、末打卡，工作日双缺卡及缺首卡的填报按同一规则处理；页面没有排班字段时，不因此反复要求用户确认国家日历。
+- 一次 9 月考勤查询显示共 30 条、每页 15 条、共两页，但每页最初的无障碍树仅暴露 14 个日期行。切换分页前滚动表格，按完整日期合并已读取行；根据显示总数和目标月份核对覆盖情况。缺失日期需要补读，不能直接当作未出勤。
+- 优先使用无障碍树中角色为 `row` 的节点及其当前名称提取考勤。导航或滚动后重新获取节点。页面可能嵌入 `cloud.italent.cn` 框架，需要时遵循浏览器工具的框架操作说明。
+- `browser-harness` 连接失败，不代表 iTalent 未登录。先运行 `browser-harness --doctor`，按实际错误诊断当前浏览器；仍无法连接时报告阻塞，不能切换其他控制方式读取考勤。只有当前证据显示存在权限对话框时，才按工具要求处理该对话框。
 
-| Purpose | CLI operation |
-| --- | --- |
-| Resolve a Wiki URL | `wiki +node-get --node-token <wiki-url> --as user` |
-| List month tabs | `sheets +workbook-info` |
-| Read displayed values | `sheets +csv-get` |
-| Read precise values, formulas, styles | `sheets +cells-get --include value,formula,style` |
-| Inspect geometry and merges | `sheets +sheet-info --include merges,row_heights,col_widths,hidden_rows,hidden_cols` |
-| Inherit a template's formats | `sheets +range-copy --paste-type formats` |
-| Write bounded data and formulas | `sheets +cells-set --range <new-block> --allow-overwrite=false` |
-| Merge only the new subtotal cells | `sheets +cells-merge --range <new-subtotal-column-block>` |
-| Check new formulas | `sheets +formula-verify --range <new-formulas> --exit-on-error` |
+## 飞书工作簿
 
-All sheet operations need the resolved workbook and exact sheet selectors. Parse CLI success using `ok == true`, not a top-level `code == 0`. Check read completeness flags and actual ranges. CSV row positions come from `[row=N]`; multiline punch fields are one logical record, so parse CSV rather than counting physical lines.
+执行命令前读取相关飞书技能参考文档，通过 `--help` 核实当前参数。CLI 文件输入、输出路径相对于工作目录。临时快照放在专门的临时目录，避免在仓库中产生运行数据。
 
-### Format copying can carry merges
+### 当前结构与格式样例
 
-In the observed service, copying `A98:J102` with `--paste-type formats` to `A104` also created `I104:I108`, mirroring the source merge `I98:I102`. Inspect the resulting merge metadata rather than assuming a format-only copy excludes merges.
+每次先读取目标工作表的实际表头、公式和布局。字段可能改名、调整顺序或新增；按含义映射，不固定历史列号。考勤以外的字段含义、取值或适用范围不明确时，列出问题请用户提供，答复前不写入受影响记录。只有用户明确允许时才留空，不能从他人的部门、项目或加班原因中推断本人的业务信息。
 
-A source such as `A102:J102` partially intersects `I98:I102` and is rejected. Preserve that original merge. Either copy a complete template block or split the source into ranges outside the merged column. If copying creates several new subtotal merges, unmerge only those confirmed new, empty destination merges and combine them within the new block. An error's suggestion to unmerge the source is not authorization to alter existing data.
+格式可以依次参考本员工记录、同表其他人的已填记录、其他月份的已填记录。记录样例来源工作表和范围，核对列含义相容后，仅把字体、对齐、底色、边框、数字格式、行高和合计布局适配到当前新增区域；不复制业务值或改写参考表。样例不一致或无法匹配当前结构时，询问用户采用哪种格式。
 
-Create the new block's subtotal formula at its upper-left total cell and keep all other cells in that merge empty. Format copy does not by itself prove row heights or all border attributes were preserved; read these back separately.
+常用操作：
+
+| 用途           | CLI 操作                                                                               |
+| ------------ | ------------------------------------------------------------------------------------ |
+| 解析 Wiki 链接   | `wiki +node-get --node-token <wiki-url> --as user`                                   |
+| 列出各月份工作表     | `sheets +workbook-info`                                                              |
+| 读取显示值        | `sheets +csv-get`                                                                    |
+| 读取精确值、公式和样式  | `sheets +cells-get --include value,formula,style`                                    |
+| 检查布局与合并区域    | `sheets +sheet-info --include merges,row_heights,col_widths,hidden_rows,hidden_cols` |
+| 继承模板格式       | `sheets +range-copy --paste-type formats`                                            |
+| 在指定区域写入数据和公式 | `sheets +cells-set --range <new-block> --allow-overwrite=false`                      |
+| 只合并新增小计单元格   | `sheets +cells-merge --range <new-subtotal-column-block>`                            |
+| 验证新增公式       | `sheets +formula-verify --range <new-formulas> --exit-on-error`                      |
+
+所有工作表操作都需要已解析的工作簿和精确的工作表选择参数。使用 `ok == true` 判断 CLI 成功，不能用顶层 `code == 0`。检查读取完整性标志和实际范围。CSV 行号以 `[row=N]` 为准；多行打卡字段仍是一条逻辑记录，应通过 CSV 解析器读取，不能按物理换行计数。
+
+### 复制格式可能同时复制合并区域
+
+在已观察到的服务中，将 `A98:J102` 以 `--paste-type formats` 复制到 `A104`，同时创建了 `I104:I108`，对应源区域的 `I98:I102` 合并单元格。因此必须回读合并区域元数据，不能假定只复制格式就不会复制合并状态。
+
+源区域 `A102:J102` 仅覆盖 `I98:I102` 的一部分，会被拒绝。保留原有合并区域，改为复制完整模板块，或拆分源范围以避开合并列。若复制后产生多个新增小计合并区域，只能取消那些已确认由本次复制产生且内容为空的目标合并，再在新增记录块内统一合并。错误提示建议取消源合并，不构成修改原始数据的授权。
+
+新增记录块的小计公式放在合并区域左上角，其余单元格保持为空。格式复制本身不能证明行高或全部边框属性已保留，需要分别回读核对。

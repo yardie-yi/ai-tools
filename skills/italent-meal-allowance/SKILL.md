@@ -1,60 +1,105 @@
 ---
 name: italent-meal-allowance
-description: Verify monthly meal allowance eligibility from iTalent attendance and append missing employee records to a Feishu spreadsheet while preserving existing data and formatting. Use for iTalent-based 餐补填报 or 加班餐补 requests.
+description: 必须使用 browser-harness 读取 iTalent 月度考勤，核对餐补资格并向飞书表格追加员工缺失记录，保留原数据和格式。适用于基于 iTalent 考勤的餐补填报、加班餐补请求。
 ---
 
-# iTalent meal allowance
+# iTalent 加班餐补填报
 
-Read actual attendance, show eligible dates and the allowance total before writing, and append only missing records to the requested Feishu sheet.
+读取真实考勤，写入前展示符合条件的日期和餐补总额，只向指定飞书表格追加缺失记录。
 
-## Personal defaults
 
-- Attendance: https://www.italent.cn/portal/convoy/attendance
-- Workbook: https://navinfo.feishu.cn/wiki/WIaZwjL3niDmtikeuyPcGYtZnD8
-- Expected employee: 易万铭. Verify the signed-in identity rather than selecting another employee's records.
-- Interpret “last month” as the previous calendar month in Asia/Shanghai, including year rollover. Report the resolved month explicitly.
-- Select the matching month tab from current workbook metadata. The original link's `sheet=4n1Zgv` identifies September 2026; it is not the destination for every month. An explicitly supplied tab remains the user's destination; clarify a month mismatch before writing.
-- Existing personal rows used department `平台应用`, project `SA8775`, and reason `SA8775开发`. Reuse current matching personal metadata when supported by the sheet or the user's instructions; these historical labels do not establish every future month's work.
 
-Use the user's current URLs, month, identity, and rules when supplied. If the destination month is absent, ask where to append rather than creating a tab or writing into an unrelated month.
+所有由 agent 执行的 iTalent 浏览器操作，包括连接已登录 Chrome、导航、登录或 SSO 页面操作、选择月份、翻页、滚动、读取页面和截图，都必须通过 `browser-harness` 技能及 `browser-harness` 命令完成。先读取该技能的实际 `SKILL.md`，再执行命令；只提到工具名称或阅读说明不算已经使用。
 
-## Allowance rules
+即使宿主自带浏览器、网页搜索、Playwright、Selenium 或其他浏览器插件，也不能代替 `browser-harness` 读取 iTalent；不能直接用 HTTP 请求抓取考勤来绕过该约束。公开的安装资料和包管理查询不受此限制。飞书表格仍通过 `lark-cli` 读取、写入和验收，无需改成浏览器填写。用户按要求手工完成登录、MFA 或授权操作仍然允许。
 
-Unless the user supplies different rules:
+缺少 `browser-harness` 技能或可执行命令时，agent 按[首次配置与依赖安装](references/setup.md)自动补齐，再继续。如果宿主不提供本机终端或命令执行工具，或安装、连接被权限和网络阻止，明确报告“无法执行 browser-harness”的真实原因并停止考勤读取及表格写入，不静默换用其他工具，不声称已完成核对。
 
-| Day | Evidence | Allowance |
+每次实际填报都必须有成功执行 `browser-harness` 的真实工具调用及其返回结果，并在连接后核对目标 iTalent 页面和员工身份。版本号检查只能证明程序存在，不能代替浏览器连接或考勤读取证据。交付时说明使用了 `browser-harness`，保留已执行命令、脱敏后的结果和日期覆盖情况；不要输出带会话参数的 URL、Cookie 或令牌。
+
+## 首次使用与配置
+
+执行顺序：检查本机配置 → 首次收集信息 → 检查并补装依赖 → 读取考勤与表格 → 核对并追加。
+
+首次使用时，必须要求用户提供以下三项，不能从旧聊天、示例或历史运行中套用其他人的配置：
+
+1. **餐补工作簿**：飞书电子表格或 Wiki 链接，可包含目标工作表参数。
+2. **考勤入口**：用户实际使用的 iTalent 考勤页面链接。
+3. **预期员工**：用于核对登录身份和筛选记录的员工姓名。
+
+一次询问全部缺失项。用户在本次请求中已经明确提供的字段视为已输入，只补问缺失项；三项未齐全或格式无效时，先等待用户补全，不读取业务数据或写表。
+
+三项有效后，按[首次配置与依赖安装](references/setup.md)保存到用户本机配置文件；不得把个人配置写入技能目录或同步到仓库。以后读取本机配置，不必每次重问。用户明确要求重新配置时更新该文件；单次任务的覆盖参数只影响本次运行，除非用户要求修改默认配置。
+
+## 月份与业务字段
+
+- “上个月”按 Asia/Shanghai 时区的上一个自然月解释，处理跨年情况，并明确告知实际月份。
+- 根据已配置工作簿的当前元数据选择对应月份的工作表，不能把历史工作表 ID 当成永久目标。用户在链接或请求中明确指定工作表时，以其指定目标为准；月份不匹配时，写入前先澄清。
+- 员工以本机配置为准，并核对实际登录身份。部门、项目、加班原因等业务字段从目标表格和用户指令中获取，不预置个人标签；历史字段不能证明以后每个月都从事同一项目。
+
+用户提供新的链接、月份、身份或规则时，按用户当前要求执行。目标月份的工作表不存在时，询问追加位置，不自行建表或写入其他月份。
+
+## 数据来源与格式参考
+
+- 飞书表格的列名、顺序、必填项、公式和布局可能变化，每次先读取当前结构，再按字段含义映射，不能固定列字母或照搬历史表头。
+- 加班日期、原始打卡时段、星期等考勤信息从 iTalent 获取；星期也可由已核对的日期计算。日期类型按下文中国国家放假与调休日历确定；工作日达标但缺首卡时，填报首卡按下文默认规则处理，原始证据仍保留为空。
+- 部门、项目、加班原因、经办人，以及表格新增的其他业务字段，只能采用用户提供或明确适用于本员工、本月份的已确认信息。未知、缺失、有冲突或无法确定适用性时，一次列出字段和问题，要求用户提供，收到答复前暂停受影响的写入；不能用猜测、历史惯例或他人的业务内容补齐。只有用户明确允许某字段留空时，才按其要求留空。
+- 格式优先参考目标表内本员工已填写的记录；没有合适样例时，可以参考同表其他人已填写的记录，或工作簿中其他月份的已填记录。选取与当前列结构相符的样例，记录来源工作表和范围，只继承字体、对齐、底色、边框、行高、日期与时间显示、合计布局等格式。
+- 格式参考不等于业务信息来源：不得复制参考记录的姓名、部门、项目、加班原因、金额或日期。参考格式与当前表结构冲突、样例不一致或不存在可判定样例时，向用户确认采用的格式。仅在当前表尾的空白新增区域应用格式，保留参考表及所有已有数据。
+
+## 餐补规则
+
+用户未另行指定时，采用以下规则。先完整读取考勤，再判定日期类型及打卡缺失；“尚未读取”“读取失败”或无法解析的时间不能视为没打卡。
+
+### 中国国家放假与调休日历
+
+以目标年份国务院办公厅公布的中国大陆放假、调休安排判定工作日和休息日。运行时查询中国政府网的对应年度通知及后续调整；原文无法访问时可使用政府网站完整转载，记录通知标题、官方来源链接、适用年份和核查日期。不要把某一年日期硬编码为以后年份的日历，也不要仅凭第三方日历库或搜索摘要确认调休。
+
+按以下顺序分类：国家通知明确要求上班的调休日期为工作日；明确放假、调休放假的日期为休息日；其余日期按周一至周五为工作日、周六周日为休息日。若官方日期相互冲突，或目标年度安排尚未发布、无法核实，则列明受影响日期，取得可靠依据后再计算和写入。
+
+iTalent 提供打卡证据，不替代国家日历。页面日期标签、公司或个人排班与国家安排不一致时列出差异，默认仍按国家安排计算；只有用户明确指定本次使用其他安排时才覆盖。官方日历可核实时直接使用，无需再请用户逐日确认。表内书面政策与本规则存在实质差异时，说明差异，按用户规则计算并保留原政策文字。
+
+### 金额与缺卡处理
+
+| 日期类型与打卡情况 | 填报处理 | 餐补金额 |
 | --- | --- | --- |
-| Monday–Friday | Last valid punch is at or after 20:30:00 | ¥30 per date |
-| Saturday–Sunday | Actual work is supported by attendance punches | ¥60 per date |
+| 工作日，首次和末次都没打卡 | 本次餐补筛选视为请假，跳过该日期，不写入餐补工作簿 | 不计餐补 |
+| 工作日，有效末打卡不早于该日 20:30:00，首打卡存在 | 填真实首、末打卡 | 每天 ¥30 |
+| 工作日，有效末打卡不早于该日 20:30:00，首打卡缺失 | 餐补表首打卡填该日 09:30:00，末打卡沿用真实值 | 每天 ¥30 |
+| 工作日，末打卡早于该日 20:30:00 | 跳过该日期；首卡缺失时也不补填 09:30 | 不计餐补 |
+| 工作日，有首打卡但缺末打卡 | 不能证明达到门槛，列为待核对，不计算、不写入 | 待核对 |
+| 休息日，考勤能证明当天实际工作 | 按真实打卡证据填报 | 每天 ¥60 |
 
-The 20:30 boundary is inclusive. Weekend means the calendar weekday under these defaults; do not silently substitute statutory workday adjustments. Explain any material difference from the sheet's written policy before applying the user's rules, and preserve the policy text.
+20:30 包含整点边界，按完整日期时间比较。空白打卡、“正常”状态或放假标签本身不能证明休息日实际工作；休息日不能套用缺首卡补 09:30 的规则，证据或填报时段不完整时向用户补问。
 
-Use first and last valid punches for the displayed interval. Blank punches, a normal attendance status, or a holiday label alone do not prove weekend work. Flag incomplete or ambiguous records instead of inventing times. Missing first punches on otherwise late weekdays should be surfaced before adding a row that requires a full interval. Count each employee/date once.
+09:30 是用户指定的餐补填报默认值，不是从 iTalent 读取的真实打卡。保留原始首卡为空的证据，另记填报首卡及“按用户规则默认 09:30”的依据；在写前预览和验收中列明采用默认值的日期，无需为本规则已授权的默认值逐条重复确认。首卡已有真实值时保留真实值，不能统一改成 09:30；其他缺失信息仍按原规则询问。
 
-## Read and verify
+“视为请假”仅用于本次餐补排除，不在 iTalent 中新增请假、补签或修改考勤状态。同一员工、同一日期只计算一次；这些规则只作用于缺失记录的追加，不覆盖、删除或重写任何已有日期。
 
-1. Read the available `lark-sheets` skill and its required `lark-shared` instructions; use `lark-wiki` to resolve a Wiki URL when necessary. Use Feishu CLI as the user for spreadsheet operations.
-2. Reuse the signed-in Chrome session for iTalent. Follow the current browser tool or `browser-harness` skill instructions. Feishu SSO is an available login route; credentials are not needed when the existing session works. Read [browser-and-sheet-notes.md](references/browser-and-sheet-notes.md) when navigating iTalent or handling Feishu formatting.
-3. Confirm both employee identity and the attendance date filter. Read every page and scroll virtualized lists so all dates in the requested month are accounted for. Retain raw date/punch evidence for calculations; record which dates have no punches separately from unread dates.
-4. Read the target sheet's headers, all populated records including hidden content, formulas, merges, and nearby row styles/heights. Locate the real last populated row across the record width; an internal blank separator is not the end of the sheet. Check below the apparent end for later data.
-5. Normalize existing dates to full dates using their actual value/type and the month/year context. Compare employee plus full date; another employee's row on the same date is not a duplicate. Preserve dates from other months already present in this tab.
-6. Compute the eligible set, the already-recorded subset, and the missing subset. Verify inclusive thresholds, weekday calculations, record counts, and monetary totals independently of display formatting. Treat an existing date with a different amount as a discrepancy to report; do not overwrite it or append a duplicate.
-7. Before writing, show the missing dates, their amounts, the subtotal to append, and any exclusions or discrepancies. Distinguish the full month's eligible total from the newly appended subtotal when duplicates exist. The user's request to fill the sheet authorizes this append after verification; seek an extra approval only if requested or required by an actual tool gate. An explicit review-only request stops before writing.
+## 读取与核对
 
-## Append and verify
+1. 先完成首次配置，再按[首次配置与依赖安装](references/setup.md)检查依赖。`lark-sheets`、`lark-shared`、`browser-harness` 为必需项，配置链接是 Wiki 时补装 `lark-wiki`。缺少 `browser-harness` 技能或同名命令时都必须补齐；其他浏览器工具存在不构成跳过理由。缺失项由 agent 自行定位可信安装来源并执行安装，不向用户提供安装链接或要求用户手动安装。安装后读取实际 `SKILL.md`，按依赖说明操作。飞书表格操作通过用户身份调用 Feishu CLI。
+2. 通过 `browser-harness` 复用 Chrome 中已登录的 iTalent 会话，按[浏览器与表格操作说明](references/browser-and-sheet-notes.md)实际执行连接和读取命令。可通过飞书 SSO 登录；现有会话可用时无需凭据。无法执行该工具时按前述阻塞规则停止，不能换用宿主内置浏览器。
+3. 核对员工身份和考勤日期筛选范围。读取全部分页，并滚动虚拟列表，确保覆盖目标月份所有日期。保留原始日期、打卡证据，以及国家日历来源和日期分类，区分“没有打卡”“尚未读取”和“日期类型未确认”；完整读取后的工作日双缺卡按请假排除，达标但缺首卡的填报另记默认值依据。
+4. 读取目标表头、全部已有记录（含隐藏内容）、公式、合并区域，以及追加位置附近的样式和行高。按当前字段含义重新建立映射，检查是否有新增或不确定业务字段，并按“数据来源与格式参考”规则向用户补问。按记录完整列宽确定真实末行，不能把表内空白分隔行当成结尾；继续检查其下方是否还有数据。
+5. 根据原始值、数据类型及年月上下文，将已有日期规范为完整日期。按“员工＋完整日期”去重；其他员工在同一天的记录不算重复。保留该工作表内已有的其他月份记录。
+6. 分别计算符合条件、已经填报、仍需追加的记录集合。独立核对时间边界、日期类型及其依据、星期、记录数量和金额，不能依赖显示格式判断。已有日期金额不一致时报告差异，不覆盖，也不追加重复日期。
+7. 写入前展示缺失日期、国家日历中的工作日或休息日分类及依据、每日金额、本次追加小计、双缺卡按请假排除的日期，以及采用默认 09:30 首卡的日期和其他差异。有已填报记录时，区分整月应得总额和本次新增小计；仍有日期类型或业务字段待用户确认时，不把结果称为完整总额，也不自行部分写入，先询问用户是否待补齐后统一写入或先处理已确认记录。用户要求填表即授权信息齐全并核对后的追加；只有用户明确要求审批或工具实际设置门禁时才额外确认。用户仅要求预览或核对时，在写入前停止。
 
-1. Save a read-only snapshot of existing values, formulas, merges, and the styles adjacent to the destination. Keep temporary attendance/snapshot files outside the repository and synced skill directory.
-2. Append chronologically after the actual last populated record, retaining any separator pattern. Check that the entire destination is empty immediately before writing. An already-complete month is a no-op.
-3. Map values to the existing columns. In this workbook the observed columns were `部门`, `项目`, `员工姓名`, `加班日期`, `加班时段`, `加班原因`, `星期`, `餐补金额`, `单人合计`, `经办人`; discover their current positions each run. Leave unsupported business fields blank and disclose them rather than fabricating work reasons or handlers.
-4. Inherit the employee's existing font, alignment, fill, borders, row height, date/time display, and total-cell layout in the new region only. Inspect merges after a format copy. Use typed numeric amounts; retain the established date-label style, or write real dates when that is the existing type.
-5. Use a bounded write such as `+cells-set --allow-overwrite=false` to protect nonempty cells. If the established layout has a merged personal subtotal, create one confined to the new block with `=SUM(<new allowance cells>)`; preserve earlier subtotals and their merges.
-6. Read the complete appended block back and compare every date, punch interval, weekday, and amount against the verified source. Check the subtotal value and formula, and run `+formula-verify --exit-on-error` for any new formulas. Sample styles at the first, middle, and final new rows and confirm the intended merges and row heights.
-7. Compare the before/after snapshots: all preexisting values and formulas must match, with original layout and styles intact. Inspect affected neighbors. After a partial failure, read what actually applied and retry only the unapplied operation; do not resend the whole append blindly.
+## 追加与验收
 
-Finish with the spreadsheet link, month, appended row range, eligible dates, count, total, and any unresolved discrepancy. State that existing records were preserved only after checking this.
+1. 保存已有值、公式、合并区域及追加位置附近样式的只读快照。临时考勤数据和快照放在仓库、技能同步目录之外。
+2. 按日期升序追加到真实最后一条记录之后，沿用原有分隔方式。写入前再次检查整个目标区域为空。当月记录已完整时，不执行写入。
+3. 按本次读取的当前列结构写入字段。历史表头 `部门`、`项目`、`员工姓名`、`加班日期`、`加班时段`、`加班原因`、`星期`、`餐补金额`、`单人合计`、`经办人` 仅作识别示例，不限制实际字段、顺序和数量。所有非考勤业务字段都必须已明确，或由用户明确允许留空；仍有未知或不确定信息时向用户询问，不能自行留空后直接提交。
+4. 按已选定的本员工、其他员工或其他月份样例，在新增区域继承格式，并适配当前列结构；参考来源、原记录和其他月份均不改动。跨工作表时也只复制格式，不搬运业务值。复制格式后检查合并区域。金额写为数值类型；日期列原本是文本标签时沿用其显示方式，原本是真日期时写入真日期。
+5. 使用有明确边界的写入，例如 `+cells-set --allow-overwrite=false`，保护非空单元格。原布局使用合并的个人小计时，只在新增记录块内建立小计，公式为 `=SUM(<new allowance cells>)`；保留以前的小计及其合并区域。
+6. 回读完整新增区域，将每个日期、打卡时段、星期和金额与已核对的填报结果逐项比较；首卡默认 09:30 的记录按已留存的默认值依据验收，其他打卡值与原始考勤逐项比较。核对小计值和公式，并对新增公式执行 `+formula-verify --exit-on-error`。抽查新增区域首行、中间行、末行的样式，核对合并区域和行高。
+7. 对比写入前后快照：所有已有值和公式必须一致，原布局与样式完整保留，并检查受影响区域的相邻单元格。部分失败后先回读实际生效情况，只重试未完成的操作，不盲目重发整批追加。
 
-## Credentials and scope
+交付时提供表格链接、月份、新增行范围、符合条件的日期、数量、金额及未解决的差异。只有检查过原记录后，才能声明已有数据未改动。
 
-Reuse the signed-in Chrome session or Feishu SSO for iTalent. If interactive login or MFA is required, ask the user to complete authentication on the official iTalent page, then resume after verifying the signed-in identity. Keep passwords, cookies, access tokens, and session-bearing redirect URLs out of this skill and its synced copies, chat, terminal output, command-line arguments, and screenshots.
+## 登录与操作范围
 
-Pause for an actual login/MFA or access blocker and describe the observed issue; do not claim a browser permission prompt exists without current evidence. Append allowance records only; reimbursement submission, payment, sharing changes, and messages to coworkers require their own user request.
+复用 Chrome 已登录会话或通过飞书 SSO 登录 iTalent。需要交互登录或 MFA 时，请用户在 iTalent 官方页面完成认证，核对登录身份后继续。密码、Cookie、访问令牌和带会话参数的跳转链接不得写入本技能及其同步副本，也不得出现在聊天、终端输出、命令行参数或截图中。
+
+遇到实际登录、MFA 或权限阻塞时暂停，并说明观察到的问题；没有当前证据时，不声称浏览器出现权限提示。只追加餐补记录；提交报销、付款、修改共享权限或联系同事，需要用户另外提出请求。

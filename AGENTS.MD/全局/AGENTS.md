@@ -29,3 +29,9 @@ A claim of success is not evidence of success.
 # Jev 与 GPT 分工
 
 使用 typesafe-ai skill，并在适用时使用 jev-fanout、jev-guardrail、jev-route。自行判断任务中哪些子问题适合 Jev，实际调用 Jev API；其余开放式分析交给 GPT。最后说明分工和实际调用结果。
+
+# 代码注释要求
+
+- 不需要为每一行代码都写注释；关键代码行必须写注释，说明其功能及作用。
+- 每个代码块前必须写注释，说明整块代码的功能及作用。
+- 每个函数接口上方必须写注释，说明函数的功能及用法。

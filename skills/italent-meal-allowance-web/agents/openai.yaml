@@ -1,0 +1,4 @@
+interface:
+  display_name: "iTalent 餐补填报（内置浏览器版）"
+  short_description: "使用宿主内置浏览器核对 iTalent 考勤，通过飞书 CLI 追加餐补"
+  default_prompt: "使用 $italent-meal-allowance-web，通过宿主内置浏览器读取 iTalent 上个月考勤，按中国国家放假与调休安排核算，工作日双缺卡跳过，达标缺首卡填09:30，再用飞书 CLI 追加餐补；首次补齐工作簿、考勤入口和预期员工。"
